@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entrar — Muito Mais</title>
+<meta name="description" content="Entre na sua conta Muito Mais: cliente para ver seu cashback, loja para acessar o painel.">
+<link rel="icon" href="https://muitomais.app/brand/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/pages.css">
+<style>
+  body { min-height: 100vh; min-height: 100svh; }
+  .auth { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); min-height: 100vh; min-height: 100svh; padding: 12px; gap: 12px; }
+
+  /* ---------- Coluna do formulário ---------- */
+  .auth-form { position: relative; display: flex; flex-direction: column; padding: 16px clamp(16px, 4vw, 48px) 24px; }
+  .auth-form::before {
+    content: ""; position: absolute; inset: -12px auto auto -12px; width: min(520px, 100%); height: 420px; z-index: -1; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(201,246,226,.75), transparent);
+  }
+  .auth-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 56px; }
+  .back {
+    display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px 0 12px;
+    border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--paper);
+    font-size: 14px; font-weight: 500; color: var(--ink-2); transition: border-color .2s ease, color .2s ease;
+  }
+  .back:hover { border-color: var(--forest-800); color: var(--forest-800); }
+  .auth-box { width: 100%; max-width: 420px; margin: auto; padding: 40px 0; }
+
+  /* seletor cliente / loja */
+  .seg {
+    position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: 4px;
+    border-radius: var(--radius-pill); background: var(--paper); border: 1px solid var(--line);
+  }
+  .seg::before {
+    content: ""; position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px);
+    border-radius: var(--radius-pill); background: var(--forest-800);
+    transition: transform .45s cubic-bezier(.2,.8,.2,1);
+  }
+  .seg[data-mode="loja"]::before { transform: translateX(100%); }
+  .seg button {
+    position: relative; z-index: 1; height: 42px; border: 0; background: none; border-radius: var(--radius-pill);
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-size: 14.5px; font-weight: 600; color: var(--ink-2); transition: color .3s ease;
+  }
+  .seg button[aria-selected="true"] { color: #fff; }
+
+  .auth-box h1 { margin-top: 36px; font-size: clamp(34px, 4vw, 44px); line-height: 1.05; letter-spacing: -0.04em; font-weight: 800; color: var(--ink-deep); }
+  .auth-box .sub { margin-top: 10px; color: var(--ink-2); font-size: 16px; }
+
+  /* seletor de plano: 3 cards, um clique troca */
+  .plan-pick { margin: 24px 0 0; padding: 0; border: 0; min-width: 0; }
+  .plan-pick[hidden] { display: none; }
+  .plan-pick legend { display: flex; width: 100%; justify-content: space-between; align-items: baseline; padding: 0; margin-bottom: 10px; font-size: 14px; font-weight: 600; color: var(--ink-deep); }
+  .plan-pick legend a { font-size: 13px; font-weight: 600; color: var(--forest-800); }
+  .plan-pick legend a:hover { text-decoration: underline; }
+  .pp-opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .pp {
+    position: relative; cursor: pointer; display: flex; flex-direction: column; gap: 2px;
+    padding: 14px 12px 12px; border-radius: 16px; background: var(--paper); border: 1.5px solid var(--line);
+    transition: border-color .2s ease, background-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  }
+  .pp:hover { border-color: var(--green-500); }
+  .pp:active { transform: scale(.98); }
+  .pp input { position: absolute; opacity: 0; pointer-events: none; }
+  .pp b { font-size: 14px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink-deep); }
+  .pp small { font-size: 13px; font-weight: 600; color: var(--ink-2); }
+  .pp small em { font-style: normal; font-weight: 500; color: var(--ink-3); }
+  .pp-ok {
+    position: absolute; top: 10px; right: 10px; width: 18px; height: 18px; border-radius: 50%;
+    display: grid; place-items: center; border: 1.5px solid var(--line-strong); color: transparent; transition: all .2s ease;
+  }
+  .pp-tag { position: absolute; top: -9px; left: 10px; font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: var(--radius-pill); background: var(--green-300); color: var(--forest-950); }
+  .pp:has(input:checked) { border-color: var(--forest-800); background: var(--mint-50); box-shadow: 0 0 0 3px rgba(15,163,110,.12); }
+  .pp:has(input:checked) .pp-ok { background: var(--forest-800); border-color: var(--forest-800); color: #fff; }
+  .pp:has(input:focus-visible) { outline: 2px solid var(--green-500); outline-offset: 2px; }
+  .pp-note { margin-top: 10px; font-size: 13px; color: var(--ink-3); line-height: 1.45; }
+
+  form { margin-top: 28px; display: grid; gap: 18px; }
+  .field label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--ink-deep); }
+  .input {
+    position: relative; display: flex; align-items: center; height: 54px;
+    border-radius: 16px; background: var(--paper); border: 1px solid var(--line-strong);
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .input:focus-within { border-color: var(--green-500); box-shadow: 0 0 0 4px rgba(15,163,110,.14); }
+  .input.err { border-color: #dc4b4b; box-shadow: 0 0 0 4px rgba(220,75,75,.12); }
+  .input > svg { position: absolute; left: 16px; color: var(--sage); pointer-events: none; }
+  .input:focus-within > svg { color: var(--forest-800); }
+  .input input {
+    width: 100%; height: 100%; border: 0; outline: 0; background: none; border-radius: inherit;
+    padding: 0 16px 0 46px; font: inherit; font-size: 15.5px; color: var(--ink-deep);
+  }
+  .input input::placeholder { color: #9aa8a2; }
+  .input .eye {
+    position: absolute; right: 8px; width: 40px; height: 40px; border: 0; border-radius: 12px; background: none;
+    display: grid; place-items: center; color: var(--ink-3);
+  }
+  .input .eye:hover { background: var(--mint-50); color: var(--forest-800); }
+  .input:has(.eye) input { padding-right: 52px; }
+  .hint { margin-top: 6px; font-size: 13px; color: #c43c3c; min-height: 0; }
+  .hint:empty { display: none; }
+
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 14px; }
+  .check { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; color: var(--ink-2); user-select: none; }
+  .check input { position: absolute; opacity: 0; pointer-events: none; }
+  .check span {
+    width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid var(--line-strong); background: var(--paper);
+    display: grid; place-items: center; color: transparent; transition: background-color .2s ease, border-color .2s ease;
+  }
+  .check input:checked + span { background: var(--forest-800); border-color: var(--forest-800); color: #fff; }
+  .check input:focus-visible + span { outline: 2px solid var(--green-500); outline-offset: 2px; }
+  .link { font-weight: 600; color: var(--forest-800); }
+  .link:hover { text-decoration: underline; }
+
+  .submit { width: 100%; height: 56px; margin-top: 4px; font-size: 16px; }
+  .submit:has(.arrow) { padding: 0 6px 0 24px; justify-content: space-between; }
+  .submit .spin { display: none; width: 20px; height: 20px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,.35); border-top-color: #fff; animation: spin .8s linear infinite; }
+  .submit.loading .label, .submit.loading .arrow { display: none; }
+  .submit.loading { justify-content: center; }
+  .submit.loading .spin { display: block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .notice {
+    display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 14px;
+    background: var(--mint-50); border: 1px solid var(--mint-150); font-size: 14px; color: var(--ink-2);
+  }
+  .notice[hidden] { display: none; }
+  .notice svg { flex: none; margin-top: 2px; color: var(--forest-800); }
+
+  .alt { margin-top: 26px; text-align: center; font-size: 14.5px; color: var(--ink-2); }
+  .legal { margin-top: auto; padding-top: 16px; text-align: center; font-size: 12.5px; color: var(--ink-3); }
+
+  /* elementos que só aparecem em um dos modos */
+  [data-only="cliente"], [data-only="loja"] { display: none; }
+  body[data-mode="cliente"] [data-only="cliente"], body[data-mode="loja"] [data-only="loja"] { display: revert; }
+  body[data-mode="cliente"] .row [data-only="cliente"] { display: inline-flex; }
+
+  /* troca suave de texto ao mudar o modo */
+  .swap { transition: opacity .25s ease, filter .25s ease, transform .25s ease; }
+  .swapping .swap { opacity: 0; filter: blur(6px); transform: translateY(6px); }
+
+  /* ---------- Painel da marca ---------- */
+  .auth-art {
+    position: relative; overflow: hidden; border-radius: 32px; color: #fff;
+    display: flex; flex-direction: column; justify-content: space-between; padding: clamp(28px, 4vw, 48px);
+    background:
+      linear-gradient(118deg, transparent 38%, rgba(71,211,152,.12) 52%, transparent 70%),
+      radial-gradient(520px 380px at 95% 0%, rgba(15,163,110,.5), transparent 70%),
+      radial-gradient(460px 360px at 0% 100%, rgba(12,107,74,.45), transparent 70%),
+      linear-gradient(165deg, #0a3328 0%, #06251d 55%, #03140f 100%);
+  }
+  .auth-art::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px); background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 20%, transparent 72%); mask-image: radial-gradient(ellipse at 50% 50%, #000 20%, transparent 72%);
+  }
+  .auth-art > * { position: relative; z-index: 1; }
+  .art-tag {
+    align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px; border-radius: var(--radius-pill);
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); font-size: 13px; font-weight: 600;
+  }
+  .art-tag i { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--green-300); color: var(--forest-950); }
+  .art-quote { font-size: clamp(28px, 3vw, 40px); line-height: 1.08; letter-spacing: -0.035em; font-weight: 700; max-width: 15ch; }
+  .art-quote em { font-style: normal; color: var(--green-300); }
+  .art-foot { margin-top: 14px; color: rgba(255,255,255,.65); font-size: 15.5px; max-width: 40ch; }
+
+  /* palco das telas ilustrativas */
+  .art-stage { flex: 1; display: grid; place-items: center; padding: 28px 0; min-height: 360px; perspective: 1200px; }
+  .scene { grid-area: 1 / 1; transition: opacity .5s ease, transform .7s cubic-bezier(.2,.8,.2,1), filter .5s ease; }
+  .scene.off { opacity: 0; transform: translateY(24px) rotateX(10deg) scale(.96); filter: blur(10px); pointer-events: none; }
+
+  /* cartão-carteira do cliente */
+  .wallet {
+    position: relative; width: min(330px, 100%); padding: 22px; border-radius: 28px; color: var(--ink-deep);
+    background: #fff; box-shadow: 0 40px 80px -30px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.1);
+    transform: rotate(-3deg);
+  }
+  .wallet .w-top { display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--ink-3); }
+  .wallet .w-top b { color: var(--ink-deep); font-size: 15px; }
+  .wallet .w-av { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--mint-200); color: var(--forest-800); font-weight: 700; }
+  .wallet .w-bal { margin-top: 20px; padding: 18px; border-radius: 20px; color: #fff; background: radial-gradient(120% 80% at 100% 0%, rgba(71,211,152,.5), transparent 60%), linear-gradient(160deg, #0fa36e, #065f46); }
+  .wallet .w-bal small { font-size: 12.5px; opacity: .8; }
+  .wallet .w-bal strong { display: block; margin-top: 4px; font-size: 34px; letter-spacing: -0.04em; line-height: 1.1; }
+  .wallet .w-bal span { display: inline-block; margin-top: 10px; font-size: 12px; padding: 4px 10px; border-radius: var(--radius-pill); background: rgba(255,255,255,.18); }
+  .wallet ul { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 4px; }
+  .wallet li { display: flex; align-items: center; gap: 12px; padding: 10px 4px; font-size: 14px; }
+  .wallet li + li { border-top: 1px solid var(--line); }
+  .wallet li i { width: 34px; height: 34px; border-radius: 12px; display: grid; place-items: center; background: var(--mint-50); color: var(--forest-800); flex: none; }
+  .wallet li div { flex: 1; line-height: 1.3; }
+  .wallet li small { display: block; color: var(--ink-3); font-size: 12px; }
+  .wallet li b { color: var(--green-500); }
+
+  /* painel da loja */
+  .dash {
+    width: min(400px, 100%); padding: 20px; border-radius: 26px; color: var(--ink-deep);
+    background: #fff; box-shadow: 0 40px 80px -30px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.1);
+    transform: rotate(2deg);
+  }
+  .dash .d-head { display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--ink-3); }
+  .dash .d-head b { color: var(--ink-deep); font-size: 15px; display: block; }
+  .dash .d-live { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: var(--radius-pill); background: var(--mint-50); color: var(--forest-800); font-weight: 600; font-size: 12px; }
+  .dash .d-live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--green-500); animation: pulse 1.8s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: .3; } }
+  .dash .d-kpis { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .dash .kpi { padding: 14px; border-radius: 16px; background: var(--canvas); border: 1px solid var(--line); }
+  .dash .kpi small { font-size: 12px; color: var(--ink-3); }
+  .dash .kpi strong { display: block; margin-top: 2px; font-size: 24px; letter-spacing: -0.04em; }
+  .dash .kpi em { font-style: normal; font-size: 12px; font-weight: 600; color: var(--green-500); }
+  .dash .kpi.hl { background: var(--forest-800); border-color: transparent; color: #fff; }
+  .dash .kpi.hl small { color: rgba(255,255,255,.7); }
+  .dash .kpi.hl em { color: var(--green-300); }
+  .dash .d-chart { margin-top: 12px; padding: 14px 14px 10px; border-radius: 16px; border: 1px solid var(--line); }
+  .dash .d-chart small { font-size: 12px; color: var(--ink-3); }
+  .dash .bars { margin-top: 12px; height: 92px; display: flex; align-items: flex-end; gap: 8px; }
+  .dash .bars span { flex: 1; height: var(--h); border-radius: 8px 8px 4px 4px; background: var(--mint-150); transform-origin: bottom; }
+  .dash .bars span:nth-last-child(-n+2) { background: linear-gradient(180deg, #47d398, #0fa36e); }
+  .scene:not(.off) .bars span { animation: grow .9s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i) * 60ms + .15s); }
+  @keyframes grow { from { transform: scaleY(0); } }
+  .dash .days { display: flex; gap: 8px; margin-top: 6px; font-size: 11px; color: var(--ink-3); }
+  .dash .days span { flex: 1; text-align: center; }
+
+  /* bolhas flutuantes */
+  .float {
+    position: absolute; display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px 10px 10px; border-radius: 16px;
+    background: rgba(255,255,255,.96); color: var(--ink-deep); font-size: 13px; line-height: 1.3;
+    box-shadow: 0 20px 40px -20px rgba(0,0,0,.6); animation: bob 5s ease-in-out infinite;
+  }
+  .float i { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; background: var(--green-300); color: var(--forest-950); flex: none; }
+  .float small { display: block; color: var(--ink-3); font-size: 11.5px; }
+  .float.f1 { top: -34px; right: -48px; }
+  .float.f2 { bottom: 4%; left: -10%; animation-delay: -2.5s; }
+  @keyframes bob { 50% { transform: translateY(-8px); } }
+
+  /* ---------- Detalhe do plano (lateral) ---------- */
+  .plan-detail {
+    width: min(400px, 100%); padding: 26px; border-radius: 26px; color: var(--ink-deep); background: #fff;
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.1);
+  }
+  .pd-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .pd-kicker { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--forest-800); }
+  .pd-badge { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: var(--radius-pill); background: var(--green-300); color: var(--forest-950); }
+  .pd-name { margin-top: 8px; font-size: 30px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; }
+  .pd-price { margin-top: 6px; display: flex; align-items: baseline; gap: 3px; }
+  .pd-price b { font-size: 34px; font-weight: 800; letter-spacing: -0.05em; color: var(--forest-800); }
+  .pd-price span { font-size: 14px; color: var(--ink-3); }
+  .pd-desc { margin-top: 8px; font-size: 14.5px; color: var(--ink-2); line-height: 1.45; }
+  .pd-head { margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--line); display: flex; justify-content: space-between; gap: 12px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  .pd-head em { font-style: normal; color: var(--forest-800); }
+  .pd-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 4px; }
+  .pd-list li {
+    display: flex; align-items: center; gap: 10px; padding: 7px 10px 7px 6px; border-radius: 12px; font-size: 14.5px; color: var(--ink-2);
+    animation: pd-in .5s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i) * 45ms);
+  }
+  .pd-list li i { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; flex: none; background: var(--mint-150); color: var(--forest-800); }
+  .pd-list li.add { background: var(--mint-50); color: var(--ink-deep); font-weight: 600; }
+  .pd-list li.add i { background: var(--forest-800); color: #fff; }
+  .pd-list li small { margin-left: auto; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--green-500); }
+  @keyframes pd-in { from { opacity: 0; transform: translateX(10px); } }
+  .plan-detail.inline { display: none; }
+  /* modo loja tem os cards de plano: menos respiro para caber numa tela de notebook */
+  body[data-mode="loja"] .auth-box { padding: 12px 0; }
+  body[data-mode="loja"] .auth-box h1 { margin-top: 24px; }
+  body[data-mode="loja"] form { margin-top: 22px; gap: 14px; }
+  /* com plano aberto a lateral fica mais enxuta para caber na tela */
+  .auth-art.has-plan { padding-top: clamp(24px, 3vw, 36px); padding-bottom: clamp(24px, 3vw, 36px); }
+  .auth-art.has-plan .art-stage { padding: 12px 0; }
+  .auth-art.has-plan .plan-detail { padding: 22px 24px; }
+  .auth-art.has-plan .pd-list { gap: 2px; }
+  .auth-art.has-plan .pd-list li { padding-top: 5px; padding-bottom: 5px; }
+  .auth-art.has-plan .pd-head { margin-top: 16px; padding-top: 14px; }
+  .auth-art.has-plan .art-foot { display: none; }
+  .auth-art.has-plan .art-quote { font-size: clamp(24px, 2.4vw, 32px); }
+
+  /* entrada da página */
+  .enter { animation: aos-in .9s cubic-bezier(.2,.7,.2,1) both; animation-delay: var(--d, 0s); --aos-y: 24px; }
+
+  @media (max-width: 960px) {
+    .auth { grid-template-columns: 1fr; }
+    .auth-art { min-height: 0; padding: 24px; border-radius: 26px; }
+    .legal { display: none; }
+    .art-stage, .art-foot { display: none; }
+    /* no celular o painel lateral fica longe: o detalhe aparece logo abaixo dos cards */
+    .plan-detail.inline:not(:empty) { display: block; margin-top: 12px; width: 100%; padding: 20px; box-shadow: none; border: 1.5px solid var(--forest-800); }
+    .plan-detail.inline .pd-name { font-size: 24px; }
+    .plan-detail.inline .pd-price b { font-size: 28px; }
+    .art-quote { margin-top: 18px; font-size: 26px; max-width: none; }
+    .auth-box { padding: 24px 0 32px; }
+  }
+  @media (max-width: 560px) {
+    .auth { padding: 8px; gap: 8px; }
+    .auth-form { padding: 8px 8px 16px; }
+    .auth-art { border-radius: 22px; padding: 20px; }
+    .art-quote { font-size: 22px; }
+    .auth-box h1 { margin-top: 28px; }
+    .pp { padding: 14px 10px 12px; }
+    .pp b { font-size: 13.5px; }
+    .pp-ok { display: none; }   /* sem espaço no celular: a borda e o fundo verdes já marcam o escolhido */
+    .pp small em { display: none; }
+  }
+</style>
+</head>
+<body data-mode="cliente">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="mm-icon" x1="40" y1="0" x2="40" y2="80" gradientUnits="userSpaceOnUse"><stop stop-color="#065F46"/><stop offset=".55" stop-color="#0FA36E"/><stop offset="1" stop-color="#47D398"/></linearGradient></defs></svg>
+
+<main class="auth">
+  <!-- Formulário -->
+  <section class="auth-form">
+    <div class="auth-top enter">
+      <a href="index.html" class="brand" aria-label="Muito Mais — início">
+        <svg width="30" height="30" viewBox="0 0 80 80" fill="none" aria-hidden="true"><rect width="80" height="80" rx="18" fill="url(#mm-icon)"/><g><circle cx="20" cy="14" r="7.2" fill="#fff"/><rect x="14.2" y="20" width="11.6" height="46" rx="5.8" fill="#fff"/><path d="M25.2 28 C32 34 36 40 40 50" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="60" cy="14" r="7.2" fill="#fff"/><rect x="54.2" y="20" width="11.6" height="46" rx="5.8" fill="#fff"/><path d="M54.8 28 C48 34 44 40 40 50" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/></g></svg>
+        <span><span class="muito">Muito</span><span class="mais">Mais</span></span>
+      </a>
+      <a href="index.html" class="back"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> Voltar ao site</a>
+    </div>
+
+    <div class="auth-box">
+      <div class="seg enter" id="seg" role="tablist" aria-label="Tipo de conta" data-mode="cliente" style="--d: .05s">
+        <button type="button" role="tab" aria-selected="true" data-mode="cliente">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+          Sou cliente
+        </button>
+        <button type="button" role="tab" aria-selected="false" data-mode="loja">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/></svg>
+          Sou da loja
+        </button>
+      </div>
+
+      <div class="swap">
+        <h1 class="enter" style="--d: .12s" id="title">Entre na sua conta</h1>
+        <p class="sub enter" style="--d: .18s" id="sub">Entre com seu email e senha para ver seu cashback.</p>
+      </div>
+
+      <!-- troca de plano direto aqui: um clique em outro card -->
+      <fieldset class="plan-pick" id="planPick" hidden>
+        <legend><span>Planos</span><a href="planos.html#comparar">Comparar planos</a></legend>
+        <div class="pp-opts">
+          <label class="pp"><input type="radio" name="plano" value="essencial"><span class="pp-ok" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><b>Essencial</b><small>R$ 99<em>/mês</em></small></label>
+          <label class="pp"><input type="radio" name="plano" value="profissional"><span class="pp-ok" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><b>Profissional</b><small>R$ 197<em>/mês</em></small><i class="pp-tag">Popular</i></label>
+          <label class="pp"><input type="radio" name="plano" value="redes"><span class="pp-ok" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><b>Redes</b><small>R$ 597<em>/mês</em></small></label>
+        </div>
+        <div class="plan-detail inline" id="planInline" aria-live="polite"></div>
+        <p class="pp-note" id="planDesc">Valores por unidade/mês. Toque em um plano para assinar ao entrar.</p>
+      </fieldset>
+
+      <form id="form" class="enter" style="--d: .24s" novalidate>
+        <div class="field">
+          <label for="email">Email</label>
+          <div class="input">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 7l9 6 9-6"/></svg>
+            <input id="email" name="email" type="text" autocomplete="username" placeholder="Digite seu email" required>
+          </div>
+          <p class="hint" id="emailHint" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="senha">Senha</label>
+          <div class="input">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <input id="senha" name="senha" type="password" autocomplete="current-password" placeholder="Digite sua senha" required>
+            <button type="button" class="eye" id="eye" aria-label="Mostrar senha" aria-pressed="false">
+              <svg class="ic-show" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="ic-hide" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M3 3l18 18M10.6 5.1A10.4 10.4 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.1M6.6 6.6A17.4 17.4 0 0 0 2 12s3.5 7 10 7a9.8 9.8 0 0 0 5.4-1.6M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+            </button>
+          </div>
+          <p class="hint" id="senhaHint" aria-live="polite"></p>
+        </div>
+        <div class="row">
+          <label class="check"><input type="checkbox" name="lembrar" checked><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Salvar conta</label>
+          <a class="link" href="#" id="forgot">Esqueci minha senha</a>
+        </div>
+        <p class="notice" id="notice" hidden aria-live="polite"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span id="noticeText"></span></p>
+        <button type="submit" class="btn btn-primary submit" id="submit"><span class="label">Entrar</span><span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="spin" aria-hidden="true"></span></button>
+      </form>
+
+      <p class="alt enter" style="--d: .3s">
+        <span data-only="cliente">Não tem uma conta? <a class="link" href="#" id="signup">Cadastre-se</a></span>
+        <span data-only="loja">Ainda não é parceiro? <a class="link" href="planos.html">Ver planos</a></span>
+      </p>
+    </div>
+
+    <p class="legal">© <span id="year">2026</span> Muito Mais · Pessoas. Conexões. Benefícios.</p>
+  </section>
+
+  <!-- Painel da marca -->
+  <aside class="auth-art enter" style="--d: .1s; --aos-y: 0; --aos-s: .98">
+    <span class="art-tag swap" aria-hidden="true"><i><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i><span id="artTag">App Muito Mais</span></span>
+
+    <div class="art-stage">
+      <!-- cliente: carteira -->
+      <div class="scene" id="sceneCliente" aria-hidden="true">
+        <div style="position: relative">
+          <div class="wallet">
+            <div class="w-top"><div><small>Olá,</small><b>Marina</b></div><span class="w-av">M</span></div>
+            <div class="w-bal"><small>Seu cashback</small><strong>R$ 48,30</strong><span>R$ 12,40 a liberar</span></div>
+            <ul>
+              <li><i><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M6 7V5h12v2M5 7l1 13h12l1-13"/></svg></i><div>Cashback<small>Nota confirmada</small></div><b>+R$ 12,40</b></li>
+              <li><i><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.6 6.5 19.5l1-6.3L3 8.9 9 8z"/></svg></i><div>Missão concluída<small>3 visitas no mês</small></div><b>+R$ 5,00</b></li>
+            </ul>
+          </div>
+          <span class="float f1"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i><span>Compra registrada<small>QR do cupom</small></span></span>
+        </div>
+      </div>
+      <!-- loja: painel -->
+      <div class="scene off" id="sceneLoja" aria-hidden="true">
+        <div style="position: relative">
+          <div class="dash">
+            <div class="d-head"><div><small>Painel da loja</small><b>Restaurante Central</b></div><span class="d-live">Ao vivo</span></div>
+            <div class="d-kpis">
+              <div class="kpi hl"><small>Clientes que voltaram</small><strong>312</strong><em>+18% no mês</em></div>
+              <div class="kpi"><small>Cupons registrados</small><strong>1.284</strong><em>+9% no mês</em></div>
+            </div>
+            <div class="d-chart">
+              <small>Retornos na semana</small>
+              <div class="bars"><span style="--h: 38%; --i: 0"></span><span style="--h: 52%; --i: 1"></span><span style="--h: 44%; --i: 2"></span><span style="--h: 66%; --i: 3"></span><span style="--h: 58%; --i: 4"></span><span style="--h: 86%; --i: 5"></span><span style="--h: 100%; --i: 6"></span></div>
+              <div class="days"><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span><span>D</span></div>
+            </div>
+          </div>
+          <span class="float f2"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></i><span>Nova missão ativa<small>Volte em 7 dias</small></span></span>
+        </div>
+      </div>
+      <!-- loja com plano escolhido: tudo o que o plano inclui -->
+      <div class="scene off" id="scenePlano">
+        <div class="plan-detail" id="planSide"></div>
+      </div>
+    </div>
+
+    <div class="swap" aria-hidden="true">
+      <p class="art-quote" id="artQuote">Seu cashback, <em>direto do cupom.</em></p>
+      <p class="art-foot" id="artFoot">Escaneie o QR Code, registre a compra e receba quando a nota for confirmada.</p>
+    </div>
+  </aside>
+</main>
+
+<script>
+(() => {
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // [item, adicional em relação ao plano anterior]
+  const PLANS = {
+    essencial: { name: 'Essencial', price: '99,00', desc: 'Cashback e missões para o seu restaurante.', items: [['Cashback'], ['Missões']] },
+    profissional: { name: 'Profissional', price: '197,00', badge: 'Mais completo', base: 'Essencial', desc: 'Cashback, missões e analytics para o seu restaurante.',
+      items: [['Cashback'], ['Missões'], ['Analytics', 1], ['Validação de NFC-e', 1], ['Segmentação', 1], ['1 unidade'], ['5 usuários', 1], ['10 missões ativas', 1]] },
+    redes: { name: 'Redes', price: '597,00', badge: 'Redes e franquias', base: 'Profissional', desc: 'Cashback, missões e analytics em todas as suas unidades.',
+      items: [['Cashback'], ['Missões'], ['Analytics'], ['Validação de NFC-e'], ['Segmentação'], ['Multiunidade', 1], ['20 usuários', 1], ['50 missões ativas', 1]] }
+  };
+  const CHECK = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>';
+  const detailHTML = k => {
+    const p = PLANS[k], adds = p.items.filter(x => x[1]).length;
+    return `<div class="pd-top"><span class="pd-kicker">Plano escolhido</span>${p.badge ? `<span class="pd-badge">${p.badge}</span>` : ''}</div>
+      <h2 class="pd-name">${p.name}</h2>
+      <p class="pd-price"><span>R$</span><b>${p.price}</b><span>/unidade/mês</span></p>
+      <p class="pd-desc">${p.desc}</p>
+      <div class="pd-head"><span>O que inclui</span>${p.base ? `<em>+${adds} adicionais ao ${p.base}</em>` : ''}</div>
+      <ul class="pd-list">${p.items.map(([t, add], i) =>
+        `<li class="${add ? 'add' : ''}" style="--i: ${i}"><i>${CHECK}</i>${t}${add ? '<small>Adicional</small>' : ''}</li>`).join('')}</ul>`;
+  };
+  const COPY = {
+    cliente: {
+      title: 'Entre na sua conta',
+      sub: 'Entre com seu email e senha para ver seu cashback.',
+      tag: 'App Muito Mais',
+      quote: 'Seu cashback, <em>direto do cupom.</em>',
+      foot: 'Escaneie o QR Code, registre a compra e receba quando a nota for confirmada.',
+      doc: 'Entrar — Muito Mais'
+    },
+    loja: {
+      title: 'Painel da loja',
+      sub: 'Entre com a conta da empresa para acessar o painel.',
+      tag: 'Muito Mais para restaurantes',
+      quote: 'Seu cliente volta. <em>A gente ajuda nisso.</em>',
+      foot: 'Acompanhe retornos, cupons registrados e missões de todas as suas unidades.',
+      doc: 'Painel da loja — Muito Mais'
+    }
+  };
+
+  const params = new URLSearchParams(location.search);
+  const $ = id => document.getElementById(id);
+  const seg = $('seg'), tabs = seg.querySelectorAll('button');
+  let plan = PLANS[params.get('plano')] ? params.get('plano') : null;
+  let mode = null;
+
+  // plano escolhido: troca com um clique, sem sair da tela
+  const syncUrl = () => {
+    params.set('tipo', mode);
+    if (mode === 'loja' && plan) params.set('plano', plan); else params.delete('plano');
+    history.replaceState(null, '', location.pathname + '?' + params.toString());
+  };
+  const renderPlan = () => {
+    const loja = mode === 'loja';
+    $('planPick').hidden = !loja;
+    document.querySelectorAll('input[name="plano"]').forEach(i => { i.checked = i.value === plan; });
+    $('planDesc').textContent = plan ? 'Valores por unidade/mês. Toque de novo no plano para desmarcar e só entrar.' : 'Valores por unidade/mês. Toque em um plano para assinar ao entrar.';
+    $('submit').querySelector('.label').textContent = loja && plan ? 'Entrar e assinar' : 'Entrar';
+    // lateral: painel da loja sem plano; detalhes do plano quando há um escolhido
+    const html = loja && plan ? detailHTML(plan) : '';
+    $('planSide').innerHTML = html; $('planInline').innerHTML = html;
+    $('sceneCliente').classList.toggle('off', mode !== 'cliente');
+    $('sceneLoja').classList.toggle('off', !(loja && !plan));
+    $('scenePlano').classList.toggle('off', !(loja && plan));
+    document.querySelector('.auth-art').classList.toggle('has-plan', !!(loja && plan));
+  };
+  // clicar no plano marca; clicar de novo no mesmo desmarca (só entrar, sem assinar)
+  document.querySelectorAll('input[name="plano"]').forEach(i => i.addEventListener('click', () => {
+    plan = plan === i.value ? null : i.value; renderPlan(); syncUrl();
+  }));
+
+  const setMode = (m, animate) => {
+    if (m === mode) return;
+    mode = m;
+    const apply = () => {
+      const c = COPY[m];
+      document.body.dataset.mode = m; seg.dataset.mode = m;
+      tabs.forEach(t => t.setAttribute('aria-selected', t.dataset.mode === m));
+      $('title').textContent = c.title; $('sub').textContent = c.sub;
+      $('artTag').textContent = c.tag; $('artQuote').innerHTML = c.quote; $('artFoot').textContent = c.foot;
+      renderPlan();
+      document.title = c.doc;
+      $('notice').hidden = true;
+      document.body.classList.remove('swapping');
+    };
+    seg.dataset.mode = m;
+    if (!animate) return apply();
+    document.body.classList.add('swapping');
+    setTimeout(apply, 220);
+    syncUrl();   // guarda o modo na URL sem recarregar
+  };
+  tabs.forEach(t => t.addEventListener('click', () => setMode(t.dataset.mode, true)));
+  setMode(params.get('tipo') === 'loja' ? 'loja' : 'cliente', false);
+
+  // mostrar/ocultar senha
+  const senha = $('senha'), eye = $('eye');
+  eye.addEventListener('click', () => {
+    const show = senha.type === 'password';
+    senha.type = show ? 'text' : 'password';
+    eye.setAttribute('aria-pressed', show);
+    eye.setAttribute('aria-label', show ? 'Ocultar senha' : 'Mostrar senha');
+    eye.querySelector('.ic-show').style.display = show ? 'none' : '';
+    eye.querySelector('.ic-hide').style.display = show ? '' : 'none';
+    senha.focus();
+  });
+
+  // validação
+  const email = $('email');
+  const showNotice = msg => { $('noticeText').textContent = msg; $('notice').hidden = false; };
+  const check = (input, hint, msg) => {
+    input.parentElement.classList.toggle('err', !!msg);
+    $(hint).textContent = msg || '';
+    return !msg;
+  };
+  const vEmail = () => check(email, 'emailHint', !email.value.trim() ? 'Digite seu email.' : !email.validity.valid ? 'Esse email não parece válido.' : '');
+  const vSenha = () => check(senha, 'senhaHint', !senha.value ? 'Digite sua senha.' : '');
+  email.addEventListener('blur', () => email.value && vEmail());
+  email.addEventListener('input', () => email.parentElement.classList.contains('err') && vEmail());
+  senha.addEventListener('input', () => senha.parentElement.classList.contains('err') && vSenha());
+
+  $('form').addEventListener('submit', e => {
+    e.preventDefault();
+    // modo demonstração: aceita qualquer login e senha (até em branco)
+    check(email, 'emailHint', ''); check(senha, 'senhaHint', '');
+    const btn = $('submit');
+    btn.classList.add('loading'); btn.disabled = true;
+    // TODO: conectar à autenticação real do Muito Mais
+    setTimeout(() => {
+      // demonstração: cada tipo de conta entra direto na sua área
+      if (mode === 'cliente') { location.href = 'cliente.html'; return; }
+      location.href = plan ? 'empresa.html?plano=' + plan + '#configuracoes/plano' : 'empresa.html#painel';
+    }, 1100);
+  });
+  $('forgot').addEventListener('click', e => {
+    e.preventDefault();
+    if (!vEmail()) { email.focus(); return; }
+    showNotice('Se houver uma conta com ' + email.value.trim() + ', enviaremos um link para criar uma nova senha.');
+  });
+  $('signup').addEventListener('click', e => { e.preventDefault(); showNotice('O cadastro de cliente é feito pelo app Muito Mais.'); });
+})();
+</script>
+</body>
+</html>

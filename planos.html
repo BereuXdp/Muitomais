@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planos — Muito Mais</title>
+<meta name="description" content="Planos do Muito Mais para restaurantes e redes: Essencial, Profissional e Redes. Cashback, missões, analytics e validação de NFC-e.">
+<link rel="icon" href="https://muitomais.app/brand/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/pages.css">
+<style>
+  /* ---------- Topo da página de planos ---------- */
+  .p-hero { position: relative; padding: clamp(56px, 8vw, 104px) 0 0; text-align: center; }
+  .p-hero::before {
+    content: ""; position: absolute; inset: -160px 0 auto; height: 680px; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(600px 340px at 18% 10%, rgba(201,246,226,.9), transparent 70%),
+      radial-gradient(520px 320px at 85% 0%, rgba(215,238,228,.9), transparent 70%);
+  }
+  .p-hero .display { margin: 22px auto 0; max-width: 12ch; font-size: clamp(42px, 6.6vw, 84px); }
+  .p-hero .lead { margin: 22px auto 0; max-width: 540px; }
+  .p-hero .plans, .p-hero .includes { text-align: left; }
+  .crumbs { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-3); }
+  .crumbs a:hover { color: var(--forest-800); }
+  .crumbs svg { opacity: .5; }
+
+  /* faixa "todos os planos incluem" */
+  .includes {
+    margin: 96px auto 0; max-width: 1040px;
+    display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center;
+    padding: 22px 26px; border-radius: 24px; background: var(--mint-50); border: 1px solid var(--mint-150);
+  }
+  .includes b { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--forest-800); white-space: nowrap; }
+  .includes ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 22px; }
+  .includes li { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; color: var(--ink); }
+  .includes li i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--forest-800); color: #fff; flex: none; }
+
+  /* ---------- Tabela comparativa ---------- */
+  .compare { max-width: 1040px; margin: 0 auto; background: var(--paper); border: 1px solid var(--line); border-radius: 28px; overflow: hidden; }
+  .compare table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .compare th, .compare td { padding: 18px 24px; text-align: center; border-bottom: 1px solid var(--line); }
+  .compare tr:last-child td { border-bottom: 0; }
+  .compare th:first-child, .compare td:first-child { text-align: left; color: var(--ink); font-weight: 500; }
+  .compare thead th { padding: 26px 24px 22px; vertical-align: bottom; background: var(--canvas); }
+  .compare thead th span { display: block; font-size: 18px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink-deep); }
+  .compare thead th small { display: block; margin-top: 4px; font-size: 13.5px; font-weight: 500; color: var(--ink-3); }
+  .compare .col-hl { background: rgba(15,163,110,.06); }
+  .compare thead .col-hl { background: var(--forest-800); }
+  .compare thead .col-hl span { color: #fff; }
+  .compare thead .col-hl small { color: rgba(255,255,255,.7); }
+  .compare .group td { padding: 14px 24px; background: var(--canvas); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); text-align: left; }
+  .compare .yes { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--mint-150); color: var(--forest-800); }
+  .compare .col-hl .yes { background: var(--forest-800); color: #fff; }
+  .compare .no { display: inline-block; width: 14px; height: 2px; border-radius: 2px; background: var(--line-strong); vertical-align: middle; }
+  .compare .txt { font-weight: 600; color: var(--ink-deep); }
+  .compare-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .compare-scroll table { min-width: 640px; }
+
+  .hero-actions { margin-top: 36px; display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap; }
+
+  @media (max-width: 960px) {
+    .includes { grid-template-columns: 1fr; gap: 14px; margin-top: 48px; }
+  }
+  @media (max-width: 560px) {
+    .compare { border-radius: 22px; }
+    /* as 4 colunas cabem na tela, sem rolagem lateral */
+    .compare-scroll table { min-width: 0; table-layout: fixed; }
+    .compare th, .compare td { padding: 13px 4px; font-size: 13px; }
+    .compare th:first-child, .compare td:first-child { width: 31%; padding-left: 14px; }
+    .compare thead th { padding: 16px 4px 14px; }
+    .compare thead th span { font-size: 12.5px; letter-spacing: -0.01em; }
+    .compare thead th small { font-size: 11px; }
+    .compare thead th:first-child small { display: none; }
+    .compare .group td { padding: 12px 14px; font-size: 11px; }
+    .compare .yes { width: 22px; height: 22px; }
+    .compare .txt { font-size: 12.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="edge-blur" aria-hidden="true"></div>
+
+<!-- Nav -->
+<div class="wrap nav-shell">
+  <nav class="nav" id="nav" aria-label="Principal">
+    <a href="index.html" class="brand" aria-label="Muito Mais — início">
+      <svg width="30" height="30" viewBox="0 0 80 80" fill="none" aria-hidden="true"><defs><linearGradient id="mm-icon" x1="40" y1="0" x2="40" y2="80" gradientUnits="userSpaceOnUse"><stop stop-color="#065F46"/><stop offset=".55" stop-color="#0FA36E"/><stop offset="1" stop-color="#47D398"/></linearGradient></defs><rect width="80" height="80" rx="18" fill="url(#mm-icon)"/><g><circle cx="20" cy="14" r="7.2" fill="#fff"/><rect x="14.2" y="20" width="11.6" height="46" rx="5.8" fill="#fff"/><path d="M25.2 28 C32 34 36 40 40 50" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="60" cy="14" r="7.2" fill="#fff"/><rect x="54.2" y="20" width="11.6" height="46" rx="5.8" fill="#fff"/><path d="M54.8 28 C48 34 44 40 40 50" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/></g></svg>
+      <span><span class="muito">Muito</span><span class="mais">Mais</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#como-funciona">Como funciona</a></li>
+      <li><a href="index.html#pra-quem">Pra quem é</a></li>
+      <li><a href="planos.html" aria-current="page">Planos</a></li>
+      <li><a href="index.html#faq">Dúvidas</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a class="login" href="entrar.html?tipo=loja">Sou da loja</a>
+      <a class="btn btn-primary" href="entrar.html">Começar <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#como-funciona">Como funciona</a>
+    <a href="index.html#pra-quem">Pra quem é</a>
+    <a href="planos.html">Planos</a>
+    <a href="index.html#faq">Dúvidas</a>
+    <a href="entrar.html?tipo=loja">Sou da loja</a>
+  </div>
+</div>
+
+<main>
+  <!-- Topo -->
+  <header class="p-hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Você está em" data-aos="up">
+        <a href="index.html">Início</a>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        <span>Planos</span>
+      </nav>
+      <h1 class="display" data-aos="words" style="--aos-delay: 0.1s">Planos pra sua operação</h1>
+      <p class="lead" data-aos="up" style="--aos-delay: 0.35s">Preços claros pra rede e restaurante. Sem surpresa na fatura. Escolha o plano e comece com um QR Code no cupom.</p>
+
+      <div class="plans">
+        <article class="plan" data-aos="up" style="--aos-delay: 0.4s">
+          <div class="price"><span class="cur">R$</span><span class="val">99</span><span class="cents">,00</span><span class="per">/unidade/mês</span></div>
+          <h2 class="p-name">Essencial</h2>
+          <p class="p-desc">Cashback e missões para o seu restaurante.</p>
+          <ul>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Cashback</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Missões</li>
+          </ul>
+          <a class="btn btn-soft" href="entrar.html?tipo=loja&amp;plano=essencial">Assinar</a>
+        </article>
+
+        <article class="plan featured" data-aos="up" style="--aos-delay: 0.5s">
+          <span class="badge">Mais completo</span>
+          <div class="price"><span class="cur">R$</span><span class="val">197</span><span class="cents">,00</span><span class="per">/unidade/mês</span></div>
+          <h2 class="p-name">Profissional</h2>
+          <p class="p-desc">Cashback, missões e analytics para o seu restaurante.</p>
+          <ul>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Cashback</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Missões</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Analytics</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Validação de NFC-e</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Segmentação</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>1 unidade</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>5 usuários</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>10 missões ativas</li>
+          </ul>
+          <a class="btn btn-white" href="entrar.html?tipo=loja&amp;plano=profissional">Assinar</a>
+        </article>
+
+        <article class="plan" data-aos="up" style="--aos-delay: 0.6s">
+          <span class="badge">Redes e franquias</span>
+          <div class="price"><span class="cur">R$</span><span class="val">597</span><span class="cents">,00</span><span class="per">/unidade/mês</span></div>
+          <h2 class="p-name">Redes</h2>
+          <p class="p-desc">Cashback, missões e analytics em todas as suas unidades.</p>
+          <ul>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Cashback</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Missões</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Analytics</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Validação de NFC-e</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Segmentação</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Multiunidade</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>20 usuários</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>50 missões ativas</li>
+          </ul>
+          <a class="btn btn-soft" href="entrar.html?tipo=loja&amp;plano=redes">Assinar</a>
+        </article>
+      </div>
+
+      <div class="includes" data-aos="up">
+        <b>Todos os planos</b>
+        <ul>
+          <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>QR Code no cupom</li>
+          <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Sem instalar nada no PDV</li>
+          <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Sem cartão de fidelidade</li>
+          <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Cliente começa direto pelo app</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- Comparativo -->
+  <section class="sec" id="comparar">
+    <div class="wrap">
+      <div class="sec-head center">
+        <span class="eyebrow" data-aos="up">Comparativo</span>
+        <h2 class="h2" data-aos="words">Compare os planos</h2>
+        <p class="lead" data-aos="up" style="--aos-delay: 0.2s">Tudo lado a lado, pra escolher sem dúvida.</p>
+      </div>
+
+      <div class="compare" data-aos="up">
+        <div class="compare-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col"><span>Recursos</span><small>Preço por unidade/mês</small></th>
+                <th scope="col"><span>Essencial</span><small>R$ 99,00</small></th>
+                <th scope="col" class="col-hl"><span>Profissional</span><small>R$ 197,00</small></th>
+                <th scope="col"><span>Redes</span><small>R$ 597,00</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="group"><td colspan="4">Para o cliente</td></tr>
+              <tr><td>Cashback</td><td><span class="yes" aria-label="Incluído"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></td><td class="col-hl"><span class="yes" aria-label="Incluído"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></td><td><span class="yes" aria-label="Incluído"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></td></tr>
+              <tr><td>Missões</td><td><span class="yes" aria-label="Incluído"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></td><td class="col-hl"><span class="yes" aria-label="Incluído"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></td><td><span class="yes" aria-label="Incluído"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></td></tr>
+              <tr><td>Missões ativas</td><td><span class="no" aria-label="Não informado"></span></td><td class="col-hl"><span class="txt">10</span></td><td><span class="txt">50</span></td></tr>
+              <tr class="group"><td colspan="4">Para a loja</td></tr>
+              <tr><td>Analytics</td><td><span class="no" aria-label="Não incluído"></span></td><td class="col-hl"><span class="yes" aria-label="Incluído"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></td><td><span class="yes" aria-label="Incluído"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></td></tr>
+              <tr><td>Validação de NFC-e</td><td><span class="no" aria-label="Não incluído"></span></td><td class="col-hl"><span class="yes" aria-label="Incluído"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></td><td><span class="yes" aria-label="Incluído"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></td></tr>
+              <tr><td>Segmentação de clientes</td><td><span class="no" aria-label="Não incluído"></span></td><td class="col-hl"><span class="yes" aria-label="Incluído"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></td><td><span class="yes" aria-label="Incluído"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></td></tr>
+              <tr class="group"><td colspan="4">Equipe e unidades</td></tr>
+              <tr><td>Unidades</td><td><span class="txt">1</span></td><td class="col-hl"><span class="txt">1</span></td><td><span class="txt">Multi&shy;unidade</span></td></tr>
+              <tr><td>Usuários no painel</td><td><span class="no" aria-label="Não informado"></span></td><td class="col-hl"><span class="txt">5</span></td><td><span class="txt">20</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dúvidas sobre planos -->
+  <section class="sec" id="faq">
+    <div class="wrap faq-grid">
+      <div>
+        <span class="eyebrow" data-aos="up">Dúvidas</span>
+        <h2 class="h2" data-aos="words">Sobre os planos</h2>
+        <p class="lead" data-aos="up" style="--aos-delay: 0.2s">O que mais perguntam antes de assinar.</p>
+        <div class="faq-help" data-aos="up" style="--aos-delay: 0.3s">
+          <b>Já tem conta?</b>
+          <p>Acesse o painel da loja para gerenciar unidades, usuários e missões.</p>
+          <a href="entrar.html?tipo=loja">Entrar como loja →</a>
+        </div>
+      </div>
+      <div class="faq-list" data-aos="right" style="--aos-delay: 0.1s">
+        <details open>
+          <summary>Como funciona a cobrança por unidade?<span class="pm" aria-hidden="true"></span></summary>
+          <p>O valor do plano é mensal e por unidade. Cada restaurante com o QR Code no cupom conta como uma unidade.</p>
+        </details>
+        <details>
+          <summary>Qual plano é melhor pra minha rede?<span class="pm" aria-hidden="true"></span></summary>
+          <p>Para várias unidades, o plano Redes reúne cashback, missões e analytics de todas as lojas, com até 20 usuários e 50 missões ativas.</p>
+        </details>
+        <details>
+          <summary>O que é a validação de NFC-e?<span class="pm" aria-hidden="true"></span></summary>
+          <p>É a confirmação da nota fiscal da compra. O cashback do cliente só é liberado quando a nota é confirmada. Disponível nos planos Profissional e Redes.</p>
+        </details>
+        <details>
+          <summary>Preciso instalar algo no meu sistema?<span class="pm" aria-hidden="true"></span></summary>
+          <p>Não. O QR Code vai no cupom. Sem instalar nada no PDV e sem trocar o sistema que você já usa.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="final">
+    <div class="wrap">
+      <div class="final-card" data-aos="zoom">
+        <h2 class="display" data-aos="words" style="--aos-delay: 0.2s">Seu cliente volta. <span class="hl">A gente ajuda nisso.</span></h2>
+        <p class="lead">Comece hoje: um QR Code no cupom e o cashback faz o resto.</p>
+        <div class="hero-actions">
+          <a class="btn btn-lime" href="entrar.html?tipo=loja&amp;plano=profissional">Assinar o Profissional <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn btn-ghost" href="index.html#como-funciona"><span class="play"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5v14l11-7z"/></svg></span> Ver como funciona</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <a href="index.html" class="brand" aria-label="Muito Mais — início">
+          <svg width="30" height="30" viewBox="0 0 80 80" fill="none" aria-hidden="true"><rect width="80" height="80" rx="18" fill="url(#mm-icon)"/><g><circle cx="20" cy="14" r="7.2" fill="#fff"/><rect x="14.2" y="20" width="11.6" height="46" rx="5.8" fill="#fff"/><path d="M25.2 28 C32 34 36 40 40 50" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="60" cy="14" r="7.2" fill="#fff"/><rect x="54.2" y="20" width="11.6" height="46" rx="5.8" fill="#fff"/><path d="M54.8 28 C48 34 44 40 40 50" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/></g></svg>
+          <span><span class="muito">Muito</span><span class="mais">Mais</span></span>
+        </a>
+        <p class="foot-tagline">Pessoas. Conexões. <span>Benefícios.</span></p>
+      </div>
+      <div>
+        <h4>Acessos</h4>
+        <ul>
+          <li><a href="entrar.html">Começar</a></li>
+          <li><a href="entrar.html?tipo=loja">Sou da loja</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Saiba mais</h4>
+        <ul>
+          <li><a href="index.html#como-funciona">Como funciona</a></li>
+          <li><a href="planos.html">Planos</a></li>
+          <li><a href="index.html#faq">Dúvidas</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> Muito Mais</span>
+      <span>Seu cliente volta. A gente ajuda nisso.</span>
+    </div>
+    <div class="wordmark" aria-hidden="true">MuitoMais</div>
+  </div>
+</footer>
+
+<a href="#" class="to-top" id="toTop" aria-label="Voltar ao topo">
+  <svg class="ring" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24"/></svg>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+</a>
+
+<script src="assets/pages.js"></script>
+</body>
+</html>

@@ -1,0 +1,1796 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muito Mais — Cashback direto no cupom</title>
+<meta name="description" content="Transforme cada cupom do seu restaurante em uma nova oportunidade de trazer o cliente de volta. QR Code no cupom, cashback para o cliente, sem cartão.">
+<link rel="icon" href="https://muitomais.app/brand/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Paleta original Muito Mais */
+    --forest-950: #06251d;
+    --forest-900: #0a3328;
+    --forest-800: #065f46;
+    --forest-700: #0c6b4a;
+    --green-500: #0fa36e;
+    --green-300: #47d398;
+    --mint-200: #c9f6e2;
+    --mint-150: #d7eee4;
+    --mint-50: #f4fbf8;
+    --canvas: #f8faf9;
+    --paper: #ffffff;
+    --line: #d5e3dc;
+    --line-strong: #c5d4cd;
+    --sage: #8ea59b;
+    --ink: #1f2937;
+    --ink-deep: #111827;
+    --ink-2: #4b5563;
+    --ink-3: #6b7280;
+
+    --brand-gradient: linear-gradient(180deg, #065f46 0%, #0fa36e 55%, #47d398 100%);
+
+    --radius-card: 20px;
+    --radius-panel: 28px;
+    --radius-input: 12px;
+    --radius-pill: 9999px;
+
+    --max: 1200px;
+    --gutter: 24px;
+    --font: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.56;
+    color: var(--ink);
+    background: var(--canvas);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  h1, h2, h3, h4, p { margin: 0; }
+  :focus-visible { outline: 2px solid var(--green-500); outline-offset: 3px; border-radius: 6px; }
+
+  .wrap { width: 100%; max-width: calc(var(--max) + var(--gutter) * 2); margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* ---------- Type ---------- */
+  .display {
+    font-size: clamp(44px, 7.6vw, 96px);
+    line-height: .95;
+    letter-spacing: -0.045em;
+    font-weight: 800;
+    color: var(--ink-deep);
+  }
+  .h2 {
+    font-size: clamp(34px, 4.6vw, 56px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    color: var(--ink-deep);
+  }
+  .h3 { font-size: 22px; line-height: 1.25; letter-spacing: -0.02em; font-weight: 700; color: var(--ink-deep); }
+  .lead { font-size: clamp(17px, 1.6vw, 20px); line-height: 1.5; color: var(--ink-2); letter-spacing: -0.01em; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--forest-800);
+  }
+  .eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--green-500); }
+  .accent { color: var(--green-500); }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    height: 48px; padding: 0 22px;
+    border-radius: var(--radius-pill); border: 0;
+    font-size: 15px; font-weight: 600; letter-spacing: -0.01em;
+    transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+    white-space: nowrap;
+  }
+  .btn-primary { background: var(--forest-800); color: #fff; }
+  .btn-primary:hover { background: var(--forest-700); }
+  .btn-lime { background: var(--green-300); color: var(--forest-950); }
+  .btn-lime:hover { background: #5fe0aa; }
+  .btn-ghost { background: var(--paper); color: var(--ink-deep); border: 1px solid var(--line); }
+  .btn-ghost:hover { border-color: var(--forest-800); color: var(--forest-800); }
+  .btn-outline { background: var(--paper); color: var(--ink-deep); border: 1px solid var(--line-strong); }
+  .btn-outline:hover { border-color: var(--forest-800); }
+  /* Botões com ícone: círculo encaixado dentro da pílula */
+  .btn:has(.arrow) { padding: 0 6px 0 24px; gap: 14px; }
+  .btn:has(.play) { padding: 0 24px 0 6px; gap: 12px; }
+  .hero-actions .btn { height: 54px; font-size: 15.5px; }
+  .btn .arrow {
+    width: 36px; height: 36px; border-radius: 50%; flex: none;
+    display: grid; place-items: center;
+    background: #fff; color: var(--forest-800);
+  }
+  .hero-actions .btn .arrow, .hero-actions .btn .play { width: 42px; height: 42px; }
+  .btn-lime .arrow { background: var(--forest-950); color: var(--green-300); }
+  .btn .play {
+    width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; flex: none;
+    background: var(--mint-200); color: var(--forest-800);
+  }
+
+  /* ---------- Announcement bar ---------- */
+  .announce {
+    background: var(--forest-950); color: rgba(255,255,255,.82);
+    font-size: 13.5px;
+  }
+  .announce .wrap { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 42px; padding-top: 8px; padding-bottom: 8px; text-align: center; flex-wrap: wrap; }
+  .announce .tag {
+    font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    background: var(--green-300); color: var(--forest-950);
+    padding: 3px 9px; border-radius: var(--radius-pill);
+  }
+  .announce a { color: var(--green-300); font-weight: 600; }
+  .announce a:hover { text-decoration: underline; }
+
+  /* ---------- Nav ---------- */
+  .nav-shell { position: sticky; top: 12px; z-index: 50; margin-top: 12px; }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    height: 64px; padding: 0 10px 0 20px;
+    background: rgba(255,255,255,.82);
+    backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    transition: box-shadow .25s ease;
+  }
+  .nav.scrolled { box-shadow: 0 10px 30px -18px rgba(6,37,29,.35); }
+  .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 19px; letter-spacing: -0.03em; }
+  .brand .muito { color: var(--ink-deep); }
+  .brand .mais { color: var(--green-500); }
+  .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a {
+    display: inline-flex; height: 40px; align-items: center; padding: 0 16px;
+    border-radius: var(--radius-pill); font-size: 14.5px; font-weight: 500; color: var(--ink-2);
+    transition: background-color .2s ease, color .2s ease;
+  }
+  .nav-links a:hover { background: var(--mint-50); color: var(--ink-deep); }
+  .nav-cta { display: flex; align-items: center; gap: 6px; }
+  .nav-cta .btn { height: 44px; }
+  .nav-cta .login { font-size: 14.5px; font-weight: 500; color: var(--ink-2); padding: 0 14px; }
+  .nav-cta .login:hover { color: var(--ink-deep); }
+  .menu-toggle { display: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--paper); place-items: center; }
+
+  .mobile-menu {
+    display: none; margin-top: 8px; padding: 10px;
+    background: var(--paper); border: 1px solid var(--line); border-radius: 24px;
+  }
+  .mobile-menu a { display: block; padding: 14px 16px; border-radius: 14px; font-weight: 500; }
+  .mobile-menu a:hover { background: var(--mint-50); }
+  .mobile-menu .btn { width: 100%; margin-top: 6px; }
+  .mobile-menu.open { display: block; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: clamp(56px, 9vw, 112px) 0 0; text-align: center; position: relative; }
+  .hero::before {
+    content: ""; position: absolute; inset: -140px 0 auto; height: 720px; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(600px 340px at 18% 10%, rgba(201,246,226,.9), transparent 70%),
+      radial-gradient(520px 320px at 85% 0%, rgba(215,238,228,.9), transparent 70%);
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 38px; padding: 0 16px 0 6px;
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-pill);
+    font-size: 14px; font-weight: 500; color: var(--ink-2);
+  }
+  .chip b {
+    font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    background: var(--mint-200); color: var(--forest-800); padding: 5px 10px; border-radius: var(--radius-pill);
+  }
+  .hero .display { margin: 28px auto 0; max-width: 13ch; }
+  .hero .lead { margin: 26px auto 0; max-width: 560px; }
+  .hero-actions { margin-top: 36px; display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .checks { margin: 40px auto 0; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; list-style: none; padding: 0; }
+  .checks li {
+    display: inline-flex; align-items: center; gap: 8px;
+    height: 36px; padding: 0 14px 0 8px;
+    border-radius: var(--radius-pill); background: rgba(255,255,255,.7); border: 1px solid var(--line);
+    font-size: 14px; font-weight: 500; color: var(--ink);
+  }
+  .checks li i {
+    width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--green-500); color: #fff; font-style: normal;
+  }
+
+  /* ---------- Showcase band ---------- */
+  .showcase { margin-top: clamp(56px, 7vw, 88px); }
+  .stage {
+    position: relative; overflow: hidden;
+    border-radius: 36px;
+    min-height: 620px;
+    background:
+      radial-gradient(520px 380px at 20% 85%, rgba(71,211,152,.55), transparent 70%),
+      radial-gradient(560px 420px at 82% 15%, rgba(15,163,110,.55), transparent 70%),
+      radial-gradient(700px 500px at 50% 50%, rgba(201,246,226,.35), transparent 70%),
+      linear-gradient(160deg, #065f46 0%, #0a3328 55%, #06251d 100%);
+    display: grid; place-items: center;
+    padding: 64px 24px;
+  }
+  .stage::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.09) 1px, transparent 1px);
+    background-size: 22px 22px;
+    mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  }
+  .stage-inner { text-align: left; position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 56px; }
+
+  /* Receipt */
+  .receipt {
+    width: 268px; background: #fff; color: #222;
+    padding: 26px 22px 30px;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 12px; line-height: 1.6;
+    transform: rotate(-4deg);
+    position: relative;
+    box-shadow: 0 30px 60px -25px rgba(0,0,0,.55);
+    --zig: 10px;
+    -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--zig) 100%;
+            mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--zig) 100%;
+  }
+  .receipt .r-head { text-align: center; font-weight: 700; letter-spacing: .04em; }
+  .receipt .r-sub { text-align: center; color: #777; font-size: 11px; }
+  .receipt hr { border: 0; border-top: 1px dashed #bbb; margin: 12px 0; }
+  .receipt .row { display: flex; justify-content: space-between; gap: 12px; }
+  .receipt .total { font-weight: 700; font-size: 13px; }
+  .receipt .qr-block {
+    margin-top: 14px; padding: 14px; border-radius: 10px; text-align: center;
+    background: var(--mint-50); border: 1px solid var(--mint-150);
+    font-family: var(--font);
+  }
+  .receipt .qr-block strong { display: block; font-size: 13px; color: var(--forest-800); letter-spacing: -0.01em; }
+  .receipt .qr-block span { font-size: 11px; color: var(--ink-3); }
+  .qr { --m: 5px; flex: none; width: calc(var(--m) * 21); height: calc(var(--m) * 21); margin: 10px auto; display: grid; grid-template-columns: repeat(21, var(--m)); grid-auto-rows: var(--m); }
+  .qr span { background: transparent; }
+  .qr span.on { background: var(--forest-950); }
+
+  /* Phone */
+  .phone {
+    width: 300px; padding: 10px; border-radius: 46px;
+    background: #0b1512;
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,.12) inset, 0 40px 80px -30px rgba(0,0,0,.7);
+    position: relative;
+  }
+  .screen {
+    border-radius: 37px; overflow: hidden; background: var(--canvas);
+    padding: 16px 16px 18px; min-height: 560px; position: relative;
+  }
+  .island { width: 92px; height: 26px; border-radius: 20px; background: #0b1512; margin: 0 auto 14px; }
+  .app-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .app-top .hi { font-size: 12px; color: var(--ink-3); }
+  .app-top .name { font-size: 15px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink-deep); }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--mint-200); display: grid; place-items: center; font-weight: 700; color: var(--forest-800); font-size: 13px; }
+  .balance { padding: 4px 2px 14px; }
+  .balance small { font-size: 12px; color: var(--ink-3); }
+  .balance .val { font-size: 30px; font-weight: 800; letter-spacing: -0.04em; color: var(--ink-deep); }
+  .reserved {
+    border-radius: 20px; padding: 16px; color: #fff;
+    background: linear-gradient(140deg, #065f46 0%, #0fa36e 100%);
+    position: relative; overflow: hidden;
+  }
+  .reserved::after { content: ""; position: absolute; width: 160px; height: 160px; right: -50px; top: -60px; border-radius: 50%; background: rgba(71,211,152,.35); }
+  .reserved small { font-size: 12px; opacity: .85; }
+  .reserved .val { font-size: 28px; font-weight: 800; letter-spacing: -0.04em; margin-top: 2px; position: relative; z-index: 1; }
+  .reserved .pending {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 10px;
+    font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: var(--radius-pill);
+    background: rgba(255,255,255,.18);
+  }
+  .reserved .pending::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--green-300); animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+  .activity { margin-top: 16px; }
+  .activity h5 { margin: 0 0 8px; font-size: 12px; font-weight: 600; color: var(--ink-3); }
+  .act { display: flex; align-items: center; gap: 10px; padding: 10px; background: #fff; border: 1px solid var(--line); border-radius: 14px; margin-bottom: 8px; }
+  .act .ic { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; background: var(--mint-50); color: var(--green-500); flex: none; }
+  .act .t { flex: 1; min-width: 0; }
+  .act .t b { display: block; font-size: 12.5px; font-weight: 600; color: var(--ink-deep); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .act .t span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .act .t span { font-size: 11px; color: var(--ink-3); }
+  .act .amt { font-size: 12.5px; font-weight: 700; color: var(--green-500); white-space: nowrap; }
+  .act .amt.muted { color: var(--ink-3); }
+  .scan-btn {
+    position: absolute; left: 16px; right: 16px; bottom: 18px;
+    height: 46px; border-radius: var(--radius-pill);
+    background: var(--forest-950); color: #fff; font-size: 13.5px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+
+  /* Floating toasts */
+  .toast {
+    position: absolute; z-index: 2;
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px 10px 10px; border-radius: 16px;
+    background: rgba(255,255,255,.96); color: var(--ink);
+    box-shadow: 0 20px 40px -20px rgba(0,0,0,.5);
+    font-size: 13px; white-space: nowrap;
+    animation: float 6s ease-in-out infinite;
+  }
+  .toast .ic { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: var(--green-500); color: #fff; flex: none; }
+  .toast b { display: block; font-weight: 700; color: var(--ink-deep); letter-spacing: -0.01em; }
+  .toast span { color: var(--ink-3); font-size: 12px; }
+  .toast.t1 { top: 8%; left: -196px; }
+  .toast.t2 { bottom: 4%; left: -196px; animation-delay: -3s; }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+  .scan-line {
+    position: absolute; left: 50%; top: 50%; width: 120px; height: 2px; margin-left: -60px;
+    background: linear-gradient(90deg, transparent, var(--green-300), transparent);
+  }
+  .connector { width: 80px; height: 2px; position: relative; flex: none; }
+  .connector::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(90deg, rgba(255,255,255,.55) 50%, transparent 0);
+    background-size: 10px 2px;
+    animation: dash 1s linear infinite;
+  }
+  @keyframes dash { to { background-position: 10px 0; } }
+
+  /* ---------- Como funciona: bento ---------- */
+  section { scroll-margin-top: 100px; }
+  .bento {
+    display: grid; gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) minmax(0, .95fr);
+    grid-template-areas: "title title phone" "s1 s2 phone" "s3 s4 phone";
+    grid-template-rows: auto minmax(220px, auto) minmax(220px, auto);
+  }
+  .b-card { position: relative; border-radius: 28px; background: var(--paper); border: 1px solid var(--line); overflow: hidden; }
+  .b-title { grid-area: title; padding: clamp(32px, 4vw, 52px); }
+  .b-title .h2 { margin-top: 16px; font-size: clamp(36px, 4.6vw, 60px); }
+  .b-title .lead { margin-top: 18px; max-width: 460px; }
+  .b-stat { padding: 30px 30px 28px; display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; }
+  .b-stat:nth-of-type(2) { grid-area: s1; } .b-stat:nth-of-type(3) { grid-area: s2; }
+  .b-stat:nth-of-type(4) { grid-area: s3; } .b-stat:nth-of-type(5) { grid-area: s4; }
+  .b-stat .num {
+    display: flex; align-items: flex-start; gap: 6px;
+    font-size: clamp(56px, 5.6vw, 80px); line-height: .85; font-weight: 800; letter-spacing: -0.06em; color: var(--ink-deep);
+  }
+  .b-stat .num::after { content: ""; width: 10px; height: 10px; margin-top: 8px; border-radius: 50%; background: var(--green-500); }
+  .b-stat p { margin-top: 22px; color: var(--ink-2); font-size: 15px; line-height: 1.5; max-width: 26ch; }
+  .b-stat.is-dark { background: linear-gradient(160deg, #0a3328, #06251d); border-color: transparent; }
+  .b-stat.is-dark .num { color: #fff; } .b-stat.is-dark .num::after { background: var(--green-300); }
+  .b-stat.is-dark p { color: rgba(255,255,255,.7); }
+  .b-stat.mint { background: var(--mint-50); border-color: var(--mint-150); }
+  .b-phone {
+    grid-area: phone; min-height: 0; border: 0; color: #fff; gap: 16px;
+    display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 26px 24px 28px;
+    background:
+      linear-gradient(118deg, transparent 38%, rgba(71,211,152,.14) 52%, transparent 70%),
+      radial-gradient(420px 320px at 90% 0%, rgba(15,163,110,.45), transparent 70%),
+      radial-gradient(360px 300px at 0% 100%, rgba(12,107,74,.4), transparent 70%),
+      linear-gradient(165deg, #0a3328 0%, #06251d 55%, #03140f 100%);
+  }
+  .b-phone::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px); background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 15%, transparent 70%); mask-image: radial-gradient(ellipse at 50% 50%, #000 15%, transparent 70%);
+  }
+  .b-tag {
+    position: relative; z-index: 1; align-self: flex-start;
+    display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px; border-radius: var(--radius-pill);
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); font-size: 13px; font-weight: 600;
+  }
+  .b-tag i { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--green-300); color: var(--forest-950); }
+  .bento-slot { height: clamp(360px, 44vw, 470px); aspect-ratio: 260 / 540; flex: none; }
+  .b-cap { position: relative; z-index: 1; align-self: flex-start; font-size: 18px; letter-spacing: -0.02em; color: rgba(255,255,255,.7); }
+  .b-cap b { color: var(--green-300); font-weight: 700; }
+  .s3d-sec { padding-top: clamp(56px, 7vw, 96px); }
+  @media (max-width: 960px) {
+    .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "phone phone" "title title" "s1 s2" "s3 s4"; grid-template-rows: auto auto auto auto; }
+    .bento-slot { height: 440px; }
+  }
+  @media (max-width: 560px) {
+    .bento { gap: 10px; }
+    .b-card { border-radius: 22px; }
+    .b-stat { padding: 20px 18px; min-height: 0; }
+    .b-stat .num { font-size: 46px; }
+    .b-stat p { margin-top: 14px; font-size: 13.5px; }
+    .bento-slot { height: 400px; }
+  }
+
+  /* ---------- Section heads ---------- */
+  .sec { padding: clamp(88px, 11vw, 140px) 0 0; }
+  .sec-head { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 48px; }
+  .sec-head .left { max-width: 640px; }
+  .sec-head .h2 { margin-top: 16px; }
+  .sec-head .lead { max-width: 420px; }
+  .sec-head.center { flex-direction: column; align-items: center; text-align: center; }
+  .sec-head.center .lead { max-width: 560px; }
+
+  /* ---------- Peças das telas (visor de QR etc.) ---------- */
+  .mini-card {
+    position: relative; background: #fff; border: 1px solid var(--line); border-radius: 22px;
+    padding: 22px; width: 100%; max-width: 340px;
+    box-shadow: 0 24px 48px -32px rgba(6,37,29,.45);
+  }
+  .mini-card .label { font-size: 12px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
+  .mini-card .title { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink-deep); margin-top: 4px; }
+  .mini-qr { display: flex; gap: 18px; align-items: center; margin-top: 16px; padding: 12px; border-radius: 18px; background: var(--mint-50); border: 1px dashed var(--line-strong); }
+  .mini-qr .qr-tile { flex: none; padding: 10px; border-radius: 12px; background: #fff; border: 1px solid var(--line); }
+  .mini-qr .qr { --m: 4px; margin: 0; }
+  .mini-qr p { font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+  .mini-qr p b { display: block; font-size: 15px; margin-bottom: 2px; letter-spacing: -0.01em; }
+  .mini-qr p b { color: var(--forest-800); }
+  .viewfinder {
+    position: relative; margin: 16px auto 0; width: 180px; height: 180px; border-radius: 24px;
+    background: var(--forest-950); display: grid; place-items: center; overflow: hidden;
+  }
+  .viewfinder .qr { --m: 4px; filter: invert(1) hue-rotate(180deg); opacity: .9; }
+  .viewfinder .corner { position: absolute; width: 28px; height: 28px; border: 3px solid var(--green-300); }
+  .viewfinder .c1 { top: 18px; left: 18px; border-right: 0; border-bottom: 0; border-radius: 10px 0 0 0; }
+  .viewfinder .c2 { top: 18px; right: 18px; border-left: 0; border-bottom: 0; border-radius: 0 10px 0 0; }
+  .viewfinder .c3 { bottom: 18px; left: 18px; border-right: 0; border-top: 0; border-radius: 0 0 0 10px; }
+  .viewfinder .c4 { bottom: 18px; right: 18px; border-left: 0; border-top: 0; border-radius: 0 0 10px 0; }
+  .viewfinder .beam { position: absolute; left: 22px; right: 22px; height: 2px; background: var(--green-300); box-shadow: 0 0 16px 2px rgba(71,211,152,.7); animation: beam 2.2s ease-in-out infinite; }
+  @keyframes beam { 0%,100% { top: 30px; } 50% { top: 148px; } }
+  .status-list { margin-top: 16px; display: grid; gap: 10px; }
+  .status { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--ink); }
+  .status i { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--green-500); color: #fff; flex: none; font-style: normal; }
+  .status.wait i { background: var(--mint-150); color: var(--forest-800); }
+  .credit { margin-top: 18px; padding: 16px; border-radius: 16px; background: var(--forest-950); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+  .credit small { display: block; font-size: 12px; color: rgba(255,255,255,.65); }
+  .credit b { font-size: 26px; letter-spacing: -0.04em; color: var(--green-300); }
+
+
+  /* ---------- How it works: celular 3D guiado pela rolagem ---------- */
+  .s3d { position: relative; height: 620vh; margin-top: 8px; }
+  .s3d-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; align-items: center; padding: 88px 0 24px; }
+  .s3d-card {
+    position: relative; width: 100%; height: min(100%, 760px); overflow: hidden;
+    border-radius: 36px; color: #fff;
+    background:
+      linear-gradient(118deg, transparent 38%, rgba(71,211,152,.16) 52%, rgba(15,163,110,.10) 60%, transparent 74%),
+      radial-gradient(700px 480px at 92% 0%, rgba(15,163,110,.38), transparent 70%),
+      radial-gradient(520px 420px at 0% 100%, rgba(12,107,74,.35), transparent 70%),
+      linear-gradient(160deg, #0a3328 0%, #06251d 50%, #03140f 100%);
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  }
+  .s3d-card::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px); background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(ellipse at 70% 50%, #000 20%, transparent 70%);
+            mask-image: radial-gradient(ellipse at 70% 50%, #000 20%, transparent 70%);
+  }
+
+  /* Capítulos de texto */
+  .s3d-copy { position: relative; z-index: 2; padding: clamp(28px, 4vw, 56px); }
+  /* capítulos e cartões: entrada/saída animadas pelo Motion (molas) */
+  .chapter {
+    position: absolute; left: clamp(28px, 4vw, 56px); right: 0; top: 50%;
+    transform: translateY(-50%); opacity: 0; pointer-events: none;
+  }
+  .chapter.on { pointer-events: auto; }
+  .chapter > * { display: block; will-change: transform, filter, opacity; }
+  .chapter .num { display: inline-block; }
+  .chapter .num { font-size: 13px; font-weight: 700; letter-spacing: .1em; color: var(--green-300); }
+  .chapter h3 { margin-top: 14px; font-size: clamp(32px, 4.2vw, 54px); line-height: 1.02; letter-spacing: -0.04em; font-weight: 700; color: #fff; max-width: 11ch; }
+  .chapter p { margin-top: 18px; font-size: 17px; line-height: 1.5; color: rgba(255,255,255,.66); max-width: 360px; }
+  .s3d-progress { position: absolute; left: clamp(28px, 4vw, 56px); bottom: clamp(24px, 3vw, 40px); display: flex; gap: 6px; z-index: 2; }
+  .s3d-progress span { width: 44px; height: 4px; border-radius: 4px; background: rgba(255,255,255,.14); overflow: hidden; position: relative; }
+  .s3d-progress span i { position: absolute; inset: 0; background: var(--green-300); transform-origin: left; transform: scaleX(var(--f, 0)); }
+
+  /* Cartões flutuantes de apoio */
+  .s3d-chip {
+    position: absolute; z-index: 3; display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px 10px 10px; border-radius: 16px; white-space: nowrap;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    font-size: 13px; color: rgba(255,255,255,.7);
+    opacity: 0;
+  }
+  .s3d-chip b { display: block; color: #fff; font-weight: 600; font-size: 13.5px; }
+  .s3d-chip .ic { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: var(--green-300); color: var(--forest-950); flex: none; }
+  .s3d-chip.c1 { left: 44%; top: 16%; }
+  .s3d-chip.c2 { left: 44%; bottom: 18%; }
+  .s3d-chip.c3 { right: 5%; top: 9%; }
+
+  /* Cena 3D */
+  .s3d-scene { position: relative; z-index: 1; min-height: 0; }
+  .p3d-layer { position: fixed; inset: 0; z-index: 30; pointer-events: none; perspective: 1400px; overflow: hidden; opacity: 0; visibility: hidden; transition: opacity .6s ease, visibility 0s .6s; }
+  /* só aparece depois que o JS posicionou o celular (evita ele piscar no canto ao carregar) */
+  .p3d-layer.ready { opacity: 1; visibility: visible; transition: opacity .6s ease; }
+  .phone-slot { padding: 0; background: none; box-shadow: none; aspect-ratio: 260 / 540; }
+  .p3d {
+    --w: 260px; --h: 540px; --r: 46px;
+    --lf: 1; --lb: .5;                    /* luz na frente / traseira (0–1), calculada no JS */
+    --rl: 60,80,72; --rr: 60,80,72;       /* cor do aro esquerdo / direito conforme a luz */
+    position: absolute; left: 0; top: 0; width: var(--w); height: var(--h);
+    transform-style: preserve-3d; will-change: transform; transform-origin: 50% 50%;
+  }
+  .p3d > .layer, .p3d > .front, .p3d > .back { position: absolute; inset: var(--in, 0px); border-radius: calc(var(--r) - var(--in, 0px)); }
+  /* Corpo: fatias empilhadas formam a espessura; as das pontas encolhem e criam o bisel arredondado */
+  .p3d .layer {
+    transform: translateZ(var(--z));
+    background: linear-gradient(90deg, rgb(var(--rl)) 0%, #16241f 7%, #0b1512 50%, #16241f 93%, rgb(var(--rr)) 100%);
+  }
+  .p3d .layer.edge { background: linear-gradient(90deg, rgb(var(--rl)) 0%, #1d2c27 10%, #121d19 50%, #1d2c27 90%, rgb(var(--rr)) 100%); }
+  .p3d .front, .p3d .back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+  .p3d .front {
+    transform: translateZ(9.6px); padding: 8px;
+    background: linear-gradient(145deg, #3c524a, #121c19 30%, #0a110f 70%, #34483f);
+    box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.10), inset 0 0 0 3px #040807;
+  }
+  .p3d .front::after {                      /* frente escurece quando vira contra a luz */
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 6;
+    background: #000; opacity: calc((1 - var(--lf)) * .55);
+  }
+  .p3d .back {
+    transform: translateZ(-9.6px) rotateY(180deg); overflow: hidden;
+    background:
+      radial-gradient(140% 70% at 25% 0%, rgba(120,170,150,.22), transparent 55%),
+      radial-gradient(90% 60% at 100% 100%, rgba(15,163,110,.18), transparent 60%),
+      linear-gradient(160deg, #1b322a 0%, #0f1f1a 45%, #08120f 100%);
+    box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.12), inset 0 0 18px rgba(0,0,0,.6);
+  }
+  .p3d .back::before {                      /* textura de vidro fosco */
+    content: ""; position: absolute; inset: 0; opacity: .16;
+    background-image: radial-gradient(rgba(255,255,255,.55) .6px, transparent .8px); background-size: 3px 3px;
+  }
+  .p3d .back::after {                       /* reflexo que corre pela traseira */
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2;
+    background: linear-gradient(calc(var(--sh, 0) * -1deg + 120deg), transparent 30%, rgba(255,255,255,.16) 46%, rgba(255,255,255,.04) 54%, transparent 64%);
+  }
+  .p3d .back .shade { position: absolute; inset: 0; background: #000; opacity: calc((1 - var(--lb)) * .55); z-index: 3; }
+  /* Módulo da câmera em relevo (3D de verdade, sai da traseira) */
+  .p3d .bump { position: absolute; left: 132px; top: 16px; width: 112px; height: 112px; transform-style: preserve-3d; }
+  .p3d .bump > * { position: absolute; }
+  .p3d .bump .bs {                          /* fatias = laterais do módulo, com a luz dos aros */
+    inset: var(--in, 0px); border-radius: calc(32px - var(--in, 0px)); transform: translateZ(var(--z));
+    background: linear-gradient(90deg, rgb(var(--rr)) 0%, #17251f 14%, #0c1613 50%, #17251f 86%, rgb(var(--rl)) 100%);
+  }
+  .p3d .bump .bt {                          /* topo do módulo, virado para trás */
+    inset: 1.2px; border-radius: 31px; transform: translateZ(-13.6px) rotateY(180deg);
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    background:
+      radial-gradient(120% 90% at 25% 10%, rgba(140,190,170,.28), transparent 55%),
+      linear-gradient(145deg, #2c433a 0%, #15261f 45%, #0a1411 100%);
+    box-shadow: inset 0 1.5px 0 rgba(255,255,255,.22), inset 0 -2px 4px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.07);
+  }
+  .p3d .bump .bt::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: #000; opacity: calc((1 - var(--lb)) * .5); }
+  .p3d .bump .seat {                        /* base escura onde cada lente encaixa */
+    position: absolute; width: 46px; height: 46px; border-radius: 50%;
+    background: radial-gradient(circle, #050807 60%, #1d2b26 72%, #0a110e 100%);
+    box-shadow: 0 0 0 1px rgba(255,255,255,.08), inset 0 2px 3px rgba(0,0,0,.7);
+  }
+  .p3d .bump .barrel {                      /* cilindro da lente (anel metálico) */
+    width: 46px; height: 46px; border-radius: 50%; transform: translateZ(var(--z));
+    background: radial-gradient(circle, #0b1210 0 56%, rgb(var(--rl)) 64%, #26362f 76%, rgb(var(--rr)) 92%, #0d1512 100%);
+  }
+  .p3d .bump .lens3d {                      /* vidro da lente, no topo do cilindro */
+    width: 42px; height: 42px; border-radius: 50%;
+    transform: translateZ(-16.2px) rotateY(180deg); backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    background:
+      radial-gradient(circle at 36% 32%, rgba(255,255,255,.8) 0 4%, transparent 9%),
+      radial-gradient(circle at 62% 68%, rgba(80,160,255,.38) 0 8%, transparent 18%),
+      radial-gradient(circle at 50% 50%, #1a2b4a 0 22%, #070b10 34%, #020304 58%, #1a2622 61%, #2a3b34 68%, #0c1411 74%);
+    box-shadow: inset 0 0 0 2px #2f413a, inset 0 0 0 3px #0a110e, 0 0 0 1px rgba(255,255,255,.18);
+  }
+  .p3d .bump .flash { position: absolute; bottom: 14px; right: 16px; width: 13px; height: 13px; border-radius: 50%; background: radial-gradient(circle, #fff6d8 0 30%, #b9a978 60%, #4d4632); box-shadow: 0 0 0 2px #1b2823, inset 0 1px 1px rgba(255,255,255,.6); }
+  .p3d .bump .mic { position: absolute; top: 14px; right: 22px; width: 6px; height: 6px; border-radius: 50%; background: #050807; box-shadow: 0 0 0 1px rgba(255,255,255,.12); }
+  /* Botões laterais (planos perpendiculares presos às bordas) */
+  .p3d .side-btn {
+    position: absolute; top: var(--t); width: 11px; height: var(--len); border-radius: 3px;
+    background: linear-gradient(90deg, #0f1916, rgb(var(--rc)) 50%, #0f1916);
+  }
+  .p3d .side-btn.l { left: -5.5px; transform: rotateY(-90deg) translateZ(1.6px); --rc: var(--rl); }
+  .p3d .side-btn.r { right: -5.5px; transform: rotateY(90deg) translateZ(1.6px); --rc: var(--rr); }
+  /* Vidro da tela: reflexo que acompanha o giro */
+  .p3d .sheen {
+    position: absolute; inset: 0; border-radius: 38px; pointer-events: none; z-index: 5;
+    background:
+      linear-gradient(calc(var(--sh, 0) * 1deg + 115deg), transparent 28%, rgba(255,255,255,.22) 44%, rgba(255,255,255,.05) 52%, transparent 62%),
+      linear-gradient(180deg, rgba(255,255,255,.06), transparent 30%);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), inset 0 0 22px rgba(0,0,0,.18);
+  }
+  /* Sombra projetada e brilho por trás */
+  .p3d-shadow, .p3d-glow { position: absolute; left: 0; top: 0; width: 260px; height: 540px; pointer-events: none; will-change: transform, opacity; }
+  .p3d-shadow { border-radius: 60px; background: rgba(3, 20, 15, .5); filter: blur(34px); }
+  .p3d-glow { border-radius: 50%; background: radial-gradient(closest-side, rgba(71,211,152,.42), rgba(15,163,110,.14) 60%, transparent); filter: blur(30px); }
+
+  /* Telas */
+  .p3d .glass { position: relative; width: 100%; height: 100%; border-radius: 38px; overflow: hidden; background: var(--canvas); filter: contrast(1.06) saturate(1.12); box-shadow: 0 0 0 1px #000; }
+  .scr { position: absolute; inset: 0; padding: 40px 16px 18px; color: var(--ink); opacity: 0; transition: opacity .35s ease; }
+  .scr.on { opacity: 1; }
+  .scr .isl { position: absolute; top: 11px; left: 50%; width: 86px; height: 25px; margin-left: -43px; border-radius: 20px; background: #020403; z-index: 4; }
+  .scr .isl::after { content: ""; position: absolute; right: 9px; top: 7px; width: 11px; height: 11px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #3b5a8c 0 15%, #0b1220 45%, #020304 70%); }
+  .scr .bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .scr .bar b { font-size: 15px; letter-spacing: -0.02em; color: var(--ink-deep); }
+  .scr .bar small { font-size: 12px; color: var(--ink-3); }
+  .scr .viewfinder { width: 196px; height: 196px; margin-top: 24px; }
+  .scr .hint { margin-top: 22px; text-align: center; font-size: 13px; color: var(--ink-2); }
+  .scr .hint b { display: block; font-size: 16px; color: var(--ink-deep); letter-spacing: -0.02em; }
+  .scr .pill { position: absolute; left: 16px; right: 16px; bottom: 18px; height: 44px; border-radius: 99px; background: var(--forest-950); color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: 600; }
+  .scr .reserved { margin-top: 4px; }
+  .scr .done-ic { width: 64px; height: 64px; margin: 18px auto 0; border-radius: 50%; display: grid; place-items: center; background: var(--green-500); color: #fff; box-shadow: 0 0 0 10px var(--mint-200); }
+  .scr .done-t { margin: 22px 0 18px; text-align: center; font-size: 13px; color: var(--ink-2); }
+  .scr .done-t b { display: block; font-size: 20px; letter-spacing: -0.03em; color: var(--ink-deep); }
+  .scr .receipt-row { margin-top: 12px; display: flex; justify-content: space-between; padding: 12px; border-radius: 14px; background: #fff; border: 1px solid var(--line); font-size: 12.5px; color: var(--ink-2); }
+  .scr .receipt-row b { color: var(--ink-deep); }
+  /* Tela deitada: conteúdo girado para ler na horizontal (visual claro, igual às outras telas) */
+  .scr.land { padding: 0; background: var(--canvas); color: var(--ink); }
+  .scr.land .rot {
+    position: absolute; left: 50%; top: 50%; width: 522px; height: 242px; margin: -121px 0 0 -261px;
+    transform: rotate(90deg); padding: 22px 26px 22px 46px;
+    display: grid; grid-template-columns: 1.05fr 1fr; gap: 18px; align-items: center;
+    background:
+      radial-gradient(260px 180px at 18% 30%, rgba(201,246,226,.9), transparent 70%),
+      var(--canvas);
+  }
+  .scr.land .cf { position: absolute; left: var(--x); top: var(--y); width: 9px; height: 4px; border-radius: 2px; background: var(--c); transform: rotate(var(--r)); }
+  .scr.land.on .cf { animation: cf-pop .7s cubic-bezier(.2,1.4,.4,1) both; }
+  .scr.land.on .cf:nth-child(2) { animation-delay: .08s; } .scr.land.on .cf:nth-child(3) { animation-delay: .16s; } .scr.land.on .cf:nth-child(4) { animation-delay: .24s; }
+  @keyframes cf-pop { from { opacity: 0; transform: translateY(10px) rotate(0deg) scale(.4); } }
+  .scr.land .l-main { position: relative; }
+  .scr.land .l-chip { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px 0 4px; border-radius: 99px; background: #fff; border: 1px solid var(--line); font-size: 11px; font-weight: 600; color: var(--forest-800); }
+  .scr.land .l-chip i { width: 17px; height: 17px; border-radius: 50%; display: grid; place-items: center; background: var(--green-500); color: #fff; }
+  .scr.land .l-main > small { display: block; margin-top: 12px; font-size: 12px; color: var(--ink-3); }
+  .scr.land .big { margin-top: 2px; font-size: 50px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; color: var(--green-500); font-variant-numeric: tabular-nums; }
+  .scr.land .big small { font-size: 18px; color: var(--forest-800); letter-spacing: -0.02em; margin-right: 3px; }
+  .scr.land .l-main p { margin-top: 8px; font-size: 11.5px; color: var(--ink-3); }
+  .scr.land .l-card {
+    position: relative; padding: 16px; border-radius: 20px; color: #fff;
+    background: radial-gradient(160px 120px at 100% 0%, rgba(71,211,152,.5), transparent 70%), linear-gradient(160deg, #0fa36e, #065f46);
+    box-shadow: 0 14px 24px -14px rgba(6,95,70,.8);
+  }
+  .scr.land .l-card small { font-size: 11px; color: rgba(255,255,255,.75); }
+  .scr.land .l-card b { display: block; font-size: 26px; letter-spacing: -0.04em; line-height: 1.15; }
+  .scr.land .l-up { display: inline-block; margin-top: 6px; padding: 3px 8px; border-radius: 99px; background: rgba(255,255,255,.18); font-size: 10.5px; font-weight: 700; }
+  .scr.land .l-steps { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); position: relative; }
+  .scr.land .l-steps::before { content: ""; position: absolute; left: 16%; right: 16%; top: 9px; height: 2px; background: rgba(255,255,255,.35); }
+  .scr.land .l-steps li { position: relative; display: grid; justify-items: center; gap: 4px; font-size: 10px; font-weight: 600; color: rgba(255,255,255,.85); }
+  .scr.land .l-steps i { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--forest-800); }
+  .scr.land .l-steps i svg { width: 11px; height: 11px; }
+
+  @media (max-width: 860px) {
+    .s3d { height: 620vh; }
+    .s3d-sticky { padding: 76px 0 16px; }
+    .s3d-card { grid-template-columns: 1fr; grid-template-rows: auto 1fr; border-radius: 28px; }
+    .s3d-copy { min-height: 230px; }
+    .chapter { top: 28px; transform: none; left: 24px; right: 24px; }
+    .chapter h3 { max-width: none; font-size: clamp(28px, 7.5vw, 40px); }
+    .chapter p { font-size: 15px; margin-top: 10px; }
+    .s3d-progress { left: auto; right: 24px; top: 28px; bottom: auto; }
+    .s3d-progress span { width: 22px; }
+    .s3d-chip { display: none; }
+  }
+
+  /* ---------- For whom (dark) ---------- */
+  .dark {
+    background: var(--forest-950); color: #fff;
+    border-radius: 40px; margin: clamp(88px, 11vw, 140px) 12px 0;
+    padding: clamp(72px, 9vw, 120px) 0;
+    position: relative; overflow: hidden;
+  }
+  .dark::before {
+    content: ""; position: absolute; width: 900px; height: 900px; right: -300px; top: -420px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(15,163,110,.35), transparent 62%); pointer-events: none;
+  }
+  .dark .wrap { position: relative; }
+  .dark .eyebrow { color: var(--green-300); }
+  .dark .eyebrow::before { background: var(--green-300); }
+  .dark-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .dark .h2 { color: #fff; margin-top: 18px; font-size: clamp(36px, 5.2vw, 68px); }
+  .dark .h2 em { font-style: normal; color: var(--green-300); }
+  .dark .lead { color: rgba(255,255,255,.72); margin-top: 24px; max-width: 520px; }
+  .dark .btn { margin-top: 36px; }
+  .benefits { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .benefit {
+    display: flex; gap: 18px; align-items: flex-start;
+    padding: 22px; border-radius: 22px;
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+    transition: background-color .25s ease, border-color .25s ease;
+  }
+  .benefit:hover { background: rgba(255,255,255,.07); border-color: rgba(71,211,152,.4); }
+  .benefit .ic { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: rgba(71,211,152,.14); color: var(--green-300); flex: none; }
+  .benefit h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.35; color: #fff; }
+  .benefit p { margin-top: 4px; font-size: 14.5px; color: rgba(255,255,255,.6); }
+
+  /* ---------- Pricing (painel branco + plano em destaque elevado) ---------- */
+  .plans {
+    position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch;
+    max-width: 1040px; margin: 72px auto 0;
+    background: var(--paper); border: 1px solid var(--line); border-radius: 32px;
+  }
+  .plan { position: relative; display: flex; flex-direction: column; padding: 44px 40px 40px; }
+  .plan .price { display: flex; align-items: baseline; gap: 4px; flex-wrap: wrap; }
+  .plan .price .cur { font-size: 18px; font-weight: 600; color: var(--ink-2); margin-right: 2px; }
+  .plan .price .val { font-size: 46px; font-weight: 800; letter-spacing: -0.05em; color: var(--ink-deep); line-height: 1; }
+  .plan .price .cents { margin-left: -4px; font-size: 20px; font-weight: 700; color: var(--ink-deep); letter-spacing: -0.02em; }
+  .plan .price .per { margin-left: 8px; font-size: 15px; font-weight: 500; color: var(--ink-3); }
+  .plan .p-name { margin-top: 26px; font-size: 26px; font-weight: 700; letter-spacing: -0.03em; color: var(--ink-deep); }
+  .plan .p-desc { margin-top: 10px; color: var(--ink-2); font-size: 15px; line-height: 1.5; min-height: 46px; }
+  .plan ul { list-style: none; padding: 0; margin: 24px 0 32px; display: grid; gap: 12px; flex: 1; align-content: start; }
+  .plan li { display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--ink-2); }
+  .plan li i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--mint-150); color: var(--forest-800); font-style: normal; flex: none; }
+  .plan .btn { align-self: flex-start; min-width: 190px; height: 52px; }
+  .btn-soft { background: var(--mint-50); color: var(--forest-800); border: 1px solid var(--mint-150); }
+  .btn-soft:hover { background: var(--mint-150); }
+  .btn-white { background: #fff; color: var(--forest-800); }
+  .btn-white:hover { background: var(--mint-50); }
+  .plan .badge {
+    position: absolute; top: 20px; right: 20px;
+    font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    padding: 7px 12px; border-radius: var(--radius-pill); background: var(--mint-50); color: var(--forest-800); border: 1px solid var(--mint-150);
+  }
+  /* plano em destaque: mais alto que o painel, verde da marca e sombra colorida */
+  .plan.featured {
+    margin: -48px 0 -36px; padding-top: 56px; border-radius: 30px; color: #fff; z-index: 1;
+    background:
+      radial-gradient(120% 60% at 100% 0%, rgba(71,211,152,.45), transparent 60%),
+      linear-gradient(180deg, #0fa36e 0%, #0c7d56 55%, #065f46 100%);
+    box-shadow: 0 50px 70px -40px rgba(6,95,70,.75), 0 30px 60px -30px rgba(15,163,110,.55);
+  }
+  .plan.featured .price .cur, .plan.featured .price .per { color: rgba(255,255,255,.75); }
+  .plan.featured .price .val, .plan.featured .price .cents, .plan.featured .p-name { color: #fff; }
+  .plan.featured .p-desc { color: rgba(255,255,255,.82); }
+  .plan.featured li { color: rgba(255,255,255,.92); }
+  .plan.featured li i { background: rgba(255,255,255,.22); color: #fff; }
+  .plan.featured .badge { background: rgba(255,255,255,.16); color: #fff; border-color: rgba(255,255,255,.22); }
+  .plan.featured .btn { align-self: stretch; }
+
+  .plans-more { margin-top: 64px; text-align: center; }
+  .plans-more a { display: inline-flex; gap: 8px; font-weight: 600; color: var(--forest-800); border-bottom: 1.5px solid var(--mint-150); padding-bottom: 2px; transition: border-color .2s ease; }
+  .plans-more a:hover { border-color: var(--forest-800); }
+
+  /* ---------- FAQ ---------- */
+  .faq-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .faq-grid .h2 { margin-top: 16px; }
+  .faq-grid .lead { margin-top: 20px; }
+  .faq-help { margin-top: 32px; padding: 22px; border-radius: var(--radius-card); background: var(--mint-50); border: 1px solid var(--mint-150); }
+  .faq-help b { display: block; font-weight: 700; color: var(--ink-deep); letter-spacing: -0.01em; }
+  .faq-help p { font-size: 14.5px; color: var(--ink-2); margin-top: 4px; }
+  .faq-help a { display: inline-flex; margin-top: 12px; font-weight: 600; color: var(--forest-800); font-size: 14.5px; }
+  .faq-help a:hover { text-decoration: underline; }
+  .faq-list { border-top: 1px solid var(--line-strong); }
+  .faq-list details { border-bottom: 1px solid var(--line-strong); }
+  .faq-list summary {
+    list-style: none; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; gap: 24px;
+    padding: 26px 0; font-size: clamp(17px, 1.6vw, 20px); font-weight: 600; letter-spacing: -0.02em; color: var(--ink-deep);
+  }
+  .faq-list summary::-webkit-details-marker { display: none; }
+  .faq-list summary .pm {
+    width: 36px; height: 36px; border-radius: 50%; flex: none; position: relative;
+    border: 1px solid var(--line-strong); transition: background-color .2s ease, border-color .2s ease, transform .3s ease;
+  }
+  .faq-list summary .pm::before, .faq-list summary .pm::after {
+    content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.8px; margin: -0.9px 0 0 -6px; background: var(--ink-deep); border-radius: 2px;
+    transition: transform .3s ease, background-color .2s ease;
+  }
+  .faq-list summary .pm::after { transform: rotate(90deg); }
+  .faq-list details[open] summary .pm { background: var(--forest-800); border-color: var(--forest-800); }
+  .faq-list details[open] summary .pm::before, .faq-list details[open] summary .pm::after { background: #fff; }
+  .faq-list details[open] summary .pm::after { transform: rotate(0deg); }
+  .faq-list summary:hover .pm { border-color: var(--forest-800); }
+  .faq-list details p { padding: 0 60px 28px 0; color: var(--ink-2); font-size: 16.5px; max-width: 620px; }
+
+  /* ---------- Final CTA ---------- */
+  .final { padding: clamp(88px, 11vw, 140px) 0 0; }
+  .final-card {
+    position: relative; overflow: hidden; text-align: center;
+    border-radius: 40px; padding: clamp(64px, 9vw, 112px) 24px;
+    background:
+      radial-gradient(500px 320px at 15% 110%, rgba(71,211,152,.6), transparent 70%),
+      radial-gradient(520px 340px at 90% -10%, rgba(15,163,110,.7), transparent 70%),
+      linear-gradient(160deg, #065f46, #06251d);
+    color: #fff;
+  }
+  .final-card .display { color: #fff; font-size: clamp(42px, 7vw, 88px); max-width: 14ch; margin: 0 auto; }
+  .final-card .display .hl { color: var(--green-300); }
+  .final-card .lead { color: rgba(255,255,255,.75); margin: 24px auto 0; max-width: 520px; }
+  .final-card .hero-actions .btn-ghost { color: #fff; background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.2); }
+  .final-card .hero-actions .btn-ghost:hover { color: var(--green-300); border-color: var(--green-300); }
+  .final-card .hero-actions .btn-ghost .play { background: rgba(255,255,255,.12); color: var(--green-300); }
+
+  /* ---------- Footer ---------- */
+  footer { margin-top: clamp(88px, 11vw, 140px); background: var(--forest-950); color: rgba(255,255,255,.7); padding: 72px 0 32px; }
+  .foot-top { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 48px; }
+  footer .brand .muito { color: #fff; }
+  footer .brand .mais { color: var(--green-300); }
+  .foot-tagline { margin-top: 18px; font-size: 26px; line-height: 1.2; letter-spacing: -0.03em; font-weight: 600; color: #fff; max-width: 360px; }
+  .foot-tagline span { color: var(--green-300); }
+  footer h4 { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.45); margin-bottom: 16px; }
+  footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  footer ul a { font-size: 15px; color: rgba(255,255,255,.8); }
+  footer ul a:hover { color: var(--green-300); }
+  .foot-bottom { margin-top: 64px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.1); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13.5px; color: rgba(255,255,255,.5); }
+  .wordmark { margin-top: 56px; font-size: clamp(64px, 17vw, 240px); line-height: .8; font-weight: 800; letter-spacing: -0.06em; color: rgba(255,255,255,.05); white-space: nowrap; user-select: none; overflow: hidden; }
+
+  /* ---------- Âncora: voltar ao topo ---------- */
+  .to-top {
+    position: fixed; right: 24px; bottom: 24px; z-index: 60;
+    width: 52px; height: 52px; border-radius: 50%; border: 0;
+    display: grid; place-items: center;
+    background: var(--forest-950); color: var(--green-300);
+    box-shadow: 0 0 0 1px rgba(71,211,152,.25), 0 16px 32px -14px rgba(6,37,29,.6);
+    opacity: 0; visibility: hidden; transform: translateY(12px) scale(.9);
+    transition: opacity .3s ease, transform .3s ease, visibility .3s, background-color .2s ease;
+  }
+  .to-top.show { opacity: 1; visibility: visible; transform: none; }
+  .to-top:hover { background: var(--forest-800); }
+  .to-top svg { transition: transform .2s ease; }
+  .to-top:hover svg { transform: translateY(-2px); }
+  .to-top .ring { position: absolute; inset: 0; transform: rotate(-90deg); }
+  .to-top .ring circle { fill: none; stroke: var(--green-300); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 151; stroke-dashoffset: 151; }
+  @media (max-width: 560px) { .to-top { right: 16px; bottom: 16px; width: 48px; height: 48px; } }
+
+  /* ---------- Animate on scroll (PrimeVue v-animateonscroll) ---------- */
+  /* esconde até o Vue montar (evita piscar); volta ao normal se o CDN falhar */
+  [v-animateonscroll] { opacity: 0; }
+  .no-aos [v-animateonscroll] { opacity: 1; }
+  .aos-in {
+    animation: aos-in .9s cubic-bezier(.2,.7,.2,1) both;
+    animation-delay: var(--aos-delay, 0s);
+  }
+  .aos-up { --aos-y: 36px; }
+  .aos-left { --aos-x: -48px; }
+  .aos-right { --aos-x: 48px; }
+  .aos-zoom { --aos-y: 40px; --aos-s: .94; }
+  .aos-out { animation: aos-out .15s ease-out both; }
+  @keyframes aos-in {
+    from { opacity: 0; filter: blur(14px); transform: translate3d(var(--aos-x, 0), var(--aos-y, 0), 0) scale(var(--aos-s, 1)); }
+    to { opacity: 1; filter: blur(0); transform: none; }
+  }
+
+  /* Hero: anima no carregamento via CSS (não depende do Vue/CDN) */
+  .hero [data-load] { animation: aos-in .9s cubic-bezier(.2,.7,.2,1) both; animation-delay: var(--aos-delay, 0s); }
+  .hero [data-load="up"] { --aos-y: 36px; }
+  .hero [data-load="zoom"] { --aos-y: 40px; --aos-s: .94; }
+  .hero [data-load="words"] { animation: none; }
+  .hero [data-load="words"] .w {
+    display: inline-block; animation: aos-word .9s cubic-bezier(.2,.7,.2,1) both;
+    animation-delay: calc(var(--aos-delay, 0s) + var(--i) * 75ms);
+  }
+
+  /* Títulos palavra por palavra (desfoque → nítido), como na referência */
+  .aos-words { animation: aos-hold var(--aos-total, 1.2s) linear both; }
+  .aos-words .w {
+    display: inline-block;
+    animation: aos-word .9s cubic-bezier(.2,.7,.2,1) both;
+    animation-delay: calc(var(--aos-delay, 0s) + var(--i) * 75ms);
+  }
+  @keyframes aos-word {
+    from { opacity: 0; filter: blur(12px); transform: translateY(.3em); }
+    40% { opacity: .35; }
+    to { opacity: 1; filter: blur(0); transform: none; }
+  }
+  @keyframes aos-hold { from { opacity: 1; } to { opacity: 1; } }
+
+  /* Desfoque progressivo no topo (conteúdo some sob o menu) */
+  .edge-blur {
+    position: fixed; top: 0; left: 0; right: 0; height: 120px; z-index: 40; pointer-events: none;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    background: linear-gradient(rgba(248,250,249,.75), rgba(248,250,249,0));
+    -webkit-mask-image: linear-gradient(#000 35%, transparent);
+            mask-image: linear-gradient(#000 35%, transparent);
+    opacity: 0; transition: opacity .3s ease;
+  }
+  .scrolled-page .edge-blur { opacity: 1; }
+
+  /* Hero: vitrine cresce e as peças se encaixam conforme a rolagem */
+  .stage { transform: scale(calc(.86 + .14 * var(--p, 1))); transform-origin: 50% 0; }
+  .receipt { transform: translateY(calc((1 - var(--p, 1)) * 80px)) rotate(calc(-4deg - (1 - var(--p, 1)) * 8deg)); }
+  .phone { transform: translateY(calc((1 - var(--p, 1)) * -40px)); }
+  @keyframes aos-out { to { opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1080px) {
+    .toast { display: none; }
+  }
+  @media (max-width: 960px) {
+    .nav-links, .nav-cta .login { display: none; }
+    .menu-toggle { display: grid; }
+    .sec-head { flex-direction: column; align-items: start; gap: 20px; }
+    .dark-grid, .faq-grid { grid-template-columns: 1fr; }
+    .plans { grid-template-columns: 1fr; max-width: 520px; margin: 48px auto 0; background: none; border: 0; gap: 16px; }
+    .plan { background: var(--paper); border: 1px solid var(--line); border-radius: 28px; }
+    .plan.featured { margin: 0; border: 0; }
+    .plan .btn, .plan.featured .btn { align-self: stretch; }
+    .foot-top { grid-template-columns: 1fr 1fr; }
+    .foot-top > :first-child { grid-column: 1 / -1; }
+    .stage-inner { gap: 20px; }
+    .receipt { width: 220px; }
+    .connector { width: 32px; }
+    .phone { width: 280px; }
+  }
+  @media (max-width: 600px) {
+    .stage { min-height: 0; padding: 48px 16px 56px; border-radius: 28px; }
+    .stage-inner { flex-direction: column; gap: 0; }
+    .connector { display: none; }
+    .receipt { transform: translateY(calc((1 - var(--p, 1)) * 60px)) rotate(calc(-3deg - (1 - var(--p, 1)) * 6deg)); margin-bottom: -60px; z-index: 0; width: 240px; }
+    .phone { width: 280px; z-index: 1; }
+    .toast { display: none; }
+  }
+  @media (max-width: 560px) {
+    :root { --gutter: 16px; }
+    .announce .tag { display: none; }
+    .announce .wrap { gap: 6px; font-size: 12px; min-height: 36px; padding-top: 6px; padding-bottom: 6px; }
+    .chip b { display: none; }
+    .chip { padding: 0 14px; font-size: 13px; }
+    .nav { padding: 0 6px 0 16px; height: 60px; }
+    .nav-cta .btn { height: 44px; padding: 0 16px; }
+    .nav-cta .btn .arrow { display: none; }
+    .announce .wrap { font-size: 12.5px; gap: 8px; }
+    .hero-actions { flex-direction: column; align-items: stretch; }
+    .hero-actions .btn { width: 100%; }
+    .checks li { font-size: 13px; }
+    .dark { margin-left: 8px; margin-right: 8px; border-radius: 28px; }
+    .plan { padding: 32px 24px 28px; }
+    .plan.featured { padding-top: 40px; }
+    .plan .badge { position: static; align-self: flex-start; margin-bottom: 16px; }
+    .faq-list details p { padding-right: 0; }
+    .final-card { border-radius: 28px; }
+    .foot-top { grid-template-columns: 1fr 1fr; gap: 36px; }
+  }
+</style>
+<script>
+  // ao atualizar, sempre começa do topo (o navegador não restaura a rolagem nem pula para #âncoras)
+  // vindo de outra página com #âncora (ex.: planos.html → index.html#faq), rola até a seção depois que tudo monta
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const navType = (performance.getEntriesByType('navigation')[0] || {}).type;
+  const jumpTo = navType !== 'reload' && location.hash.length > 1 ? location.hash : '';
+  if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  window.scrollTo(0, 0);
+  addEventListener('pageshow', () => { if (!jumpTo) window.scrollTo(0, 0); });
+  if (jumpTo) addEventListener('load', () => setTimeout(() => {
+    const el = document.querySelector(jumpTo);
+    if (el) { window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - 100, behavior: 'instant' }); history.replaceState(null, '', jumpTo); }
+  }, 350));
+</script>
+<noscript><style>[v-animateonscroll] { opacity: 1 !important; }</style></noscript>
+</head>
+<body>
+<div class="edge-blur" aria-hidden="true"></div>
+
+<!-- Announcement -->
+<div class="announce">
+  <div class="wrap">
+    <span class="tag">Profissional</span>
+    <span>Validação de NFC-e e segmentação de clientes.</span>
+    <a href="planos.html">Ver planos →</a>
+  </div>
+</div>
+
+<!-- Nav -->
+<div class="wrap nav-shell">
+  <nav class="nav" id="nav" aria-label="Principal">
+    <a href="#" class="brand" aria-label="Muito Mais — início">
+      <svg width="30" height="30" viewBox="0 0 80 80" fill="none" aria-hidden="true"><defs><linearGradient id="mm-icon" x1="40" y1="0" x2="40" y2="80" gradientUnits="userSpaceOnUse"><stop stop-color="#065F46"/><stop offset=".55" stop-color="#0FA36E"/><stop offset="1" stop-color="#47D398"/></linearGradient></defs><rect width="80" height="80" rx="18" fill="url(#mm-icon)"/><g><circle cx="20" cy="14" r="7.2" fill="#fff"/><rect x="14.2" y="20" width="11.6" height="46" rx="5.8" fill="#fff"/><path d="M25.2 28 C32 34 36 40 40 50" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="60" cy="14" r="7.2" fill="#fff"/><rect x="54.2" y="20" width="11.6" height="46" rx="5.8" fill="#fff"/><path d="M54.8 28 C48 34 44 40 40 50" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/></g></svg>
+      <span><span class="muito">Muito</span><span class="mais">Mais</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#como-funciona">Como funciona</a></li>
+      <li><a href="#pra-quem">Pra quem é</a></li>
+      <li><a href="planos.html">Planos</a></li>
+      <li><a href="#faq">Dúvidas</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a class="login" href="entrar.html?tipo=loja">Sou da loja</a>
+      <a class="btn btn-primary" href="entrar.html">Começar <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#pra-quem">Pra quem é</a>
+    <a href="planos.html">Planos</a>
+    <a href="#faq">Dúvidas</a>
+    <a href="entrar.html?tipo=loja">Sou da loja</a>
+  </div>
+</div>
+
+<main>
+  <!-- Hero -->
+  <header class="hero">
+    <div class="wrap">
+      <span class="chip" data-load="up"><b>Para restaurantes</b> Fidelização sem cartão e sem app no PDV</span>
+      <h1 class="display" data-load="words" style="--aos-delay: 0.08s">Cashback direto no cupom do <span class="accent">seu restaurante.</span></h1>
+      <p class="lead" data-load="up" style="--aos-delay: 0.16s">Transforme cada cupom em uma nova oportunidade de trazer seu cliente de volta.</p>
+      <div class="hero-actions" data-load="up" style="--aos-delay: 0.24s">
+        <a class="btn btn-primary" href="entrar.html">Começar agora <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="btn btn-ghost" href="#como-funciona"><span class="play"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span> Ver como funciona</a>
+      </div>
+      <ul class="checks" data-load="up" style="--aos-delay: 0.32s">
+        <li><i><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>QR Code no cupom</li>
+        <li><i><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Cashback para o cliente</li>
+        <li><i><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Confirmação simples da compra</li>
+        <li><i><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Sem cartão</li>
+      </ul>
+    </div>
+
+    <!-- Showcase -->
+    <div class="wrap showcase">
+      <div class="stage" aria-label="Exemplo: cupom com QR Code e app do cliente mostrando o cashback">
+        <div class="stage-inner">
+          <div class="receipt" aria-hidden="true">
+            <div class="r-head">RESTAURANTE DO BAIRRO</div>
+            <div class="r-sub">CUPOM FISCAL · NFC-e</div>
+            <hr>
+            <div class="row"><span>1x Prato executivo</span><span>38,90</span></div>
+            <div class="row"><span>1x Suco natural</span><span>12,00</span></div>
+            <div class="row"><span>1x Sobremesa</span><span>14,50</span></div>
+            <hr>
+            <div class="row total"><span>TOTAL</span><span>R$ 65,40</span></div>
+            <div class="qr-block">
+              <strong>Ganhe cashback</strong>
+              <div class="qr" data-seed="7"></div>
+              <span>Escaneie com a câmera</span>
+            </div>
+          </div>
+
+          <div class="connector" aria-hidden="true"></div>
+
+          <div class="phone phone-slot" id="heroSlot" aria-hidden="true">
+            <div class="toast t1"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg></span><div><b>Cupom escaneado</b><span>Agora mesmo</span></div></div>
+            <div class="toast t2"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><div><b>Crédito confirmado</b><span>+R$ 12,40 no seu saldo</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Como funciona: bloco bento (título + números + celular) -->
+  <section data-vue class="sec bento-sec" id="como-funciona">
+    <div class="wrap bento">
+      <div class="b-card b-title" v-animateonscroll="up">
+        <span class="eyebrow">Como funciona</span>
+        <h2 class="h2">Em 3 passos.<br>Sem enrolação.</h2>
+        <p class="lead">Pequeno, claro e rápido. Do cupom impresso ao cashback na conta do cliente.</p>
+      </div>
+
+      <div class="b-card b-stat is-dark" v-animateonscroll="up" style="--aos-delay: 0.05s">
+        <div class="num">1</div><p>QR Code impresso no cupom. É tudo o que o restaurante precisa.</p>
+      </div>
+      <div class="b-card b-stat" v-animateonscroll="up" style="--aos-delay: 0.1s">
+        <div class="num">3</div><p>Passos para o cliente: escanear, registrar e receber.</p>
+      </div>
+      <div class="b-card b-stat mint" v-animateonscroll="up" style="--aos-delay: 0.15s">
+        <div class="num">0</div><p>Instalações no PDV. Continue com o sistema que você já usa.</p>
+      </div>
+      <div class="b-card b-stat" v-animateonscroll="up" style="--aos-delay: 0.2s">
+        <div class="num">0</div><p>Cartões de fidelidade. O cliente começa direto pelo app.</p>
+      </div>
+
+      <div class="b-card b-phone" v-animateonscroll="up" style="--aos-delay: 0.1s">
+        <span class="b-tag"><i><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i> App Muito Mais</span>
+        <div class="bento-slot" id="bentoSlot" aria-hidden="true"></div>
+        <p class="b-cap">Do cupom ao cashback, <b>em segundos.</b></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Os 3 passos: celular 3D guiado pela rolagem -->
+  <section data-vue class="sec s3d-sec" id="passos">
+    <div class="wrap">
+      <div class="s3d" id="s3d">
+        <div class="s3d-sticky">
+          <div class="s3d-card">
+            <div class="s3d-copy">
+              <div class="chapter on" data-ch="0">
+                <span class="num">01 / 03</span>
+                <h3>Adicione o QR Code ao cupom</h3>
+                <p>Imprima o QR Code no cupom do restaurante. O cliente escaneia na hora.</p>
+              </div>
+              <div class="chapter" data-ch="1">
+                <span class="num">02 / 03</span>
+                <h3>Seu cliente escaneia e registra a compra</h3>
+                <p>Ele aponta a câmera, registra e já vê o cashback reservado.</p>
+              </div>
+              <div class="chapter" data-ch="2">
+                <span class="num">03 / 03</span>
+                <h3>Compra confirmada. Cashback liberado.</h3>
+                <p>Quando a nota é confirmada, o cashback cai na conta do cliente.</p>
+              </div>
+              <div class="s3d-progress" aria-hidden="true"><span><i></i></span><span><i></i></span><span><i></i></span></div>
+            </div>
+
+            <div class="s3d-scene" aria-hidden="true"></div>
+
+            <div class="s3d-chip c1" data-chip="0"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg></span><div><b>QR no cupom</b>Sem instalar nada no PDV</div></div>
+            <div class="s3d-chip c2" data-chip="1"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><b>R$ 12,40 reservado</b>Aguardando a nota</div></div>
+            <div class="s3d-chip c3" data-chip="2"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><div><b>Nota confirmada</b>Crédito na conta do cliente</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- For whom -->
+  <section data-vue class="dark" id="pra-quem">
+    <div class="wrap dark-grid">
+      <div>
+        <span class="eyebrow" v-animateonscroll="up">Pra quem é</span>
+        <h2 class="h2" v-animateonscroll="words">Feito para restaurantes que querem <em>mais clientes de volta.</em></h2>
+        <p class="lead" v-animateonscroll="up" style="--aos-delay: 0.3s">Se você já atende bem e quer o cliente repetindo, o Muito Mais ajuda a dar um motivo a mais para a próxima visita.</p>
+        <a class="btn btn-lime" v-animateonscroll="up" style="--aos-delay: 0.4s" href="entrar.html">Quero começar <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      </div>
+      <ul class="benefits">
+        <li class="benefit" v-animateonscroll="right">
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></span>
+          <div><h3>Motive quem já gosta de você a voltar mais vezes</h3><p>Cada visita deixa um motivo para a próxima.</p></div>
+        </li>
+        <li class="benefit" v-animateonscroll="right" style="--aos-delay: 0.08s">
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18"/><path d="M4 4l16 16"/></svg></span>
+          <div><h3>Fidelize sem virar um clube com cartão</h3><p>Nada de carimbo, cartão ou cadastro longo.</p></div>
+        </li>
+        <li class="benefit" v-animateonscroll="right" style="--aos-delay: 0.16s">
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg></span>
+          <div><h3>Mostre na mesa o QR e o cliente já entende o benefício</h3><p>Comunicação simples, direto no cupom.</p></div>
+        </li>
+        <li class="benefit" v-animateonscroll="right" style="--aos-delay: 0.24s">
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+          <div><h3>Implemente cashback na operação sem treinar o time</h3><p>O QR faz o trabalho. Sua equipe segue igual.</p></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section data-vue class="sec" id="planos">
+    <div class="wrap">
+      <div class="sec-head center">
+        <span class="eyebrow" v-animateonscroll="up">Planos</span>
+        <h2 class="h2" v-animateonscroll="words">Planos pra sua operação</h2>
+        <p class="lead" v-animateonscroll="up" style="--aos-delay: 0.25s">Preços claros pra rede e restaurante. Sem surpresa na fatura.</p>
+      </div>
+
+      <div class="plans">
+        <article class="plan" v-animateonscroll="up">
+          <div class="price"><span class="cur">R$</span><span class="val">99</span><span class="cents">,00</span><span class="per">/unidade/mês</span></div>
+          <h3 class="p-name">Essencial</h3>
+          <p class="p-desc">Cashback e missões para o seu restaurante.</p>
+          <ul>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Cashback</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Missões</li>
+          </ul>
+          <a class="btn btn-soft" href="entrar.html?tipo=loja&amp;plano=essencial">Assinar</a>
+        </article>
+
+        <article class="plan featured" v-animateonscroll="up" style="--aos-delay: 0.1s">
+          <span class="badge">Mais completo</span>
+          <div class="price"><span class="cur">R$</span><span class="val">197</span><span class="cents">,00</span><span class="per">/unidade/mês</span></div>
+          <h3 class="p-name">Profissional</h3>
+          <p class="p-desc">Cashback, missões e analytics para o seu restaurante.</p>
+          <ul>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Cashback</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Missões</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Analytics</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Validação de NFC-e</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Segmentação</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>1 unidade</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>5 usuários</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>10 missões ativas</li>
+          </ul>
+          <a class="btn btn-white" href="entrar.html?tipo=loja&amp;plano=profissional">Assinar</a>
+        </article>
+
+        <article class="plan" v-animateonscroll="up" style="--aos-delay: 0.2s">
+          <span class="badge">Redes e franquias</span>
+          <div class="price"><span class="cur">R$</span><span class="val">597</span><span class="cents">,00</span><span class="per">/unidade/mês</span></div>
+          <h3 class="p-name">Redes</h3>
+          <p class="p-desc">Cashback, missões e analytics em todas as suas unidades.</p>
+          <ul>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Cashback</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Missões</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Analytics</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Validação de NFC-e</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Segmentação</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Multiunidade</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>20 usuários</li>
+            <li><i><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>50 missões ativas</li>
+          </ul>
+          <a class="btn btn-soft" href="entrar.html?tipo=loja&amp;plano=redes">Assinar</a>
+        </article>
+      </div>
+      <p class="plans-more" v-animateonscroll="up"><a href="planos.html#comparar">Comparar todos os recursos <span aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section data-vue class="sec" id="faq">
+    <div class="wrap faq-grid">
+      <div>
+        <span class="eyebrow" v-animateonscroll="up">Dúvidas</span>
+        <h2 class="h2" v-animateonscroll="words">Perguntas frequentes</h2>
+        <p class="lead" v-animateonscroll="up" style="--aos-delay: 0.2s">Tudo o que você precisa saber para começar a oferecer cashback no seu restaurante.</p>
+        <div class="faq-help" v-animateonscroll="up" style="--aos-delay: 0.3s">
+          <b>Ainda com dúvida?</b>
+          <p>Acesse a área da loja e veja como o Muito Mais se encaixa na sua operação.</p>
+          <a href="entrar.html?tipo=loja">Sou da loja →</a>
+        </div>
+      </div>
+      <div class="faq-list" v-animateonscroll="right" style="--aos-delay: 0.1s">
+        <details open>
+          <summary>Como o Muito Mais funciona para o meu restaurante?<span class="pm" aria-hidden="true"></span></summary>
+          <p>Você adiciona o QR Code no cupom. O cliente escaneia, registra a compra e recebe o cashback quando a nota é confirmada.</p>
+        </details>
+        <details>
+          <summary>Preciso instalar algum aplicativo no sistema atual?<span class="pm" aria-hidden="true"></span></summary>
+          <p>Não. O QR Code vai no cupom. Sem instalar nada no PDV e sem trocar o sistema que você já usa.</p>
+        </details>
+        <details>
+          <summary>Meu cliente precisa de cartão ou cadastro?<span class="pm" aria-hidden="true"></span></summary>
+          <p>Não. Sem cartão. O cliente começa pelo app, com o essencial.</p>
+        </details>
+        <details>
+          <summary>Funciona em qualquer restaurante?<span class="pm" aria-hidden="true"></span></summary>
+          <p>Funciona nos restaurantes parceiros do Muito Mais. A lista aparece no app.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section data-vue class="final">
+    <div class="wrap">
+      <div class="final-card" v-animateonscroll.once="zoom">
+        <h2 class="display" v-animateonscroll="words" style="--aos-delay: 0.2s">Seu cliente volta. <span class="hl">A gente ajuda nisso.</span></h2>
+        <p class="lead">Comece hoje: um QR Code no cupom e o cashback faz o resto.</p>
+        <div class="hero-actions">
+          <a class="btn btn-lime" href="entrar.html">Começar agora <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn btn-ghost" href="entrar.html?tipo=loja"><span class="play"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13"/></svg></span> Sou da loja</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <a href="#" class="brand" aria-label="Muito Mais — início">
+          <svg width="30" height="30" viewBox="0 0 80 80" fill="none" aria-hidden="true"><rect width="80" height="80" rx="18" fill="url(#mm-icon)"/><g><circle cx="20" cy="14" r="7.2" fill="#fff"/><rect x="14.2" y="20" width="11.6" height="46" rx="5.8" fill="#fff"/><path d="M25.2 28 C32 34 36 40 40 50" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="60" cy="14" r="7.2" fill="#fff"/><rect x="54.2" y="20" width="11.6" height="46" rx="5.8" fill="#fff"/><path d="M54.8 28 C48 34 44 40 40 50" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/></g></svg>
+          <span><span class="muito">Muito</span><span class="mais">Mais</span></span>
+        </a>
+        <p class="foot-tagline">Pessoas. Conexões. <span>Benefícios.</span></p>
+      </div>
+      <div>
+        <h4>Acessos</h4>
+        <ul>
+          <li><a href="entrar.html">Começar</a></li>
+          <li><a href="entrar.html?tipo=loja">Sou da loja</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Saiba mais</h4>
+        <ul>
+          <li><a href="#como-funciona">Como funciona</a></li>
+          <li><a href="planos.html">Planos</a></li>
+          <li><a href="#faq">Dúvidas</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> Muito Mais</span>
+      <span>Seu cliente volta. A gente ajuda nisso.</span>
+    </div>
+    <div class="wordmark" aria-hidden="true">MuitoMais</div>
+  </div>
+</footer>
+
+<!-- Celular 3D: começa na hero e desce até "Como funciona" (camada fixa, guiada pela rolagem) -->
+<div class="p3d-layer" id="p3dLayer" aria-hidden="true">
+  <div class="p3d-glow" id="p3dGlow"></div>
+  <div class="p3d-shadow" id="p3dShadow"></div>
+  <div class="p3d" id="p3d">
+    <div class="layer edge" style="--z: -8.6px; --in: 1.6px"></div>
+    <div class="layer edge" style="--z: -7.4px; --in: 0.6px"></div>
+    <div class="layer" style="--z: -6px"></div>
+    <div class="layer" style="--z: -4.5px"></div>
+    <div class="layer" style="--z: -3px"></div>
+    <div class="layer" style="--z: -1.5px"></div>
+    <div class="layer" style="--z: 0px"></div>
+    <div class="layer" style="--z: 1.5px"></div>
+    <div class="layer" style="--z: 3px"></div>
+    <div class="layer" style="--z: 4.5px"></div>
+    <div class="layer" style="--z: 6px"></div>
+    <div class="layer edge" style="--z: 7.4px; --in: 0.6px"></div>
+    <div class="layer edge" style="--z: 8.6px; --in: 1.6px"></div>
+    <span class="side-btn l" style="--t: 92px; --len: 26px"></span>
+    <span class="side-btn l" style="--t: 134px; --len: 46px"></span>
+    <span class="side-btn l" style="--t: 190px; --len: 46px"></span>
+    <span class="side-btn r" style="--t: 150px; --len: 70px"></span>
+
+    <div class="back">
+      <span class="shade"></span>
+    </div>
+
+    <!-- módulo da câmera em 3D: fatias dão a espessura; lentes saem um pouco mais -->
+    <div class="bump">
+      <span class="bs" style="--z: -10.2px; --in: 1.5px"></span>
+      <span class="bs" style="--z: -10.9px"></span>
+      <span class="bs" style="--z: -11.6px"></span>
+      <span class="bs" style="--z: -12.3px"></span>
+      <span class="bs" style="--z: -13.0px; --in: 0.8px"></span>
+      <div class="bt">
+        <span class="seat" style="top: 8px; left: 8px"></span><span class="seat" style="top: 58px; left: 8px"></span><span class="seat" style="top: 33px; right: 8px"></span>
+        <span class="flash"></span><span class="mic"></span>
+      </div>
+      <span class="barrel" style="left: 58px; top: 8px; --z: -14.2px"></span>
+      <span class="barrel" style="left: 58px; top: 8px; --z: -15px"></span>
+      <span class="barrel" style="left: 58px; top: 8px; --z: -15.8px"></span>
+      <span class="barrel" style="left: 58px; top: 58px; --z: -14.2px"></span>
+      <span class="barrel" style="left: 58px; top: 58px; --z: -15px"></span>
+      <span class="barrel" style="left: 58px; top: 58px; --z: -15.8px"></span>
+      <span class="barrel" style="left: 8px; top: 33px; --z: -14.2px"></span>
+      <span class="barrel" style="left: 8px; top: 33px; --z: -15px"></span>
+      <span class="barrel" style="left: 8px; top: 33px; --z: -15.8px"></span>
+      <span class="lens3d" style="left: 60px; top: 10px"></span>
+      <span class="lens3d" style="left: 60px; top: 60px"></span>
+      <span class="lens3d" style="left: 10px; top: 35px"></span>
+    </div>
+    <div class="front">
+      <div class="glass">
+        <!-- 0: carteira (hero) -->
+        <div class="scr on" data-scr="0">
+          <span class="isl"></span>
+          <div class="bar"><div><small>Olá,</small><br><b>Marina</b></div><span class="avatar">M</span></div>
+          <div class="balance"><small>Seu cashback</small><div class="val">R$ 48,30</div></div>
+          <div class="reserved">
+            <small>Cashback reservado</small>
+            <div class="val">R$ 12,40</div>
+            <span class="pending">Aguardando confirmação</span>
+          </div>
+          <div class="activity">
+            <h5>Atividade recente</h5>
+            <div class="act"><span class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><div class="t"><b>Cashback</b><span>Nota confirmada</span></div><span class="amt">+R$ 8,30</span></div>
+            </div>
+          <div class="pill"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg> Escanear cupom</div>
+        </div>
+
+        <!-- 1: escaneando -->
+        <div class="scr" data-scr="1">
+          <span class="isl"></span>
+          <div class="bar"><b>Escanear cupom</b><small>Muito Mais</small></div>
+          <div class="viewfinder">
+            <div class="qr" data-seed="11"></div>
+            <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+            <span class="beam"></span>
+          </div>
+          <div class="hint"><b>Aponte para o QR do cupom</b>O cashback fica reservado na hora.</div>
+          <div class="pill">Escaneando…</div>
+        </div>
+
+        <!-- 2: compra registrada -->
+        <div class="scr" data-scr="2">
+          <span class="isl"></span>
+          <div class="bar"><b>Compra registrada</b><small>Agora</small></div>
+          <div class="done-ic"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+          <div class="done-t"><b>Tudo certo!</b>Seu cashback já está reservado.</div>
+          <div class="reserved">
+            <small>Cashback reservado</small>
+            <div class="val">R$ 12,40</div>
+            <span class="pending">Aguardando a nota fiscal</span>
+          </div>
+          <div class="receipt-row"><span>Restaurante do Bairro</span><b>R$ 65,40</b></div>
+          <div class="pill">Ver minha carteira</div>
+        </div>
+
+        <!-- 3: liberado (deitado) — mesmo visual claro das outras telas do app -->
+        <div class="scr land" data-scr="3">
+          <div class="rot">
+            <span class="cf" style="--x:44%;--y:10%;--c:#47d398;--r:18deg"></span><span class="cf" style="--x:6%;--y:78%;--c:#ffd77a;--r:-24deg"></span>
+            <span class="cf" style="--x:38%;--y:88%;--c:#0fa36e;--r:40deg"></span><span class="cf" style="--x:3%;--y:16%;--c:#c9f6e2;--r:-8deg"></span>
+            <div class="l-main">
+              <span class="l-chip"><i><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Nota fiscal confirmada</span>
+              <small>Cashback liberado</small>
+              <div class="big"><small>+R$</small>12,40</div>
+              <p>Restaurante do Bairro · agora</p>
+            </div>
+            <div class="l-card">
+              <small>Seu saldo</small>
+              <b>R$ 60,70</b>
+              <span class="l-up">+ R$ 12,40 hoje</span>
+              <ol class="l-steps">
+                <li><i><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Compra</li>
+                <li><i><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Nota</li>
+                <li><i><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></i>Cashback</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="sheen"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a href="#" class="to-top" id="toTop" aria-label="Voltar ao topo">
+  <svg class="ring" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24"/></svg>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+</a>
+
+<!-- Motion (motion.dev) — molas, scroll e gestos -->
+<script src="https://cdn.jsdelivr.net/npm/motion@12.23.12/dist/motion.js"></script>
+<script>
+function initSite() {
+  // Quebra títulos em palavras para a animação palavra por palavra
+  document.querySelectorAll('.display, .h2').forEach(el => {
+    let i = 0;
+    const walk = node => [...node.childNodes].forEach(c => {
+      if (c.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        c.textContent.split(/(\s+)/).forEach(part => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) return frag.append(part);
+          const w = document.createElement('span');
+          w.className = 'w'; w.style.setProperty('--i', i++); w.textContent = part;
+          frag.append(w);
+        });
+        c.replaceWith(frag);
+      } else if (c.nodeType === 1 && c.tagName !== 'BR') walk(c);
+    });
+    walk(el);
+    const delay = parseFloat(getComputedStyle(el).getPropertyValue('--aos-delay')) || 0;
+    el.style.setProperty('--aos-total', (delay + i * 0.075 + 0.9).toFixed(2) + 's');
+  });
+  // o fim da animação de cada palavra não pode encerrar a do título no PrimeVue
+  document.addEventListener('animationend', e => { if (e.target.classList && e.target.classList.contains('w')) e.stopPropagation(); }, true);
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // QR codes decorativos (padrão determinístico com marcadores de canto)
+  document.querySelectorAll('.qr').forEach(el => {
+    let s = Number(el.dataset.seed || 1) * 9301 + 49297;
+    const rand = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+    const N = 21, finder = (r, c) => {
+      for (const [fr, fc] of [[0,0],[0,14],[14,0]]) {
+        const y = r - fr, x = c - fc;
+        if (y >= 0 && y < 7 && x >= 0 && x < 7) {
+          return (y === 0 || y === 6 || x === 0 || x === 6 || (y >= 2 && y <= 4 && x >= 2 && x <= 4)) ? 1 : 0;
+        }
+        if (y >= -1 && y <= 7 && x >= -1 && x <= 7) return 0;
+      }
+      return null;
+    };
+    let html = '';
+    for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+      const f = finder(r, c);
+      html += `<span class="${(f === null ? rand() > .52 : f) ? 'on' : ''}"></span>`;
+    }
+    el.innerHTML = html;
+  });
+
+  // Nav: sombra ao rolar + menu mobile
+  const nav = document.getElementById('nav');
+  const toTop = document.getElementById('toTop'), ring = toTop.querySelector('.ring circle');
+  const stage = document.querySelector('.stage');
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const onScroll = () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+    document.body.classList.toggle('scrolled-page', window.scrollY > 40);
+    if (!reduceMotion) {
+      const top = stage.getBoundingClientRect().top;
+      const p = Math.min(1, Math.max(0, (innerHeight - top) / (innerHeight * 0.75)));
+      stage.style.setProperty('--p', p.toFixed(3));
+    }
+    // rede de segurança: o PrimeVue ignora blocos que entram em vista já cortados no topo
+    // (salto de rolagem, link de âncora, recarregar no meio da página) — revela esses blocos
+    document.querySelectorAll('[data-pd-animateonscroll]').forEach(el => {
+      if (el.style.opacity !== '0') return;
+      const b = el.getBoundingClientRect();
+      if (b.top < 0 && b.bottom > 0) { el.style.opacity = ''; el.classList.add('aos-in', 'aos-fade'); }
+    });
+    toTop.classList.toggle('show', window.scrollY > 600);
+    const max = document.documentElement.scrollHeight - innerHeight;
+    ring.style.strokeDashoffset = 151 * (1 - (max > 0 ? scrollY / max : 0));
+  };
+  toTop.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const toggle = document.getElementById('menuToggle'), menu = document.getElementById('mobileMenu');
+  toggle.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { menu.classList.remove('open'); toggle.setAttribute('aria-expanded', false); }));
+
+  // Celular 3D: nasce na hero, desce girando e conduz os 3 passos em "Como funciona"
+  const p3d = document.getElementById('p3d');
+  const layer = document.getElementById('p3dLayer');
+  const heroSlot = document.getElementById('heroSlot');
+  const screens = [...p3d.querySelectorAll('.scr')];
+  // a seção "Como funciona" é montada pelo Vue depois: estas referências são recarregadas após a montagem
+  let s3d, scene, chapters, chips, bars, bentoSlot;
+  const collect = () => {
+    s3d = document.getElementById('s3d');
+    scene = s3d.querySelector('.s3d-scene');
+    chapters = [...s3d.querySelectorAll('.chapter')];
+    chips = [...s3d.querySelectorAll('.s3d-chip')];
+    bars = [...s3d.querySelectorAll('.s3d-progress i')];
+    bentoSlot = document.getElementById('bentoSlot');
+  };
+  collect();
+  const PW = 260, PH = 540;
+  const shadow = document.getElementById('p3dShadow'), glow = document.getElementById('p3dGlow');
+
+  // Linha do tempo u: 0→1 = viagem da hero até a seção; 1→2 = os 3 capítulos (seção fixa)
+  // [u, rotX, rotY, rotZ, escala] — cada meia-volta em Y mostra a traseira e troca a tela
+  const KF = [
+    // viagem (0→1): a tela fica sempre de frente — só inclina e balança
+    [0.00,  0,    0,   0, 1.00],
+    [0.40,  3,   -8,   2, 1.00],
+    [0.80,  5,  -16,   5, 1.00],
+    [1.00,  8,  -24,   9, 1.00],
+    // seção (1→2): aqui sim ele vira e mostra a traseira entre um passo e outro
+    [1.24,  3,   -8,   2, 1.00],
+    [1.50, 12,  168,  -8, 0.95],
+    [1.66,  1,  356,  -1, 1.00],
+    [1.70,  0,  360,   0, 1.00],
+    [1.86, 16,  532, -45, 0.97],
+    [1.96,  0,  720, -90, 1.12],
+    [2.00,  0,  720, -90, 1.12]
+  ];
+  const smooth = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+  const easeSine = t => 0.5 - Math.cos(Math.PI * t) / 2;     // aceleração mais suave que a cúbica
+  const easeIO = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  // curva contínua (Hermite monotônica, Fritsch–Carlson) por canal: passa pelos pontos-chave
+  // sem frear em cada um e sem "passar do ponto" — o movimento flui de um passo para o outro
+  const xs = KF.map(k => k[0]);
+  const slopes = [1, 2, 3, 4].map(c => {
+    const ys = KF.map(k => k[c]), n = xs.length;
+    const d = xs.slice(1).map((x, i) => (ys[i + 1] - ys[i]) / (x - xs[i]));
+    const m = ys.map((_, i) => i === 0 ? d[0] : i === n - 1 ? d[n - 2] : (d[i - 1] * d[i] <= 0 ? 0 : (d[i - 1] + d[i]) / 2));
+    for (let i = 0; i < n - 1; i++) {
+      if (d[i] === 0) { m[i] = m[i + 1] = 0; continue; }
+      const a = m[i] / d[i], b = m[i + 1] / d[i], h = a * a + b * b;
+      if (h > 9) { const t = 3 / Math.sqrt(h); m[i] = t * a * d[i]; m[i + 1] = t * b * d[i]; }
+    }
+    return m;
+  });
+  const sample = u => {
+    const x = clamp(u, xs[0], xs[xs.length - 1]);
+    let k = 1; while (k < xs.length - 1 && x > xs[k]) k++;
+    const h = xs[k] - xs[k - 1], t = (x - xs[k - 1]) / h, t2 = t * t, t3 = t2 * t;
+    const h00 = 2 * t3 - 3 * t2 + 1, h10 = t3 - 2 * t2 + t, h01 = -2 * t3 + 3 * t2, h11 = t3 - t2;
+    return [x, ...[1, 2, 3, 4].map((c, j) =>
+      h00 * KF[k - 1][c] + h10 * h * slopes[j][k - 1] + h01 * KF[k][c] + h11 * h * slopes[j][k])];
+  };
+
+  // posição alvo da rolagem (u) — a renderizada persegue o alvo com inércia
+  const targetU = () => {
+    const sTop = s3d.getBoundingClientRect().top + scrollY;   // onde a seção trava
+    // a viagem só começa quando o celular da hero chega ao centro da tela
+    const slot = heroSlot.getBoundingClientRect();
+    const start = Math.max(0, slot.top + scrollY + slot.height / 2 - innerHeight / 2);
+    const travel = clamp((scrollY - start) / Math.max(1, sTop - start));
+    const r = s3d.getBoundingClientRect();
+    const p = clamp(-r.top / (r.height - innerHeight));
+    return travel < 1 ? travel : 1 + p;
+  };
+  let upS = targetU(), smoothPos = false;
+  let sy = scrollY;                                             // rolagem amaciada, usada só na descida até os passos
+  let u = upS, scr = -1, chapter = -1, chipState = '', running = false;
+  const M = window.Motion;                                       // Motion (motion.dev), carregado via CDN
+  const springy = { type: 'spring', stiffness: 170, damping: 22 };
+  // troca de capítulo: o antigo sai desfocando; o novo entra em cascata (número, título, texto) com mola
+  const showChapter = (nc, prev) => {
+    chapters.forEach((el, i) => {
+      el.classList.toggle('on', i === nc);
+      if (!M) { el.style.opacity = i === nc ? 1 : 0; return; }
+      if (i === nc) {
+        M.animate(el, { opacity: 1 }, { duration: 0.2 });
+        M.animate([...el.children],
+          { opacity: [0, 1], y: [nc > prev ? 34 : -34, 0], filter: ['blur(10px)', 'blur(0px)'] },
+          { ...springy, delay: M.stagger(0.07) });
+      } else if (i === prev) {
+        M.animate([...el.children], { opacity: 0, y: nc > prev ? -26 : 26, filter: 'blur(8px)' }, { duration: 0.32, ease: 'easeIn' });
+        M.animate(el, { opacity: 0 }, { duration: 0.32, delay: 0.1 });
+      } else el.style.opacity = 0;
+    });
+  };
+  const showChip = (idx) => chips.forEach((el, i) => {
+    const on = i === idx;
+    if (!M) { el.style.opacity = on ? 1 : 0; return; }
+    M.animate(el, on
+      ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
+      : { opacity: 0, y: 14, scale: 0.94, filter: 'blur(6px)' },
+      on ? { type: 'spring', stiffness: 220, damping: 18, delay: 0.15 } : { duration: 0.25 });
+  });
+
+  const draw = () => {
+    // posição/tamanho seguem a rolagem real (up), sem atraso; só o giro (u) passa pela mola
+    const raw = targetU();
+    // posição suavizada pela mola, mas nunca mais de 0.08 atrás da rolagem real (não "flutua" sobre a hero)
+    const up = smoothPos ? clamp(upS, raw - 0.05, raw + 0.05) : raw;
+    const H = innerHeight;
+    const hero = heroSlot.getBoundingClientRect();
+    const ben = bentoSlot.getBoundingClientRect();
+    const box = scene.getBoundingClientRect();
+    let [, rx, ry, rz, s] = sample(u);
+    const sceneScale = Math.min(1.12, (box.height - 24) / 560, (box.width - 16) / 600);
+    // trajeto contínuo e sempre visível: hero → card do bento → card dos passos
+    // (progresso pela rolagem da página: começa quando cada ponto chega ao centro da tela)
+    const hY = hero.top + hero.height / 2, bY = ben.top + ben.height / 2;
+    const sH = scrollY + hY - H / 2, sB = scrollY + bY - H / 2;
+    const sS = s3d.getBoundingClientRect().top + scrollY;            // onde a seção dos passos trava
+    const t1 = easeSine(clamp((scrollY - sH) / Math.max(1, sB - sH)));
+    // depois de chegar ao bento o celular fica parado na tela; só desce quando a próxima seção se aproxima
+    const sA = sB + (sS - sB) * 0.3;
+    const t2 = easeSine(clamp((sy - sA) / Math.max(1, sS - sA)));
+    const benScale = ben.width / PW;
+    let cx = lerp(hero.left + hero.width / 2, ben.left + ben.width / 2, t1);
+    let cy = lerp(hY, bY, t1);
+    let scale = lerp(hero.width / PW, benScale, t1);
+    // telas estreitas: sem trajeto por cima do texto — o celular rola junto com o card do bento
+    // e, quando esse card já saiu da tela, passa a acompanhar o card dos passos (que entra por baixo)
+    const narrow = innerWidth <= 960;
+    if (narrow && ben.bottom < 0) {
+      cx = box.left + box.width / 2; cy = box.top + box.height / 2; scale = sceneScale;
+    } else if (!narrow && scrollY > sB) {
+      // parado no centro da tela enquanto o card sobe; depois desliza até onde fica quando a seção trava
+      const s3r = s3d.getBoundingClientRect();
+      const endY = scrollY >= sS ? box.top + box.height / 2 : box.top - s3r.top + box.height / 2;
+      cx = lerp(ben.left + ben.width / 2, box.left + box.width / 2, t2);
+      cy = lerp(H / 2, endY, t2);
+      scale = lerp(benScale, sceneScale, t2);
+    }
+    // balanço contínuo enquanto ainda não está na seção dos passos (flutua e gira de leve)
+    const idle = reduceMotion ? 0 : 1 - smooth(0.9, 1.04, up);
+    if (idle > 0) {
+      const tm = performance.now() / 1000;
+      cy += Math.sin(tm * 1.25) * 8 * idle;
+      rx += Math.sin(tm * 0.85) * 2.4 * idle;
+      ry += Math.sin(tm * 0.6 + 1) * 6 * idle;
+      rz += Math.sin(tm * 1.05 + 2) * 1.6 * idle;
+    }
+    const op = 1;
+    p3d.style.opacity = op.toFixed(3);
+    scale *= s;
+    // deitado (último passo): diminui para caber folgado dentro do card escuro, com a sombra junto
+    const side = Math.abs(Math.sin(rz * Math.PI / 180));
+    if (up > 1 && side > 0.01) scale = Math.min(scale, lerp(scale, (box.width * 0.74) / PH, side));
+    layer.style.perspectiveOrigin = `${cx}px ${cy}px`;
+    p3d.style.transform =
+      `translate3d(${(cx - PW / 2).toFixed(1)}px, ${(cy - PH / 2).toFixed(1)}px, 0) scale(${scale.toFixed(4)}) ` +
+      `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) rotateZ(${rz.toFixed(2)}deg)`;
+    p3d.style.setProperty('--sh', (ry * 0.25).toFixed(1));
+    // iluminação: luz vinda de cima/esquerda/frente; frente, traseira e aros clareiam ou escurecem com o giro
+    const R = Math.PI / 180, cY = Math.cos(ry * R), sY = Math.sin(ry * R), cX = Math.cos(rx * R);
+    const facing = cY * cX;                                       // 1 = tela de frente, -1 = traseira de frente
+    p3d.style.setProperty('--lf', clamp(0.35 + 0.65 * facing).toFixed(3));
+    p3d.style.setProperty('--lb', clamp(0.35 - 0.65 * facing).toFixed(3));
+    const rim = v => { const k = clamp(v); return [40 + 150 * k, 60 + 150 * k, 52 + 145 * k].map(Math.round).join(','); };
+    p3d.style.setProperty('--rl', rim(0.25 - sY * 0.9));
+    p3d.style.setProperty('--rr', rim(0.25 + sY * 0.9));
+    // sombra projetada (deslocada para baixo/direita) e brilho verde por trás
+    const zr = rz.toFixed(2), sw = 0.55 + 0.45 * Math.abs(cY);
+    shadow.style.transform = `translate3d(${(cx - PW / 2 + 26 * scale).toFixed(1)}px, ${(cy - PH / 2 + 44 * scale).toFixed(1)}px, -60px) scale(${(scale * sw).toFixed(3)}, ${(scale * 0.96).toFixed(3)}) rotateZ(${zr}deg)`;
+    glow.style.transform = `translate3d(${(cx - PW / 2).toFixed(1)}px, ${(cy - PH / 2).toFixed(1)}px, -120px) scale(${(scale * 1.5).toFixed(3)}) rotateZ(${zr}deg)`;
+    shadow.style.opacity = glow.style.opacity = p3d.style.opacity || 1;
+    glow.style.opacity = ((+p3d.style.opacity || 1) * clamp(up - 0.6)).toFixed(3); // brilho só na seção escura
+    // a tela só troca enquanto a traseira está virada para a pessoa
+    // carteira → escanear troca com fade no meio da viagem; as demais trocam com a traseira virada
+    const ns = up < 0.55 ? 0 : ry < 180 ? 1 : ry < 540 ? 2 : 3;
+    if (ns !== scr) { scr = ns; screens.forEach((el, i) => el.classList.toggle('on', i === ns)); }
+    const p = clamp(up - 1);
+    const nc = p < 0.36 ? 0 : p < 0.72 ? 1 : 2;
+    if (nc !== chapter) { const prev = chapter; chapter = nc; showChapter(nc, prev < 0 ? nc - 1 : prev); }
+    const cs = up > 1.02 && up < 1.995 ? String(nc) : '';
+    if (cs !== chipState) { chipState = cs; showChip(cs === '' ? -1 : nc); }
+    const edges = [0, 0.36, 0.72, 1];
+    bars.forEach((b, i) => b.style.setProperty('--f', clamp((p - edges[i]) / (edges[i + 1] - edges[i])).toFixed(3)));
+  };
+  if (M && !reduceMotion) {
+    // Motion: a rolagem define o alvo; uma mola física (springValue) leva o celular até ele,
+    // herdando a velocidade quando a pessoa muda de direção — sem trancos
+    const goal = M.motionValue(u);
+    const spring = M.springValue(goal, { stiffness: 28, damping: 13, mass: 1.2, restDelta: 0.0004, restSpeed: 0.002 });
+    spring.on('change', v => { u = v; draw(); });
+    // posição também passa por uma mola (mais leve), deixando a descida macia
+    smoothPos = true;
+    const posGoal = M.motionValue(upS);
+    const posSpring = M.springValue(posGoal, { stiffness: 60, damping: 20, mass: 1, restDelta: 0.0003, restSpeed: 0.002 });
+    posSpring.on('change', v => { upS = v; draw(); });
+    M.scroll(() => { const g = targetU(); goal.set(g); posGoal.set(g); draw(); });
+  } else {
+    // sem Motion (CDN fora do ar) ou com movimento reduzido: segue a rolagem com inércia simples
+    const tick = () => {
+      const g = targetU();
+      u += (g - u) * (reduceMotion ? 1 : 0.09);
+      if (Math.abs(g - u) < 0.0004) u = g;
+      draw();
+      if (u !== g) requestAnimationFrame(tick); else running = false;
+    };
+    const kick = () => { if (!running) { running = true; requestAnimationFrame(tick); } };
+    window.addEventListener('scroll', kick, { passive: true });
+    window.addEventListener('resize', kick);
+  }
+  draw();
+  if (!reduceMotion) {
+    const idleLoop = () => {
+      if (!document.hidden) {
+        sy += (scrollY - sy) * 0.12;
+        if (Math.abs(scrollY - sy) < 0.5) sy = scrollY;
+        if (u < 1.06 || sy !== scrollY) draw();
+      }
+      requestAnimationFrame(idleLoop);
+    };
+    requestAnimationFrame(idleLoop);
+  } else addEventListener('scroll', () => { sy = scrollY; }, { passive: true });
+
+  // Botões: resposta com mola do Motion ao passar o mouse e ao pressionar
+  const bindButtons = sel => {
+    if (!M || reduceMotion) return;
+    M.hover(sel, el => {
+      const ic = el.querySelector('.arrow, .play');
+      M.animate(el, { y: -2 }, { type: 'spring', stiffness: 400, damping: 22 });
+      if (ic) M.animate(ic, ic.classList.contains('arrow') ? { x: 4, rotate: -8 } : { scale: 1.12 }, { type: 'spring', stiffness: 380, damping: 14 });
+      return () => {
+        M.animate(el, { y: 0 }, { type: 'spring', stiffness: 400, damping: 22 });
+        if (ic) M.animate(ic, { x: 0, rotate: 0, scale: 1 }, { type: 'spring', stiffness: 300, damping: 16 });
+      };
+    });
+    M.press(sel, el => {
+      M.animate(el, { scale: 0.95 }, { type: 'spring', stiffness: 700, damping: 30 });
+      return () => M.animate(el, { scale: 1 }, { type: 'spring', stiffness: 500, damping: 12 });
+    });
+  };
+  bindButtons('.btn');
+  requestAnimationFrame(() => { draw(); layer.classList.add('ready'); });
+
+  // chamado pelo módulo do Vue depois de montar as seções
+  window.afterVueMount = () => {
+    collect();
+    chapter = -1; chipState = '';
+    draw();
+    bindButtons('[data-vue] .btn');
+    setTimeout(onScroll, 60);
+  };
+}
+initSite();
+</script>
+
+<!-- Vue 3 + PrimeVue (só a diretiva AnimateOnScroll) -->
+<script type="importmap">
+  { "imports": { "vue": "https://unpkg.com/vue@3.5.13/dist/vue.esm-browser.prod.js" } }
+</script>
+<script type="module">
+  const pv = 'https://esm.sh/primevue@4.3.9';
+  try {
+    const [{ createApp }, { default: PrimeVue }, { default: AnimateOnScroll }] = await Promise.all([
+      import('vue'),
+      import(`${pv}/config?external=vue`),
+      import(`${pv}/animateonscroll?external=vue`)
+    ]);
+    // Sem leaveClass: o deslocamento da entrada (translateY) tirava o bloco da área observada,
+    // disparava a saída e ele sumia ainda visível. Assim o PrimeVue só "reseta" o bloco quando
+    // ele sai totalmente pela parte de baixo da tela, e ele anima de novo ao voltar.
+    const opts = { threshold: 0.1 };
+    const anim = (dir) => ({ ...opts, enterClass: `aos-in aos-${dir}` });
+    const words = { ...opts, enterClass: 'aos-words' };
+    const setup = () => ({ up: anim('up'), left: anim('left'), right: anim('right'), zoom: anim('zoom'), words });
+    // um app por seção: a hero, o menu e o celular não esperam o Vue nem são recriados por ele
+    document.querySelectorAll('[data-vue]').forEach(el => {
+      const app = createApp({ setup });
+      app.use(PrimeVue, { theme: 'none' });
+      app.directive('animateonscroll', AnimateOnScroll);
+      app.mount(el);
+    });
+    window.afterVueMount && window.afterVueMount();
+  } catch (err) {
+    document.documentElement.classList.add('no-aos');
+    console.warn('AnimateOnScroll indisponível, seguindo sem animação.', err);
+  }
+</script>
+</body>
+</html>
