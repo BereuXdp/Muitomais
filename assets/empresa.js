@@ -91,6 +91,8 @@
   const TRIAL_DAYS = 14;
   const qs = new URLSearchParams(location.search);
   const PLAN = { current: null, trialEnd: null, landing: PLANS[qs.get('plano')] ? qs.get('plano') : null, pick: PLANS[qs.get('plano')] ? qs.get('plano') : 'profissional', units: 3, pay: 'cartao' };
+  // vindo da tela de assinatura (assinar.html): o teste grátis já começou
+  if (qs.get('ativo') === '1' && PLAN.landing) { PLAN.current = PLAN.landing; PLAN.trialEnd = addDays(today, TRIAL_DAYS); PLAN.units = PLAN.curUnits = Math.max(2, parseInt(qs.get('unidades'), 10) || 2); }
 
   // ================= utilidades de interface =================
   let tt;
@@ -691,6 +693,7 @@
   $('menuBtn').addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
   $('scrim').addEventListener('click', () => setMenu(false));
 
+  if (PLAN.current) $('sidePlan').textContent = 'Plano ' + PLANS[PLAN.current].name + ' · teste';
   updateRiskCount();
   go();
 })();

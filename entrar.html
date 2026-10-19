@@ -50,34 +50,6 @@
   .auth-box h1 { margin-top: 36px; font-size: clamp(34px, 4vw, 44px); line-height: 1.05; letter-spacing: -0.04em; font-weight: 800; color: var(--ink-deep); }
   .auth-box .sub { margin-top: 10px; color: var(--ink-2); font-size: 16px; }
 
-  /* seletor de plano: 3 cards, um clique troca */
-  .plan-pick { margin: 24px 0 0; padding: 0; border: 0; min-width: 0; }
-  .plan-pick[hidden] { display: none; }
-  .plan-pick legend { display: flex; width: 100%; justify-content: space-between; align-items: baseline; padding: 0; margin-bottom: 10px; font-size: 14px; font-weight: 600; color: var(--ink-deep); }
-  .plan-pick legend a { font-size: 13px; font-weight: 600; color: var(--forest-800); }
-  .plan-pick legend a:hover { text-decoration: underline; }
-  .pp-opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-  .pp {
-    position: relative; cursor: pointer; display: flex; flex-direction: column; gap: 2px;
-    padding: 14px 12px 12px; border-radius: 16px; background: var(--paper); border: 1.5px solid var(--line);
-    transition: border-color .2s ease, background-color .2s ease, box-shadow .2s ease, transform .2s ease;
-  }
-  .pp:hover { border-color: var(--green-500); }
-  .pp:active { transform: scale(.98); }
-  .pp input { position: absolute; opacity: 0; pointer-events: none; }
-  .pp b { font-size: 14px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink-deep); }
-  .pp small { font-size: 13px; font-weight: 600; color: var(--ink-2); }
-  .pp small em { font-style: normal; font-weight: 500; color: var(--ink-3); }
-  .pp-ok {
-    position: absolute; top: 10px; right: 10px; width: 18px; height: 18px; border-radius: 50%;
-    display: grid; place-items: center; border: 1.5px solid var(--line-strong); color: transparent; transition: all .2s ease;
-  }
-  .pp-tag { position: absolute; top: -9px; left: 10px; font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: var(--radius-pill); background: var(--green-300); color: var(--forest-950); }
-  .pp:has(input:checked) { border-color: var(--forest-800); background: var(--mint-50); box-shadow: 0 0 0 3px rgba(15,163,110,.12); }
-  .pp:has(input:checked) .pp-ok { background: var(--forest-800); border-color: var(--forest-800); color: #fff; }
-  .pp:has(input:focus-visible) { outline: 2px solid var(--green-500); outline-offset: 2px; }
-  .pp-note { margin-top: 10px; font-size: 13px; color: var(--ink-3); line-height: 1.45; }
-
   form { margin-top: 28px; display: grid; gap: 18px; }
   .field label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--ink-deep); }
   .input {
@@ -234,46 +206,6 @@
   .float.f2 { bottom: 4%; left: -10%; animation-delay: -2.5s; }
   @keyframes bob { 50% { transform: translateY(-8px); } }
 
-  /* ---------- Detalhe do plano (lateral) ---------- */
-  .plan-detail {
-    width: min(400px, 100%); padding: 26px; border-radius: 26px; color: var(--ink-deep); background: #fff;
-    box-shadow: 0 40px 80px -30px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.1);
-  }
-  .pd-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-  .pd-kicker { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--forest-800); }
-  .pd-badge { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: var(--radius-pill); background: var(--green-300); color: var(--forest-950); }
-  .pd-name { margin-top: 8px; font-size: 30px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; }
-  .pd-price { margin-top: 6px; display: flex; align-items: baseline; gap: 3px; }
-  .pd-price b { font-size: 34px; font-weight: 800; letter-spacing: -0.05em; color: var(--forest-800); }
-  .pd-price span { font-size: 14px; color: var(--ink-3); }
-  .pd-desc { margin-top: 8px; font-size: 14.5px; color: var(--ink-2); line-height: 1.45; }
-  .pd-head { margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--line); display: flex; justify-content: space-between; gap: 12px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
-  .pd-head em { font-style: normal; color: var(--forest-800); }
-  .pd-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 4px; }
-  .pd-list li {
-    display: flex; align-items: center; gap: 10px; padding: 7px 10px 7px 6px; border-radius: 12px; font-size: 14.5px; color: var(--ink-2);
-    animation: pd-in .5s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i) * 45ms);
-  }
-  .pd-list li i { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; flex: none; background: var(--mint-150); color: var(--forest-800); }
-  .pd-list li.add { background: var(--mint-50); color: var(--ink-deep); font-weight: 600; }
-  .pd-list li.add i { background: var(--forest-800); color: #fff; }
-  .pd-list li small { margin-left: auto; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--green-500); }
-  @keyframes pd-in { from { opacity: 0; transform: translateX(10px); } }
-  .plan-detail.inline { display: none; }
-  /* modo loja tem os cards de plano: menos respiro para caber numa tela de notebook */
-  body[data-mode="loja"] .auth-box { padding: 12px 0; }
-  body[data-mode="loja"] .auth-box h1 { margin-top: 24px; }
-  body[data-mode="loja"] form { margin-top: 22px; gap: 14px; }
-  /* com plano aberto a lateral fica mais enxuta para caber na tela */
-  .auth-art.has-plan { padding-top: clamp(24px, 3vw, 36px); padding-bottom: clamp(24px, 3vw, 36px); }
-  .auth-art.has-plan .art-stage { padding: 12px 0; }
-  .auth-art.has-plan .plan-detail { padding: 22px 24px; }
-  .auth-art.has-plan .pd-list { gap: 2px; }
-  .auth-art.has-plan .pd-list li { padding-top: 5px; padding-bottom: 5px; }
-  .auth-art.has-plan .pd-head { margin-top: 16px; padding-top: 14px; }
-  .auth-art.has-plan .art-foot { display: none; }
-  .auth-art.has-plan .art-quote { font-size: clamp(24px, 2.4vw, 32px); }
-
   /* entrada da página */
   .enter { animation: aos-in .9s cubic-bezier(.2,.7,.2,1) both; animation-delay: var(--d, 0s); --aos-y: 24px; }
 
@@ -282,10 +214,6 @@
     .auth-art { min-height: 0; padding: 24px; border-radius: 26px; }
     .legal { display: none; }
     .art-stage, .art-foot { display: none; }
-    /* no celular o painel lateral fica longe: o detalhe aparece logo abaixo dos cards */
-    .plan-detail.inline:not(:empty) { display: block; margin-top: 12px; width: 100%; padding: 20px; box-shadow: none; border: 1.5px solid var(--forest-800); }
-    .plan-detail.inline .pd-name { font-size: 24px; }
-    .plan-detail.inline .pd-price b { font-size: 28px; }
     .art-quote { margin-top: 18px; font-size: 26px; max-width: none; }
     .auth-box { padding: 24px 0 32px; }
   }
@@ -295,10 +223,6 @@
     .auth-art { border-radius: 22px; padding: 20px; }
     .art-quote { font-size: 22px; }
     .auth-box h1 { margin-top: 28px; }
-    .pp { padding: 14px 10px 12px; }
-    .pp b { font-size: 13.5px; }
-    .pp-ok { display: none; }   /* sem espaço no celular: a borda e o fundo verdes já marcam o escolhido */
-    .pp small em { display: none; }
   }
 </style>
 </head>
@@ -332,18 +256,6 @@
         <h1 class="enter" style="--d: .12s" id="title">Entre na sua conta</h1>
         <p class="sub enter" style="--d: .18s" id="sub">Entre com seu email e senha para ver seu cashback.</p>
       </div>
-
-      <!-- troca de plano direto aqui: um clique em outro card -->
-      <fieldset class="plan-pick" id="planPick" hidden>
-        <legend><span>Planos</span><a href="planos.html#comparar">Comparar planos</a></legend>
-        <div class="pp-opts">
-          <label class="pp"><input type="radio" name="plano" value="essencial"><span class="pp-ok" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><b>Essencial</b><small>R$ 99<em>/mês</em></small></label>
-          <label class="pp"><input type="radio" name="plano" value="profissional"><span class="pp-ok" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><b>Profissional</b><small>R$ 197<em>/mês</em></small><i class="pp-tag">Popular</i></label>
-          <label class="pp"><input type="radio" name="plano" value="redes"><span class="pp-ok" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><b>Redes</b><small>R$ 597<em>/mês</em></small></label>
-        </div>
-        <div class="plan-detail inline" id="planInline" aria-live="polite"></div>
-        <p class="pp-note" id="planDesc">Valores por unidade/mês. Toque em um plano para assinar ao entrar.</p>
-      </fieldset>
 
       <form id="form" class="enter" style="--d: .24s" novalidate>
         <div class="field">
@@ -420,10 +332,6 @@
           <span class="float f2"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></i><span>Nova missão ativa<small>Volte em 7 dias</small></span></span>
         </div>
       </div>
-      <!-- loja com plano escolhido: tudo o que o plano inclui -->
-      <div class="scene off" id="scenePlano">
-        <div class="plan-detail" id="planSide"></div>
-      </div>
     </div>
 
     <div class="swap" aria-hidden="true">
@@ -437,25 +345,6 @@
 (() => {
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // [item, adicional em relação ao plano anterior]
-  const PLANS = {
-    essencial: { name: 'Essencial', price: '99,00', desc: 'Cashback e missões para o seu restaurante.', items: [['Cashback'], ['Missões']] },
-    profissional: { name: 'Profissional', price: '197,00', badge: 'Mais completo', base: 'Essencial', desc: 'Cashback, missões e analytics para o seu restaurante.',
-      items: [['Cashback'], ['Missões'], ['Analytics', 1], ['Validação de NFC-e', 1], ['Segmentação', 1], ['1 unidade'], ['5 usuários', 1], ['10 missões ativas', 1]] },
-    redes: { name: 'Redes', price: '597,00', badge: 'Redes e franquias', base: 'Profissional', desc: 'Cashback, missões e analytics em todas as suas unidades.',
-      items: [['Cashback'], ['Missões'], ['Analytics'], ['Validação de NFC-e'], ['Segmentação'], ['Multiunidade', 1], ['20 usuários', 1], ['50 missões ativas', 1]] }
-  };
-  const CHECK = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>';
-  const detailHTML = k => {
-    const p = PLANS[k], adds = p.items.filter(x => x[1]).length;
-    return `<div class="pd-top"><span class="pd-kicker">Plano escolhido</span>${p.badge ? `<span class="pd-badge">${p.badge}</span>` : ''}</div>
-      <h2 class="pd-name">${p.name}</h2>
-      <p class="pd-price"><span>R$</span><b>${p.price}</b><span>/unidade/mês</span></p>
-      <p class="pd-desc">${p.desc}</p>
-      <div class="pd-head"><span>O que inclui</span>${p.base ? `<em>+${adds} adicionais ao ${p.base}</em>` : ''}</div>
-      <ul class="pd-list">${p.items.map(([t, add], i) =>
-        `<li class="${add ? 'add' : ''}" style="--i: ${i}"><i>${CHECK}</i>${t}${add ? '<small>Adicional</small>' : ''}</li>`).join('')}</ul>`;
-  };
   const COPY = {
     cliente: {
       title: 'Entre na sua conta',
@@ -478,33 +367,16 @@
   const params = new URLSearchParams(location.search);
   const $ = id => document.getElementById(id);
   const seg = $('seg'), tabs = seg.querySelectorAll('button');
-  let plan = PLANS[params.get('plano')] ? params.get('plano') : null;
   let mode = null;
 
-  // plano escolhido: troca com um clique, sem sair da tela
   const syncUrl = () => {
-    params.set('tipo', mode);
-    if (mode === 'loja' && plan) params.set('plano', plan); else params.delete('plano');
+    params.set('tipo', mode); params.delete('plano');
     history.replaceState(null, '', location.pathname + '?' + params.toString());
   };
-  const renderPlan = () => {
-    const loja = mode === 'loja';
-    $('planPick').hidden = !loja;
-    document.querySelectorAll('input[name="plano"]').forEach(i => { i.checked = i.value === plan; });
-    $('planDesc').textContent = plan ? 'Valores por unidade/mês. Toque de novo no plano para desmarcar e só entrar.' : 'Valores por unidade/mês. Toque em um plano para assinar ao entrar.';
-    $('submit').querySelector('.label').textContent = loja && plan ? 'Entrar e assinar' : 'Entrar';
-    // lateral: painel da loja sem plano; detalhes do plano quando há um escolhido
-    const html = loja && plan ? detailHTML(plan) : '';
-    $('planSide').innerHTML = html; $('planInline').innerHTML = html;
+  const renderScene = () => {
     $('sceneCliente').classList.toggle('off', mode !== 'cliente');
-    $('sceneLoja').classList.toggle('off', !(loja && !plan));
-    $('scenePlano').classList.toggle('off', !(loja && plan));
-    document.querySelector('.auth-art').classList.toggle('has-plan', !!(loja && plan));
+    $('sceneLoja').classList.toggle('off', mode !== 'loja');
   };
-  // clicar no plano marca; clicar de novo no mesmo desmarca (só entrar, sem assinar)
-  document.querySelectorAll('input[name="plano"]').forEach(i => i.addEventListener('click', () => {
-    plan = plan === i.value ? null : i.value; renderPlan(); syncUrl();
-  }));
 
   const setMode = (m, animate) => {
     if (m === mode) return;
@@ -515,7 +387,7 @@
       tabs.forEach(t => t.setAttribute('aria-selected', t.dataset.mode === m));
       $('title').textContent = c.title; $('sub').textContent = c.sub;
       $('artTag').textContent = c.tag; $('artQuote').innerHTML = c.quote; $('artFoot').textContent = c.foot;
-      renderPlan();
+      renderScene();
       document.title = c.doc;
       $('notice').hidden = true;
       document.body.classList.remove('swapping');
@@ -565,7 +437,7 @@
     setTimeout(() => {
       // demonstração: cada tipo de conta entra direto na sua área
       if (mode === 'cliente') { location.href = 'cliente.html'; return; }
-      location.href = plan ? 'empresa.html?plano=' + plan + '#configuracoes/plano' : 'empresa.html#painel';
+      location.href = 'empresa.html#painel';
     }, 1100);
   });
   $('forgot').addEventListener('click', e => {
