@@ -190,7 +190,7 @@
       <svg width="30" height="30" viewBox="0 0 80 80" fill="none" aria-hidden="true"><rect width="80" height="80" rx="18" fill="url(#mm-icon)"/><g><circle cx="20" cy="14" r="7.2" fill="#fff"/><rect x="14.2" y="20" width="11.6" height="46" rx="5.8" fill="#fff"/><path d="M25.2 28 C32 34 36 40 40 50" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="60" cy="14" r="7.2" fill="#fff"/><rect x="54.2" y="20" width="11.6" height="46" rx="5.8" fill="#fff"/><path d="M54.8 28 C48 34 44 40 40 50" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/></g></svg>
       <span><span class="muito">Muito</span><span class="mais">Mais</span></span>
     </a>
-    <span class="co-secure"><svg class="ic"><use href="#i-lock"/></svg><span>Pagamento seguro</span></span>
+    <span class="co-secure"><svg class="ic"><use href="#i-lock"/></svg><span>Cadastro seguro</span></span>
     <a href="planos.html" class="co-back"><svg class="ic"><use href="#i-back"/></svg>Planos</a>
   </div>
 </header>
@@ -199,7 +199,7 @@
   <div class="co-head">
     <h1>Assinar o Muito Mais</h1>
     <p>Comece com <b>14 dias grátis</b>. Hoje você não paga nada e pode cancelar quando quiser.</p>
-    <nav class="co-steps" aria-label="Etapas"><a href="#s-plano" data-step="1"><span>1</span>Plano</a><a href="#s-empresa" data-step="2"><span>2</span>Empresa</a><a href="#s-pagamento" data-step="3"><span>3</span>Pagamento</a></nav>
+    <nav class="co-steps" aria-label="Etapas"><a href="#s-plano" data-step="1"><span>1</span>Plano</a><a href="#s-empresa" data-step="2"><span>2</span>Cadastro</a></nav>
   </div>
 
   <form class="co" id="form" novalidate>
@@ -228,38 +228,8 @@
         </div>
       </section>
 
-      <!-- 3. Pagamento -->
-      <section class="card" id="s-pagamento">
-        <div class="card-head"><span class="num">3</span><div class="grow"><h2>Pagamento</h2><p>Nada é cobrado durante o teste.</p></div></div>
-        <div class="pay-tabs" role="radiogroup" aria-label="Forma de pagamento">
-          <label class="pt"><input type="radio" name="pay" value="cartao" checked><svg class="ic"><use href="#i-card"/></svg>Cartão</label>
-          <label class="pt"><input type="radio" name="pay" value="pix"><svg class="ic"><use href="#i-pix"/></svg>Pix</label>
-          <label class="pt"><input type="radio" name="pay" value="boleto"><svg class="ic"><use href="#i-barcode"/></svg>Boleto</label>
-        </div>
-
-        <div class="pay-pane" data-pane="cartao">
-          <div class="card-prev" aria-hidden="true">
-            <div class="cp-top"><span class="chip"></span><span class="cp-brand" id="cpBrand">CARTÃO</span></div>
-            <div class="cp-num" id="cpNum">•••• •••• •••• ••••</div>
-            <div class="cp-bot"><div><small>Nome</small><b id="cpName">SEU NOME</b></div><div><small>Validade</small><b id="cpExp">MM/AA</b></div></div>
-          </div>
-          <div class="grid">
-            <label class="field full"><span>Número do cartão</span><span class="with-ic"><input class="ctl" id="cNum" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000"><i class="brand-tag" id="cBrand">—</i></span><em class="err-t"></em></label>
-            <label class="field full"><span>Nome impresso no cartão</span><input class="ctl" id="cName" autocomplete="cc-name" placeholder="Como está no cartão"><em class="err-t"></em></label>
-            <label class="field"><span>Validade</span><input class="ctl" id="cExp" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA"><em class="err-t"></em></label>
-            <label class="field"><span>CVV</span><input class="ctl" id="cCvv" inputmode="numeric" autocomplete="cc-csc" placeholder="3 ou 4 números"><em class="err-t"></em></label>
-          </div>
-        </div>
-        <div class="pay-pane" data-pane="pix" hidden>
-          <div class="pay-info"><span class="big-ic"><svg class="ic" style="width:22px;height:22px"><use href="#i-pix"/></svg></span><div><b>Pix todo mês</b><br>No fim do teste enviamos um QR Code Pix para o seu e-mail. Depois, um novo a cada mês, alguns dias antes do vencimento.</div></div>
-        </div>
-        <div class="pay-pane" data-pane="boleto" hidden>
-          <div class="pay-info"><span class="big-ic"><svg class="ic" style="width:22px;height:22px"><use href="#i-barcode"/></svg></span><div><b>Boleto todo mês</b><br>O boleto chega no seu e-mail no fim do teste e vence em 3 dias úteis. O acesso continua normalmente enquanto ele é compensado.</div></div>
-        </div>
-
-        <label class="agree" id="agreeL"><input type="checkbox" id="agree">Li e aceito os termos de uso e a política de privacidade do Muito Mais.</label>
-      </section>
     </div>
+    <label class="agree" id="agreeL"><input type="checkbox" id="agree">Li e aceito os termos de uso e a política de privacidade do Muito Mais.</label>
 
     <!-- Resumo -->
     <aside class="card summary" aria-label="Resumo da assinatura">
@@ -300,6 +270,8 @@
   const icon = n => `<svg class="ic"><use href="#i-${n}"/></svg>`;
   const brl = v => 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   const TRIAL = 14;
+  const STRIPE_CHECKOUT_URL = '';
+  $('payBtn').querySelector('.lbl').textContent = 'Continuar para pagamento';
 
   // mesmos planos da página de planos
   const PLANS = {
@@ -338,30 +310,8 @@
   const mask = (el, fn) => el.addEventListener('input', () => { el.value = fn(el.value); setErr(el, ''); });
   mask($('tel'), v => { const d = digits(v).slice(0, 11); return d.length <= 2 ? (d ? '(' + d : '') :d.length <= 6 ? `(${d.slice(0, 2)}) ${d.slice(2)}` : d.length <= 10 ? `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}` : `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`; });
   mask($('cnpj'), v => { const d = digits(v).slice(0, 14); return d.replace(/^(\d{2})(\d)/, '$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3').replace(/\.(\d{3})(\d)/, '.$1/$2').replace(/(\d{4})(\d)/, '$1-$2'); });
-  const brandOf = d => /^4/.test(d) ? 'VISA' : /^(5[1-5]|2[2-7])/.test(d) ? 'MASTER' : /^3[47]/.test(d) ? 'AMEX' : /^(636368|438935|504175|451416|636297|5067|4576|4011|506699)/.test(d) ? 'ELO' : /^(606282|3841)/.test(d) ? 'HIPER' : '';
-  mask($('cNum'), v => digits(v).slice(0, 19).replace(/(\d{4})(?=\d)/g, '$1 '));
-  mask($('cExp'), v => { const d = digits(v).slice(0, 4); return d.length > 2 ? d.slice(0, 2) + '/' + d.slice(2) : d; });
-  mask($('cCvv'), v => digits(v).slice(0, 4));
-  mask($('cName'), v => v.toUpperCase());
-  const preview = () => {
-    const d = digits($('cNum').value), b = brandOf(d);
-    $('cpNum').textContent = (d + '•'.repeat(Math.max(0, 16 - d.length))).slice(0, Math.max(16, d.length)).replace(/(.{4})(?=.)/g, '$1 ');
-    $('cpName').textContent = $('cName').value || 'SEU NOME';
-    $('cpExp').textContent = $('cExp').value || 'MM/AA';
-    $('cpBrand').textContent = b || 'CARTÃO';
-    $('cBrand').textContent = b || '—'; $('cBrand').classList.toggle('on', !!b);
-  };
-  ['cNum', 'cName', 'cExp'].forEach(id => $(id).addEventListener('input', preview));
-
-  // ---------- forma de pagamento ----------
-  document.querySelectorAll('input[name="pay"]').forEach(r => r.addEventListener('change', () => {
-    S.pay = r.value;
-    document.querySelectorAll('.pay-pane').forEach(p => { p.hidden = p.dataset.pane !== S.pay; });
-  }));
-
   // ---------- validação ----------
   const setErr = (el, msg) => { el.classList.toggle('err', !!msg); const t = el.closest('.field').querySelector('.err-t'); if (t) t.textContent = msg; };
-  const luhn = d => { let s = 0; d.split('').reverse().forEach((c, i) => { let n = +c; if (i % 2) { n *= 2; if (n > 9) n -= 9; } s += n; }); return s % 10 === 0; };
   const rules = [
     ['nome', v => v.trim().split(/\s+/).length >= 2 ? '' : 'Digite nome e sobrenome.'],
     ['tel', v => digits(v).length >= 10 ? '' : 'Telefone com DDD.'],
@@ -370,37 +320,42 @@
     ['cnpj', v => digits(v).length === 14 ? '' : 'O CNPJ tem 14 números.'],
     ['senha', v => v.length >= 8 ? '' : 'Use pelo menos 8 caracteres.']
   ];
-  const cardRules = [
-    ['cNum', v => { const d = digits(v); return d.length >= 13 && luhn(d) ? '' : 'Número de cartão inválido.'; }],
-    ['cName', v => v.trim().length >= 3 ? '' : 'Como está escrito no cartão.'],
-    ['cExp', v => { const m = v.match(/^(\d{2})\/(\d{2})$/); if (!m || +m[1] < 1 || +m[1] > 12) return 'Use MM/AA.'; const end = new Date(2000 + +m[2], +m[1], 0, 23, 59); return end >= new Date() ? '' : 'Cartão vencido.'; }],
-    ['cCvv', v => /^\d{3,4}$/.test(v) ? '' : '3 ou 4 números.']
-  ];
-  [...rules, ...cardRules].forEach(([id, fn]) => $(id).addEventListener('blur', () => { if ($(id).value) setErr($(id), fn($(id).value)); }));
+  rules.forEach(([id, fn]) => $(id).addEventListener('blur', () => { if ($(id).value) setErr($(id), fn($(id).value)); }));
 
   $('form').addEventListener('submit', e => {
     e.preventDefault();
-    const list = S.pay === 'cartao' ? [...rules, ...cardRules] : rules;
+    const list = rules;
     let firstBad = null;
     list.forEach(([id, fn]) => { const m = fn($(id).value); setErr($(id), m); if (m && !firstBad) firstBad = $(id); });
-    const agreed = $('agree').checked;
-    $('agreeL').classList.toggle('err', !agreed);
+    const agreement = document.querySelector('form > .agree input');
+    const agreementLabel = document.querySelector('form > .agree');
+    const agreed = agreement.checked;
+    agreementLabel.classList.toggle('err', !agreed);
     if (firstBad || !agreed) {
       $('formErr').textContent = firstBad ? 'Confira os campos marcados em vermelho.' : 'Aceite os termos para continuar.';
-      (firstBad || $('agree')).focus();
-      (firstBad || $('agree')).scrollIntoView({ behavior: 'smooth', block: 'center' });
+      (firstBad || agreement).focus();
+      (firstBad || agreement).scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
     $('formErr').textContent = '';
     const btn = $('payBtn'); btn.classList.add('loading'); btn.disabled = true;
-    // TODO: enviar para o provedor de pagamento e criar a conta no Muito Mais (hoje só simula)
+    if (!STRIPE_CHECKOUT_URL) {
+      $('formErr').textContent = 'Cadastro validado. Configure a URL do Stripe para continuar.';
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      return;
+    }
+    window.location.href = STRIPE_CHECKOUT_URL;
+    return;
+
+    // Fluxo de demonstração local, mantido apenas como referência visual.
     setTimeout(() => {
       const p = PLANS[S.plan], n = units();
       $('dPlan').textContent = p.name + (n > 1 ? ` · ${n} unidades` : '');
       $('dRest').textContent = $('rest').value.trim();
+      $('dPay').textContent = 'Stripe';
       $('dTrial').textContent = fmtLong(first);
       $('dAfter').textContent = brl(p.price * n) + '/mês';
-      $('dPay').textContent = S.pay === 'cartao' ? 'Cartão final ' + digits($('cNum').value).slice(-4) : S.pay === 'pix' ? 'Pix' : 'Boleto';
       $('dSub').textContent = 'Enviamos os dados de acesso para ' + $('email').value.trim() + '.';
       $('dGo').href = `empresa.html?plano=${S.plan}&ativo=1${n > 1 ? '&unidades=' + n : ''}#painel`;
       $('checkout').hidden = true; $('success').hidden = false;
