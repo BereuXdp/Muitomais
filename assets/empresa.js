@@ -90,7 +90,7 @@
   };
   const TRIAL_DAYS = 14;
   const qs = new URLSearchParams(location.search);
-  const PLAN = { current: null, trialEnd: null, landing: PLANS[qs.get('plano')] ? qs.get('plano') : null, pick: PLANS[qs.get('plano')] ? qs.get('plano') : 'profissional', units: 3, pay: 'cartao' };
+  const PLAN = { current: null, trialEnd: null, landing: PLANS[qs.get('plano')] ? qs.get('plano') : null, pick: PLANS[qs.get('plano')] ? qs.get('plano') : 'profissional', units: 3 };
   // vindo da tela de assinatura (assinar.html): o teste grátis já começou
   if (qs.get('ativo') === '1' && PLAN.landing) { PLAN.current = PLAN.landing; PLAN.trialEnd = addDays(today, TRIAL_DAYS); PLAN.units = PLAN.curUnits = Math.max(2, parseInt(qs.get('unidades'), 10) || 2); }
 
@@ -558,9 +558,6 @@
             <ul>${pl.feats.map(f => `<li>${icon('check')}${f}</li>`).join('')}</ul></label>`).join('')}</div></div>
         ${p.multi ? `<div class="card"><div class="card-head"><div><h2>Unidades</h2><p>No plano Redes cada unidade é cobrada separadamente. Você tem ${UNITS.length} cadastradas.</p></div></div>
           <div class="stepper"><button type="button" data-step="-1" aria-label="Menos uma" ${PLAN.units <= 2 ? 'disabled' : ''}>−</button><input id="plUnits" type="number" min="2" value="${PLAN.units}" aria-label="Unidades"><button type="button" data-step="1" aria-label="Mais uma">+</button></div></div>` : ''}
-        <div class="card"><div class="card-head"><div><h2>Forma de pagamento</h2><p>Nada é cobrado durante o teste.</p></div></div>
-          <div class="pay">${[['cartao', 'card', 'Cartão de crédito', 'Cobrança automática'], ['pix', 'pix', 'Pix', 'QR Code todo mês'], ['boleto', 'barcode', 'Boleto', 'Vence em 3 dias úteis']].map(([v, ic, t, s]) => `<label class="pm"><input type="radio" name="pay" value="${v}" ${PLAN.pay === v ? 'checked' : ''}><span class="pm-ic">${icon(ic)}</span><div><b>${t}</b><small>${s}</small></div></label>`).join('')}</div></div>
-        <div class="card"><div class="card-head"><div><h2>Faturas</h2><p>Histórico de cobranças da assinatura.</p></div></div><p class="empty">${cur ? 'Nenhuma fatura ainda. A primeira cobrança é em ' + fmtLong(PLAN.trialEnd) + '.' : 'Nenhuma fatura ainda.'}</p></div>
         ${cur ? `<div class="card" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center"><div><b style="color:var(--ink-deep)">Cancelar assinatura</b><p class="muted" style="font-size:14px">Cancelando durante o teste, nada é cobrado.</p></div><button class="btn btn-danger" id="plCancel">Cancelar assinatura</button></div>` : ''}
       </div>
       <aside class="card summary"><div class="card-head" style="margin-bottom:12px"><h2>Resumo</h2>${pill(same ? 'Ativo' : cur ? 'Troca' : 'Teste grátis', same ? 'ok' : 'warn')}</div>
@@ -575,7 +572,6 @@
   };
   V.plano.bind = () => {
     document.querySelectorAll('input[name="plano"]').forEach(r => r.addEventListener('change', () => { PLAN.pick = r.value; qs.set('plano', r.value); history.replaceState(null, '', location.pathname + '?' + qs + location.hash); render(true); }));
-    document.querySelectorAll('input[name="pay"]').forEach(r => r.addEventListener('change', () => { PLAN.pay = r.value; }));
     document.querySelectorAll('[data-step]').forEach(b => b.addEventListener('click', () => { PLAN.units = Math.max(2, PLAN.units + +b.dataset.step); render(true); }));
     const ui = $('plUnits'); if (ui) ui.addEventListener('change', () => { PLAN.units = Math.max(2, parseInt(ui.value, 10) || 2); render(true); });
     $('plGo').addEventListener('click', () => {
