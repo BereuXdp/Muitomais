@@ -9,12 +9,12 @@
 
   // ================= dados de exemplo (trocar pela API) =================
   const EMPRESAS = [
-    { id: 'e1', n: 'Grupo Bella Mesa', rs: 'Bella Mesa Restaurantes Ltda', slug: 'grupo-bella-mesa', cnpj: '12.345.678/0001-90', st: 'ACTIVE', acc: 'TRIAL', plan: 'Redes', bill: 'TRIALING', trial: '04/11/2026', units: ['Bella Centro', 'Bella Jardins', 'Bella Shopping'], users: [['Ana Ribeiro', 'Proprietária'], ['Marcos Lima', 'Gerente']] },
-    { id: 'e2', n: 'Café Aurora', rs: 'Aurora Cafeteria Ltda', slug: 'cafe-aurora', cnpj: '23.456.789/0001-01', st: 'ACTIVE', acc: 'ACTIVE', plan: 'Profissional', bill: 'ACTIVE', trial: null, units: ['Café Aurora'], users: [['Bruno Alves', 'Proprietário']] },
-    { id: 'e3', n: 'Sabor da Vila', rs: 'Vila Sabores Alimentos Ltda', slug: 'sabor-da-vila', cnpj: '34.567.890/0001-12', st: 'ACTIVE', acc: 'ACTIVE', plan: 'Essencial', bill: 'PAST_DUE', trial: null, units: ['Sabor da Vila'], users: [['Carla Nunes', 'Proprietária'], ['Diego Reis', 'Caixa']] },
-    { id: 'e4', n: 'Cantina Nonna', rs: 'Nonna Gastronomia Ltda', slug: 'cantina-nonna', cnpj: '45.678.901/0001-23', st: 'ACTIVE', acc: 'COMPLIMENTARY', plan: '—', bill: 'NONE', trial: null, units: ['Cantina Nonna'], users: [['Elisa Prado', 'Proprietária']] },
-    { id: 'e5', n: 'Ponto do Pastel', rs: 'Pastelaria Ponto Ltda', slug: 'ponto-do-pastel', cnpj: '56.789.012/0001-34', st: 'INACTIVE', acc: 'NONE', plan: '—', bill: 'CANCELED', trial: null, units: [], users: [['Fábio Costa', 'Proprietário']] },
-    { id: 'e6', n: 'Restaurante Demonstração', rs: 'Demo Restaurante Ltda', slug: 'restaurante-demo', cnpj: '67.890.123/0001-45', st: 'ACTIVE', acc: 'NONE', plan: '—', bill: 'NONE', trial: null, units: [], users: [['Gabriela Torres', 'Proprietária']] }
+    { id: 'e1', n: 'Grupo Bella Mesa', rs: 'Bella Mesa Restaurantes Ltda', slug: 'grupo-bella-mesa', cnpj: '12.345.678/0001-90', st: 'ACTIVE', acc: 'ACTIVE', plan: 'Redes', bill: 'ACTIVE', units: ['Bella Centro', 'Bella Jardins', 'Bella Shopping'], users: [['Ana Ribeiro', 'Proprietária'], ['Marcos Lima', 'Gerente']] },
+    { id: 'e2', n: 'Café Aurora', rs: 'Aurora Cafeteria Ltda', slug: 'cafe-aurora', cnpj: '23.456.789/0001-01', st: 'ACTIVE', acc: 'ACTIVE', plan: 'Profissional', bill: 'ACTIVE', units: ['Café Aurora'], users: [['Bruno Alves', 'Proprietário']] },
+    { id: 'e3', n: 'Sabor da Vila', rs: 'Vila Sabores Alimentos Ltda', slug: 'sabor-da-vila', cnpj: '34.567.890/0001-12', st: 'ACTIVE', acc: 'ACTIVE', plan: 'Essencial', bill: 'PAST_DUE', units: ['Sabor da Vila'], users: [['Carla Nunes', 'Proprietária'], ['Diego Reis', 'Caixa']] },
+    { id: 'e4', n: 'Cantina Nonna', rs: 'Nonna Gastronomia Ltda', slug: 'cantina-nonna', cnpj: '45.678.901/0001-23', st: 'ACTIVE', acc: 'COMPLIMENTARY', plan: '—', bill: 'NONE', units: ['Cantina Nonna'], users: [['Elisa Prado', 'Proprietária']] },
+    { id: 'e5', n: 'Ponto do Pastel', rs: 'Pastelaria Ponto Ltda', slug: 'ponto-do-pastel', cnpj: '56.789.012/0001-34', st: 'INACTIVE', acc: 'NONE', plan: '—', bill: 'CANCELED', units: [], users: [['Fábio Costa', 'Proprietário']] },
+    { id: 'e6', n: 'Restaurante Demonstração', rs: 'Demo Restaurante Ltda', slug: 'restaurante-demo', cnpj: '67.890.123/0001-45', st: 'ACTIVE', acc: 'NONE', plan: '—', bill: 'NONE', units: [], users: [['Gabriela Torres', 'Proprietária']] }
   ];
   const CLIENTES = [
     { id: 'c1', n: 'Mariana Costa', e: 'mariana.costa@exemplo.com', tel: '1699', cpf: '***.***.***-21', st: 'ACTIVE', wal: [['Grupo Bella Mesa', 37.40, 12.40]] },
@@ -59,9 +59,9 @@
   ];
   const FEATS = ['Cashback', 'Missões', 'Analytics', 'Missões inteligentes', 'Validação de NFC-e', 'Multiunidade', 'Segmentação'];
   const PLANOS = [
-    { id: 'p1', n: 'Essencial', slug: 'essencial', price: 99, per: 'Mensal', st: 'ACTIVE', pub: true, order: 1, hl: false, pid: 'preco_essencial_mensal', sync: true, trial: 14, feats: ['Cashback', 'Missões'], badge: '', cta: '' },
-    { id: 'p2', n: 'Profissional', slug: 'profissional', price: 197, per: 'Mensal', st: 'ACTIVE', pub: true, order: 2, hl: true, pid: 'preco_profissional_mensal', sync: true, trial: 14, feats: ['Cashback', 'Missões', 'Analytics', 'Validação de NFC-e', 'Segmentação'], badge: 'Mais completo', cta: '' },
-    { id: 'p3', n: 'Redes', slug: 'redes', price: 597, per: 'Mensal', st: 'ACTIVE', pub: true, order: 3, hl: false, pid: 'preco_redes_mensal', sync: true, trial: 14, feats: ['Cashback', 'Missões', 'Analytics', 'Validação de NFC-e', 'Multiunidade', 'Segmentação'], badge: 'Redes e franquias', cta: '' }
+    { id: 'p1', n: 'Essencial', slug: 'essencial', price: 99, per: 'Mensal', st: 'ACTIVE', pub: true, order: 1, hl: false, pid: 'preco_essencial_mensal', sync: true, feats: ['Cashback', 'Missões'], badge: '', cta: '' },
+    { id: 'p2', n: 'Profissional', slug: 'profissional', price: 197, per: 'Mensal', st: 'ACTIVE', pub: true, order: 2, hl: true, pid: 'preco_profissional_mensal', sync: true, feats: ['Cashback', 'Missões', 'Analytics', 'Validação de NFC-e', 'Segmentação'], badge: 'Mais completo', cta: '' },
+    { id: 'p3', n: 'Redes', slug: 'redes', price: 597, per: 'Mensal', st: 'ACTIVE', pub: true, order: 3, hl: false, pid: 'preco_redes_mensal', sync: true, feats: ['Cashback', 'Missões', 'Analytics', 'Validação de NFC-e', 'Multiunidade', 'Segmentação'], badge: 'Redes e franquias', cta: '' }
   ];
   const PAGAMENTOS = [
     ['05/10/2026', 'Café Aurora', 197, 'Cartão', 'Pago'], ['05/10/2026', 'Sabor da Vila', 99, 'Boleto', 'Falhou'],
@@ -115,7 +115,7 @@
   const sel = (id, label, opts, val) => `<label class="field"><span>${label}</span><select class="ctl" id="${id}">${opts.map(([v, t]) => `<option value="${v}" ${v === val ? 'selected' : ''}>${t}</option>`).join('')}</select></label>`;
   const table = (cols, rows, empty = 'Nada por aqui.') => `<div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr>${cols.map(c => `<th class="${c[1] || ''}">${c[0]}</th>`).join('')}</tr></thead><tbody>${rows.join('') || `<tr><td colspan="${cols.length}"><p class="empty">${empty}</p></td></tr>`}</tbody></table></div></div>`;
   const ST = { ACTIVE: ['Ativo', 'ok'], INACTIVE: ['Inativo', ''], BLOCKED: ['Bloqueado', 'err'], INVITED: ['Convidado', 'warn'], DISABLED: ['Desativado', ''],
-    TRIAL: ['Teste', 'info'], TRIALING: ['Em teste', 'info'], COMPLIMENTARY: ['Cortesia', 'info'], NONE: ['Sem plano', ''], PAST_DUE: ['Em atraso', 'warn'], CANCELED: ['Cancelada', ''],
+    COMPLIMENTARY: ['Cortesia', 'info'], NONE: ['Sem plano', ''], PAST_DUE: ['Em atraso', 'warn'], CANCELED: ['Cancelada', ''],
     VALID: ['Válida', 'ok'], PENDING: ['Pendente', 'warn'], REJECTED: ['Rejeitada', 'err'], OPEN: ['Aberto', 'warn'], REVIEW: ['Em revisão', 'info'], RESOLVED: ['Resolvido', 'ok'],
     LOW: ['Baixa', 'ok'], MEDIUM: ['Média', 'warn'], HIGH: ['Alta', 'err'], DRAFT: ['Rascunho', 'info'] };
   const st = k => pill(...(ST[k] || [k, '']));
@@ -132,7 +132,7 @@
   const V = {};
   const SEARCH = { q: '' };
   const kpiCount = () => ({
-    emp: EMPRESAS.length, empAt: EMPRESAS.filter(e => e.st === 'ACTIVE').length, trial: EMPRESAS.filter(e => e.bill === 'TRIALING').length,
+    emp: EMPRESAS.length, empAt: EMPRESAS.filter(e => e.st === 'ACTIVE').length,
     cli: CLIENTES.filter(c => c.st === 'ACTIVE').length, nf: NFCE.length, vres: VOUCHERS.filter(v => v[4] === 'Usado').length,
     mrr: EMPRESAS.filter(e => e.bill === 'ACTIVE').reduce((a, e) => a + (PLANOS.find(p => p.n === e.plan) || { price: 0 }).price * Math.max(1, e.units.length), 0),
     past: EMPRESAS.filter(e => e.bill === 'PAST_DUE').length, fail: PAGAMENTOS.filter(p => p[4] === 'Falhou').length,
@@ -141,7 +141,7 @@
 
   V.dashboard = () => {
     const k = kpiCount();
-    const kp = [['Empresas', k.emp], ['Empresas ativas', k.empAt], ['Empresas em teste', k.trial], ['Clientes ativos', k.cli], ['NFC-e', k.nf], ['Vouchers resgatados', k.vres], ['Missões ativas', 4],
+    const kp = [['Empresas', k.emp], ['Empresas ativas', k.empAt], ['Clientes ativos', k.cli], ['NFC-e', k.nf], ['Vouchers resgatados', k.vres], ['Missões ativas', 4],
       ['MRR', brl(k.mrr), true], ['Em atraso', k.past], ['Pagamentos falhos', k.fail], ['Clientes', CLIENTES.length], ['Usuários', k.users], ['Vouchers', k.vch], ['Fraudes abertas', k.fr]];
     const days = Array.from({ length: 14 }, (_, i) => { const d = new Date(); d.setDate(d.getDate() - 13 + i); return d.toLocaleDateString('pt-BR').slice(0, 5); });
     const nf = [12, 18, 9, 22, 30, 41, 26, 15, 21, 19, 33, 47, 38, 24];
@@ -216,7 +216,7 @@
     return `<a class="back-link" href="#empresas">${icon('back')}Empresas</a>` + head(esc(e.n), `${esc(e.rs)} · ${e.cnpj} · ${st(e.st)}`,
       `<button class="btn btn-primary btn-sm" data-em="ACTIVE" ${e.st === 'ACTIVE' ? 'disabled' : ''}>Ativar</button><button class="btn btn-danger btn-sm" data-em="INACTIVE" ${e.st !== 'ACTIVE' ? 'disabled' : ''}>Desativar</button>`) + `
       <div class="grid-3">
-        <div class="card"><div class="card-head"><h2>Billing</h2></div><div class="kv"><div><span>Plano</span><b>${e.plan}</b></div><div><span>Billing</span><b>${st(e.bill)}</b></div><div><span>Acesso</span><b>${st(e.acc)}</b></div>${e.trial ? `<div><span>Teste até</span><b>${e.trial}</b></div>` : ''}<div><span>Slug</span><b class="mono">${e.slug}</b></div></div></div>
+        <div class="card"><div class="card-head"><h2>Billing</h2></div><div class="kv"><div><span>Plano</span><b>${e.plan}</b></div><div><span>Billing</span><b>${st(e.bill)}</b></div><div><span>Acesso</span><b>${st(e.acc)}</b></div><div><span>Slug</span><b class="mono">${e.slug}</b></div></div></div>
         <div class="card"><div class="card-head"><h2>Unidades</h2>${pill(e.units.length)}</div>${e.units.map(u => `<div class="item"><span class="item-ic">${icon('store')}</span><div class="item-body"><b>${esc(u)}</b><p>Cashback ativo</p></div></div>`).join('') || '<p class="empty">Nenhuma unidade.</p>'}</div>
         <div class="card"><div class="card-head"><h2>Usuários</h2>${pill(e.users.length)}</div>${e.users.map(u => `<div class="item"><span class="av">${u[0].split(' ').map(w => w[0]).join('').slice(0, 2)}</span><div class="item-body"><b>${esc(u[0])}</b><p>${u[1]}</p></div></div>`).join('')}</div>
       </div>`;
@@ -256,7 +256,7 @@
   // --- Billing ---
   V.billing = () => {
     const c = s => EMPRESAS.filter(e => e.bill === s).length, k = kpiCount();
-    const kp = [['MRR estimado', brl(k.mrr), true], ['Ativas', c('ACTIVE')], ['Em teste', c('TRIALING')], ['Em atraso', c('PAST_DUE')], ['Não pagas', 0], ['Canceladas', c('CANCELED')],
+    const kp = [['MRR estimado', brl(k.mrr), true], ['Ativas', c('ACTIVE')], ['Em atraso', c('PAST_DUE')], ['Não pagas', 0], ['Canceladas', c('CANCELED')],
       ['Recebido (30d)', brl(PAGAMENTOS.filter(p => p[4] === 'Pago').slice(0, 1).reduce((a, p) => a + p[2], 0))], ['Falhos', k.fail], ['Novas (30d)', 3]];
     return head('Billing', 'Visão geral de planos e assinaturas. O pagamento é feito na plataforma de pagamento.', `<a class="btn btn-ghost btn-sm" href="#billing/planos">${icon('crown')}Planos</a>`) +
       `<div class="kpis" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">${kp.map(([l, v, hl]) => `<div class="kpi${hl ? ' hl' : ''}"><small>${l}</small><strong>${typeof v === 'number' ? num(v) : v}</strong></div>`).join('')}</div>
@@ -272,7 +272,7 @@
   V.planos = () => head('Planos', 'Catálogo de planos. O plano nasce como rascunho; depois use Ativar e Publicar na landing.', `<button class="btn btn-primary" id="plNew">${icon('plus')}Criar plano</button>`) + `
     <div class="stack">${PLANOS.slice().sort((a, b) => a.order - b.order).map(p => `<div class="item" style="margin:0" data-p="${p.id}"><span class="item-ic">${icon('crown')}</span><div class="item-body">
       <b>${esc(p.n)} · ${brl(p.price)} / ${p.per === 'Anual' ? 'ano' : 'mês'}</b>
-      <div class="meta">${st(p.st)}${p.pub ? pill('Publicado', 'ok') : pill('Oculto da landing')}${pill('Ordem ' + p.order)}${p.hl ? pill('Destacado', 'dark') : ''}${pill(p.trial ? 'Teste ' + p.trial + 'd' : 'Sem teste')}${pill(p.pid ? 'ID de preço ok' : 'Sem ID de preço', p.pid ? 'ok' : 'warn')}</div>
+      <div class="meta">${st(p.st)}${p.pub ? pill('Publicado', 'ok') : pill('Oculto da landing')}${pill('Ordem ' + p.order)}${p.hl ? pill('Destacado', 'dark') : ''}${pill(p.pid ? 'ID de preço ok' : 'Sem ID de preço', p.pid ? 'ok' : 'warn')}</div>
       <p style="margin-top:8px">${p.feats.join(' · ')}${p.badge ? ' · selo “' + esc(p.badge) + '”' : ''}</p>
       <div class="item-acts">
         <button class="btn btn-ghost btn-sm" data-pa="status">${p.st === 'ACTIVE' ? 'Voltar a rascunho' : 'Ativar'}</button>
@@ -288,7 +288,6 @@
       <label class="field"><span>Preço</span><input class="ctl" id="pfPrice" inputmode="decimal" value="${p.price ? String(p.price).replace('.', ',') : ''}" placeholder="99,90"><small>Sem R$. É o valor mostrado na landing.</small></label>
       <label class="field"><span>Periodicidade</span><select class="ctl" id="pfPer"><option ${p.per !== 'Anual' ? 'selected' : ''}>Mensal</option><option ${p.per === 'Anual' ? 'selected' : ''}>Anual</option></select></label>
       <label class="field"><span>ID do preço na plataforma de pagamento</span><input class="ctl mono" id="pfPid" value="${esc(p.pid || '')}"><small>Sem ele, use Sincronizar depois de criar o plano.</small></label>
-      <label class="field"><span>Dias de teste grátis</span><input class="ctl" id="pfTrial" type="number" min="0" value="${p.trial ?? 14}"><small>0 esconde o teste.</small></label>
       <div class="field"><span>Recursos</span><div class="checks-row">${FEATS.map(f => `<label class="chk"><input type="checkbox" value="${f}" ${(p.feats || []).includes(f) ? 'checked' : ''}>${f}</label>`).join('')}</div></div>
       <label class="field"><span>Ordem na landing</span><input class="ctl" id="pfOrder" type="number" min="1" value="${p.order || PLANOS.length + 1}"></label>
       <label class="field"><span>Selo</span><input class="ctl" id="pfBadge" value="${esc(p.badge || '')}" placeholder="Ex.: Mais completo"></label>
@@ -307,8 +306,8 @@
   };
 
   // --- Assinaturas / Pagamentos / Faturas / Reconciliação ---
-  V.assinaturas = () => head('Assinaturas', 'Assinaturas das empresas.') + table([['Empresa'], ['Plano'], ['Status'], ['Teste até'], ['Fim do período'], ['Cancela no fim']],
-    EMPRESAS.map(e => `<tr class="link" data-go-href="#empresas/${e.id}"><td><b>${esc(e.n)}</b></td><td>${e.plan}</td><td>${st(e.bill)}</td><td>${e.trial || '—'}</td><td>${e.bill === 'ACTIVE' || e.bill === 'PAST_DUE' ? '05/11/2026' : '—'}</td><td>${e.bill === 'CANCELED' ? pill('Sim', 'warn') : 'Não'}</td></tr>`));
+  V.assinaturas = () => head('Assinaturas', 'Assinaturas das empresas.') + table([['Empresa'], ['Plano'], ['Status'], ['Fim do período'], ['Cancela no fim']],
+    EMPRESAS.map(e => `<tr class="link" data-go-href="#empresas/${e.id}"><td><b>${esc(e.n)}</b></td><td>${e.plan}</td><td>${st(e.bill)}</td><td>${e.bill === 'ACTIVE' || e.bill === 'PAST_DUE' ? '05/11/2026' : '—'}</td><td>${e.bill === 'CANCELED' ? pill('Sim', 'warn') : 'Não'}</td></tr>`));
   V.assinaturas.bind = () => rowLinks();
   V.pagamentos = () => head('Pagamentos', 'Cobranças da plataforma de pagamento espelhadas aqui.', `<button class="btn btn-ghost btn-sm" data-retry>${icon('refresh')}Atualizar</button>`) +
     table([['Data'], ['Empresa'], ['Valor', 'num'], ['Método'], ['Status']], PAGAMENTOS.map(p => `<tr><td>${p[0]}</td><td><b>${esc(p[1])}</b></td><td class="num">${brl(p[2])}</td><td>${p[3]}</td><td>${pill(p[4], p[4] === 'Pago' ? 'ok' : 'err')}</td></tr>`), 'Nenhum pagamento.');
@@ -418,7 +417,7 @@
       const bad = [['pfN', !n], ['pfSlug', !/^[a-z0-9-]+$/.test(slug)], ['pfPrice', !(price > 0)]].filter(x => x[1]);
       document.querySelectorAll('.sh-form .ctl').forEach(i => i.classList.remove('err'));
       if (bad.length) { bad.forEach(([i]) => $(i).classList.add('err')); $(bad[0][0]).focus(); return toast('Confira os campos marcados.'); }
-      const data = { n, slug, price, per: $('pfPer').value, pid: $('pfPid').value.trim(), trial: +$('pfTrial').value || 0, order: +$('pfOrder').value || 1, badge: $('pfBadge').value.trim(), cta: $('pfCta').value.trim(), feats: [...document.querySelectorAll('.sh-form .chk input:checked')].map(i => i.value) };
+      const data = { n, slug, price, per: $('pfPer').value, pid: $('pfPid').value.trim(), order: +$('pfOrder').value || 1, badge: $('pfBadge').value.trim(), cta: $('pfCta').value.trim(), feats: [...document.querySelectorAll('.sh-form .chk input:checked')].map(i => i.value) };
       if (id) Object.assign(PLANOS.find(p => p.id === id), data); else PLANOS.push({ id: 'p' + Date.now(), st: 'DRAFT', pub: false, hl: false, ...data });
       AUDIT.unshift(['plan.' + (id ? 'update' : 'create'), 'operacao@exemplo.com', 'Plan', now()]); closeSheet(); render(); toast(id ? 'Plano salvo.' : 'Plano criado como rascunho.');
     }

@@ -88,11 +88,10 @@
     profissional: { name: 'Profissional', price: 197, multi: false, feats: ['Cashback', 'Missões', 'Analytics', 'Validação de NFC-e', 'Segmentação', '1 unidade', '5 usuários', '10 missões ativas'] },
     redes: { name: 'Redes', price: 597, multi: true, feats: ['Cashback', 'Missões', 'Analytics', 'Validação de NFC-e', 'Segmentação', 'Multiunidade', '20 usuários', '50 missões ativas'] }
   };
-  const TRIAL_DAYS = 14;
   const qs = new URLSearchParams(location.search);
-  const PLAN = { current: null, trialEnd: null, landing: PLANS[qs.get('plano')] ? qs.get('plano') : null, pick: PLANS[qs.get('plano')] ? qs.get('plano') : 'profissional', units: 3 };
-  // vindo da tela de assinatura (assinar.html): o teste grátis já começou
-  if (qs.get('ativo') === '1' && PLAN.landing) { PLAN.current = PLAN.landing; PLAN.trialEnd = addDays(today, TRIAL_DAYS); PLAN.units = PLAN.curUnits = Math.max(2, parseInt(qs.get('unidades'), 10) || 2); }
+  const PLAN = { current: null, landing: PLANS[qs.get('plano')] ? qs.get('plano') : null, pick: PLANS[qs.get('plano')] ? qs.get('plano') : 'profissional', units: 3 };
+  // vindo da tela de cadastro (assinar.html): o plano escolhido já está ativo
+  if (qs.get('ativo') === '1' && PLAN.landing) { PLAN.current = PLAN.landing; PLAN.units = PLAN.curUnits = Math.max(2, parseInt(qs.get('unidades'), 10) || 2); }
 
   // ================= utilidades de interface =================
   let tt;
@@ -545,28 +544,25 @@
   const pUnits = () => PLANS[PLAN.pick].multi ? PLAN.units : 1;
   V.plano = () => {
     const cur = PLAN.current, p = PLANS[PLAN.pick], n = pUnits(), same = cur === PLAN.pick;
-    const first = PLAN.trialEnd || addDays(today, TRIAL_DAYS);
     return head('Plano e cobrança', 'Contrate, troque ou regularize sua assinatura. Os preços não são alterados pela empresa.') + `
       <div class="layout"><div class="stack">
         <div class="current"><span class="pg-ic">${icon('crown')}</span>
-          <div class="cur-txt"><small>${cur ? 'Plano atual' : 'Status'}</small><b>${cur ? PLANS[cur].name + ' · teste grátis' : 'Sem plano'}</b><p>${cur ? 'Teste grátis até ' + fmtLong(PLAN.trialEnd) + '. Depois, cobrança mensal.' : 'Escolha um plano e comece com 14 dias de teste grátis.'}</p></div>
-          ${cur ? `<div class="cur-meta"><span>Valor depois do teste<strong>${brl(PLANS[cur].price * (PLANS[cur].multi ? PLAN.curUnits : 1))}/mês</strong></span></div>` : ''}</div>
-        <div class="card"><div class="card-head"><div><h2>Planos</h2><p>Valores por unidade, cobrados todo mês. Todos com ${TRIAL_DAYS} dias de teste.</p></div><a class="pill ok" href="planos.html#comparar">Comparar planos</a></div>
+          <div class="cur-txt"><small>${cur ? 'Plano atual' : 'Status'}</small><b>${cur ? PLANS[cur].name : 'Sem plano'}</b><p>${cur ? 'Cobrança mensal pela plataforma de pagamento.' : 'Escolha um plano para liberar os recursos.'}</p></div>
+          ${cur ? `<div class="cur-meta"><span>Valor mensal<strong>${brl(PLANS[cur].price * (PLANS[cur].multi ? PLAN.curUnits : 1))}/mês</strong></span></div>` : ''}</div>
+        <div class="card"><div class="card-head"><div><h2>Planos</h2><p>Valores por unidade, cobrados todo mês.</p></div><a class="pill ok" href="planos.html#comparar">Comparar planos</a></div>
           <div class="plans-pick">${Object.entries(PLANS).map(([k, pl]) => `<label class="pk"><input type="radio" name="plano" value="${k}" ${PLAN.pick === k ? 'checked' : ''}><span class="pk-ok">${icon('check')}</span>
             ${k === cur ? pill('Plano atual', 'dark') : k === PLAN.landing ? pill('Selecionado na landing', 'ok') : pill(k === 'redes' ? 'Redes e franquias' : k === 'profissional' ? 'Mais completo' : 'Para começar')}
-            <b>${pl.name}</b><span class="pk-price"><strong>${brl(pl.price).replace(',00', '')}</strong>/mês</span><span class="trial">${TRIAL_DAYS} dias de teste</span>
+            <b>${pl.name}</b><span class="pk-price"><strong>${brl(pl.price).replace(',00', '')}</strong>/mês</span>
             <ul>${pl.feats.map(f => `<li>${icon('check')}${f}</li>`).join('')}</ul></label>`).join('')}</div></div>
         ${p.multi ? `<div class="card"><div class="card-head"><div><h2>Unidades</h2><p>No plano Redes cada unidade é cobrada separadamente. Você tem ${UNITS.length} cadastradas.</p></div></div>
           <div class="stepper"><button type="button" data-step="-1" aria-label="Menos uma" ${PLAN.units <= 2 ? 'disabled' : ''}>−</button><input id="plUnits" type="number" min="2" value="${PLAN.units}" aria-label="Unidades"><button type="button" data-step="1" aria-label="Mais uma">+</button></div></div>` : ''}
-        ${cur ? `<div class="card" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center"><div><b style="color:var(--ink-deep)">Cancelar assinatura</b><p class="muted" style="font-size:14px">Cancelando durante o teste, nada é cobrado.</p></div><button class="btn btn-danger" id="plCancel">Cancelar assinatura</button></div>` : ''}
+        ${cur ? `<div class="card" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center"><div><b style="color:var(--ink-deep)">Cancelar assinatura</b><p class="muted" style="font-size:14px">Os recursos param de funcionar no fim do período já pago.</p></div><button class="btn btn-danger" id="plCancel">Cancelar assinatura</button></div>` : ''}
       </div>
-      <aside class="card summary"><div class="card-head" style="margin-bottom:12px"><h2>Resumo</h2>${pill(same ? 'Ativo' : cur ? 'Troca' : 'Teste grátis', same ? 'ok' : 'warn')}</div>
+      <aside class="card summary"><div class="card-head" style="margin-bottom:12px"><h2>Resumo</h2>${pill(same ? 'Ativo' : cur ? 'Troca' : 'Novo plano', same ? 'ok' : 'warn')}</div>
         <div class="line"><span>Plano</span><b>${p.name}</b></div>
         <div class="line"><span>${brl(p.price)} × ${n} ${n > 1 ? 'unidades' : 'unidade'}</span><b>${brl(p.price * n)}/mês</b></div>
-        <div class="line"><span>Hoje</span><b>${brl(0)}</b></div>
-        <div class="line"><span>Primeira cobrança</span><b>${fmtLong(first)}</b></div>
-        <div class="total"><span>Depois do teste</span><strong>${brl(p.price * n)}<small>/mês</small></strong></div>
-        <button class="btn btn-primary" id="plGo" style="width:100%;height:52px;margin-top:16px" ${same ? 'disabled' : ''}>${same ? 'Plano atual' : cur ? 'Trocar para o ' + p.name : 'Começar teste grátis'}</button>
+        <div class="total"><span>Valor mensal</span><strong>${brl(p.price * n)}<small>/mês</small></strong></div>
+        <button class="btn btn-primary" id="plGo" style="width:100%;height:52px;margin-top:16px" ${same ? 'disabled' : ''}>${same ? 'Plano atual' : cur ? 'Trocar para o ' + p.name : 'Contratar ' + p.name}</button>
         <p class="muted" style="margin-top:10px;font-size:12.5px;text-align:center">${icon('lock', 'width:13px;height:13px;vertical-align:-2px')} Cancele quando quiser</p></aside>
       </div>`;
   };
@@ -576,10 +572,10 @@
     const ui = $('plUnits'); if (ui) ui.addEventListener('change', () => { PLAN.units = Math.max(2, parseInt(ui.value, 10) || 2); render(true); });
     $('plGo').addEventListener('click', () => {
       const p = PLANS[PLAN.pick], n = pUnits();
-      openSheet('ok', sheetHead('ok', 'crown', PLAN.current ? 'Trocar plano' : 'Teste grátis', (PLAN.current ? 'Trocar para o ' : 'Começar o ') + p.name + '?', PLAN.current ? 'O novo plano vale na hora. O teste continua até a mesma data.' : `Você usa tudo por ${TRIAL_DAYS} dias sem pagar nada.`) +
-        `<div class="sh-box"><div class="line"><span>Hoje</span><b>${brl(0)}</b></div><div class="line"><span>Depois do teste</span><b>${brl(p.price * n)}/mês</b></div></div><div class="sh-actions"><button class="btn btn-primary" data-go="planGo">Confirmar</button><button class="btn btn-ghost" data-go="close">Voltar</button></div>`);
+      openSheet('ok', sheetHead('ok', 'crown', PLAN.current ? 'Trocar plano' : 'Novo plano', (PLAN.current ? 'Trocar para o ' : 'Contratar o ') + p.name + '?', PLAN.current ? 'O novo plano vale na hora.' : 'Os recursos são liberados assim que o plano for ativado.') +
+        `<div class="sh-box"><div class="line"><span>Plano</span><b>${p.name}</b></div><div class="line"><span>Valor mensal</span><b>${brl(p.price * n)}/mês</b></div></div><div class="sh-actions"><button class="btn btn-primary" data-go="planGo">Confirmar</button><button class="btn btn-ghost" data-go="close">Voltar</button></div>`);
     });
-    const c = $('plCancel'); if (c) c.addEventListener('click', () => openSheet('err', sheetHead('err', 'alert', 'Assinatura', 'Cancelar a assinatura?', 'Durante o teste nada é cobrado. O cashback para de funcionar na hora.') + `<div class="sh-actions"><button class="btn btn-ghost" data-go="close">Manter</button><button class="btn btn-err" data-go="planCancel">Cancelar assinatura</button></div>`));
+    const c = $('plCancel'); if (c) c.addEventListener('click', () => openSheet('err', sheetHead('err', 'alert', 'Assinatura', 'Cancelar a assinatura?', 'O cashback para de funcionar no fim do período já pago.') + `<div class="sh-actions"><button class="btn btn-ghost" data-go="close">Manter</button><button class="btn btn-err" data-go="planCancel">Cancelar assinatura</button></div>`));
   };
 
   // --- Validar no caixa ---
@@ -637,13 +633,12 @@
     if (go === 'cbOff') { PROGRAM.on = false; closeSheet(); render(); toast('Programa desativado.'); }
     if (go === 'planGo') {
       const p = PLANS[PLAN.pick];
-      if (!PLAN.current) PLAN.trialEnd = addDays(today, TRIAL_DAYS);
       PLAN.current = PLAN.pick; PLAN.curUnits = pUnits();
-      $('sidePlan').textContent = 'Plano ' + p.name + ' · teste';
+      $('sidePlan').textContent = 'Plano ' + p.name;
       render(true);
-      openSheet('ok', sheetHead('ok', 'check', 'Tudo certo', 'Plano ' + p.name + ' ativo!', 'Teste grátis até ' + fmtLong(PLAN.trialEnd) + '. Os recursos já estão liberados.') + `<div class="sh-actions"><button class="btn btn-primary" data-go="close">Fechar</button></div>`);
+      openSheet('ok', sheetHead('ok', 'check', 'Tudo certo', 'Plano ' + p.name + ' ativo!', 'Os recursos já estão liberados.') + `<div class="sh-actions"><button class="btn btn-primary" data-go="close">Fechar</button></div>`);
     }
-    if (go === 'planCancel') { PLAN.current = null; PLAN.trialEnd = null; $('sidePlan').textContent = 'Sem plano'; closeSheet(); render(true); toast('Assinatura cancelada. Nada foi cobrado.'); }
+    if (go === 'planCancel') { PLAN.current = null; $('sidePlan').textContent = 'Sem plano'; closeSheet(); render(true); toast('Assinatura cancelada.'); }
     if (go === 'reserve') { VOUCHERS.unshift({ code: b.dataset.code, c: CLIENTS[0].n, v: 37.40, u: $('cxUnit').value, st: 'Reservado', dt: new Date().toLocaleString('pt-BR').slice(0, 17) }); closeSheet(); $('cxCode').value = ''; $('cxHint').textContent = 'Toque em “Ler QR Code” e aponte para o celular do cliente'; toast('Voucher reservado. Registre a NFC-e da venda.'); }
   });
 
@@ -689,7 +684,7 @@
   $('menuBtn').addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
   $('scrim').addEventListener('click', () => setMenu(false));
 
-  if (PLAN.current) $('sidePlan').textContent = 'Plano ' + PLANS[PLAN.current].name + ' · teste';
+  if (PLAN.current) $('sidePlan').textContent = 'Plano ' + PLANS[PLAN.current].name;
   updateRiskCount();
   go();
 })();
