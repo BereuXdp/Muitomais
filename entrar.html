@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Entrar — Muito Mais</title>
 <meta name="description" content="Entre na sua conta Muito Mais: cliente para ver seu cashback, loja para acessar o painel.">
-<link rel="icon" href="https://muitomais.app/brand/icon.png">
+<link rel="icon" type="image/svg+xml" href="brand/icon.svg">
+<link rel="alternate icon" type="image/png" href="brand/logo-icone.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -225,6 +226,13 @@
     .art-quote { font-size: 22px; }
     .auth-box h1 { margin-top: 28px; }
   }
+  /* logo nova: cubo + nome em duas linhas */
+  .brand .mm-logo { display: block; width: auto; height: 36px; flex: none; }
+  .brand .wm { display: flex; flex-direction: column; line-height: .9; font-size: .8em; font-weight: 800; letter-spacing: .02em; text-transform: uppercase; }
+  .brand .wm .muito { color: #2db160; }
+  .brand .wm .mais { color: #0c9444; }
+  footer .brand .wm .muito, .side .brand .wm .muito { color: #fff; }
+  footer .brand .wm .mais, .side .brand .wm .mais { color: var(--green-300); }
 </style>
 </head>
 <body data-mode="cliente">
@@ -235,8 +243,8 @@
   <section class="auth-form">
     <div class="auth-top enter">
       <a href="index.html" class="brand" aria-label="Muito Mais — início">
-        <svg width="30" height="30" viewBox="0 0 80 80" fill="none" aria-hidden="true"><rect width="80" height="80" rx="18" fill="url(#mm-icon)"/><g><circle cx="20" cy="14" r="7.2" fill="#fff"/><rect x="14.2" y="20" width="11.6" height="46" rx="5.8" fill="#fff"/><path d="M25.2 28 C32 34 36 40 40 50" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="60" cy="14" r="7.2" fill="#fff"/><rect x="54.2" y="20" width="11.6" height="46" rx="5.8" fill="#fff"/><path d="M54.8 28 C48 34 44 40 40 50" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/></g></svg>
-        <span><span class="muito">Muito</span><span class="mais">Mais</span></span>
+        <img class="mm-logo" src="brand/icon.svg" width="36" height="30" alt="">
+        <span class="wm"><span class="muito">Muito</span><span class="mais">Mais</span></span>
       </a>
       <a href="index.html" class="back"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> Voltar ao site</a>
     </div>

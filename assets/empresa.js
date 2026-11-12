@@ -118,8 +118,8 @@
   const sel = (id, label, opts, val) => `<label class="field"><span>${label}</span><select class="ctl" id="${id}">${opts.map(([v, t]) => `<option value="${v}" ${v === val ? 'selected' : ''}>${t}</option>`).join('')}</select></label>`;
 
   // gráfico de barras (SVG) com linha opcional
-  const barChart = (vals, labels, { line, color = '#0fa36e', line2 = '#e0a100', stack } = {}) => {
-    const W = 600, H = 220, P = { l: 8, r: 8, t: 10, b: 24 };
+  const barChart = (vals, labels, { line, color = '#0fa36e', line2 = '#e0a100', stack, w = 600 } = {}) => {
+    const W = w, H = 220, P = { l: 8, r: 8, t: 10, b: 24 };
     const n = vals.length, iw = W - P.l - P.r, ih = H - P.t - P.b, bw = iw / n;
     const max = Math.max(...vals.map((v, i) => v + (stack ? stack[i] : 0)), 1);
     let s = '';
@@ -180,21 +180,86 @@
     prods.sort((a, b) => b[si] - a[si]);
     const atRisk = CLIENTS.filter(c => c.st === 'AT_RISK');
     const act = MISSIONS.filter(m => m.st === 'Ativa');
-    return head('Dashboard', 'Números desta empresa apenas. Totais financeiros usam NFC-e verificadas.') + `
-      <div class="filters">
-        ${sel('fPeriod', 'Período', Object.entries(PERIOD).map(([v, [t]]) => [v, t]), DASH.period)}
-        ${sel('fUnit', 'Unidade', [['all', 'Todas as unidades'], ...UNITS.map(u => [u.id, u.n])], DASH.unit)}
+    const K = Object.fromEntries(kpis.map(([l, v, d]) => [l, { v, d }]));
+    const delta = d => `<em class="dl ${d >= 0 ? 'up' : 'down'}">${d >= 0 ? '▲' : '▼'} ${num(Math.abs(d), 1)}%</em>`;
+    const stat = l => `<div class="st"><small>${l}</small><b>${K[l].v}</b>${delta(K[l].d)}</div>`;
+    // linha de vendas do herói (área suave)
+    const spark = (() => {
+      const W = 600, H = 90, max = Math.max(...sales, 1), min = Math.min(...sales), st = W / Math.max(sales.length - 1, 1);
+      const pts = sales.map((v, i) => [i * st, H - 8 - (H - 16) * (v - min) / Math.max(max - min, 1)]);
+      const d = pts.map(([x, y], i) => (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1)).join(' ');
+      return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="spG" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#47d398" stop-opacity=".35"/><stop offset="1" stop-color="#47d398" stop-opacity="0"/></linearGradient></defs><path d="${d} L${W} ${H} L0 ${H} Z" fill="url(#spG)"/><path d="${d}" fill="none" stroke="#47d398" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>`;
+    })();
+    const pend = CUPONS.filter(c => c.sit === 'PENDENTE').length, riskOpen = RISKS.filter(r => r.st === 'open').length, noA1 = UNITS.filter(u => u.on && !u.a1);
+    const alerts = [
+      atRisk.length && ['alert', 'warn', `${atRisk.length} clientes em risco`, 'Recorrentes que passaram do intervalo habitual.', '#clientes'],
+      riskOpen && ['shield', 'err', `${riskOpen} alertas de risco abertos`, 'Revise antes de liberar o cashback.', '#risco'],
+      pend && ['receipt', 'info', `${pend} cupom aguardando a SEFAZ`, 'Nova tentativa automática em andamento.', '#cupons'],
+      noA1.length && ['key', 'warn', `${noA1.map(u => u.n).join(', ')} sem certificado A1`, 'Sem ele os cupons dessa unidade não são confirmados.', '#unidades']
+    ].filter(Boolean);
+    const resg = 612.3 / 1842.05 * 100;
+    const hora = today.getHours(), oi = hora < 12 ? 'Bom dia' : hora < 18 ? 'Boa tarde' : 'Boa noite';
+    return `
+      <div class="dash-head">
+        <div><p class="hello">${oi}, Ana</p><h1>Visão geral</h1><p class="sub">${esc(COMPANY.fant)} · ${DASH.unit === 'all' ? 'todas as unidades' : unitName(DASH.unit)} · NFC-e verificadas</p></div>
+        <div class="dash-ctl">
+          <div class="seg" role="group" aria-label="Período">${Object.entries(PERIOD).filter(([v]) => v !== 'custom').map(([v, [t]]) => `<button type="button" data-period="${v}" aria-pressed="${DASH.period === v}">${t}</button>`).join('')}</div>
+          <label class="unit-pick">${icon('store')}<select id="fUnit" aria-label="Unidade">${[['all', 'Todas as unidades'], ...UNITS.map(u => [u.id, u.n])].map(([v, t]) => `<option value="${v}" ${v === DASH.unit ? 'selected' : ''}>${t}</option>`).join('')}</select></label>
+        </div>
       </div>
-      <div class="kpis">${kpis.map(([l, v, d, hl]) => `<div class="kpi${hl ? ' hl' : ''}"><small>${l}</small><strong>${v}</strong><em class="${d >= 0 ? 'up' : 'down'}">${d >= 0 ? '▲' : '▼'} ${num(Math.abs(d), 1)}% vs. período anterior</em></div>`).join('')}</div>
 
-      <div class="card" style="margin-top:16px">
-        <div class="card-head"><div><h2>Missões ativas</h2><p>${act.reduce((a, m) => a + m.done, 0)} conclusões · extra ${brl(act.reduce((a, m) => a + m.extra, 0))} · vendas associadas ${brl(act.reduce((a, m) => a + m.sales, 0))}</p></div><a class="btn btn-ghost btn-sm" href="#missoes">Ver missões</a></div>
-        <div class="grid-2">${act.map(m => `<div class="item" style="margin:0"><span class="item-ic">${icon('target')}</span><div class="item-body"><b>${esc(m.n)}</b><p>${m.done} conclusões · até ${m.to}</p></div>${pill(m.kind === 'pct' ? '+' + m.val + '%' : '+' + brl(m.val), 'ok')}</div>`).join('') || '<p class="empty">Nenhuma missão ativa.</p>'}</div>
+      <div class="board">
+        <div class="board-main">
+          <div class="board-top">
+            <section class="mm-card" aria-label="Faturamento no Muito Mais">
+              <div class="mc-row"><img src="brand/icon.svg" width="40" height="36" alt=""><span class="mc-tag">${PERIOD[DASH.period][0]}</span></div>
+              <small>Faturamento no Muito Mais</small>
+              <strong>${K['Faturamento no MuitoMais'].v}</strong>
+              <div class="mc-row mc-foot"><div><small>${esc(PROGRAM.name)} · ${PROGRAM.pct}%</small><b>${esc(COMPANY.fant)}</b></div>${delta(K['Faturamento no MuitoMais'].d)}</div>
+              ${spark}
+            </section>
+            <div class="tiles">
+              <a class="tile" href="#caixa"><span class="tile-more" aria-hidden="true">⋮</span><svg class="tile-ic"><use href="#i-scan"/></svg><b>Validar cashback no caixa</b></a>
+              <a class="tile" href="#missoes"><span class="tile-more" aria-hidden="true">⋮</span><svg class="tile-ic"><use href="#i-target"/></svg><b>Missões e campanhas</b></a>
+            </div>
+          </div>
+          <div class="ops-head"><h2>Últimas transações</h2><a href="#transacoes">Ver todas ${icon('chev')}</a></div>
+          <div class="ops">${TX.slice(0, 5).map((t, i) => { const c = CLIENTS.find(x => x.n === t.c); return `<a class="op" href="${c ? '#clientes/' + c.id : '#transacoes'}"><span class="op-av" style="--h:${[152, 28, 200, 340, 45][i]}">${initials(t.c)}</span><span class="op-n"><b>${esc(t.c)}</b><small>${esc(t.desc)} · ${unitName(t.u)}</small></span><span class="op-dt">${t.dt.replace(', ', ' · ')}</span><span class="op-v ${t.v < 0 ? 'neg' : ''}">${t.v < 0 ? '' : '+'}${brl(t.v)}</span><span class="op-more" aria-hidden="true">⋮</span></a>`; }).join('')}</div>
+        </div>
+
+        <aside class="board-side">
+          <section class="ring-card">
+            <div class="ring">${(() => { const R = 64, C = 2 * Math.PI * R, p = resg / 100; return `<svg viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="${R}" fill="none" stroke="#e3efe9" stroke-width="14"/><circle class="ring-arc" cx="80" cy="80" r="${R}" fill="none" stroke="url(#rgG)" stroke-width="14" stroke-linecap="round" stroke-dasharray="${C * p} ${C}" transform="rotate(-90 80 80)"/><defs><linearGradient id="rgG" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#47d398"/><stop offset="1" stop-color="#0fa36e"/></linearGradient></defs></svg>`; })()}
+              <div class="ring-c"><small>Cashback concedido</small><b>${K['Cashback concedido'].v}</b></div></div>
+            <div class="ring-kv"><div><small>Utilizado</small><b>${K['Cashback utilizado'].v}</b></div><div><small>Pendente</small><b>${K['Cashback pendente'].v}</b></div></div>
+            <a class="soft t-mint" href="#missoes"><span><small>Missões ativas</small><b>${brl(act.reduce((a, m) => a + m.extra, 0))} extra</b></span><em>${act.reduce((a, m) => a + m.done, 0)} conclusões</em></a>
+            <a class="soft t-rose" href="#risco"><span><small>Alertas de risco</small><b>${riskOpen} abertos</b></span><em>revisar</em></a>
+            <a class="soft t-sand" href="#clientes"><span><small>Clientes em risco</small><b>${atRisk.length} clientes</b></span><em>sem voltar</em></a>
+          </section>
+          <a class="promo" href="#missoes">
+            <span class="promo-tx"><b>Traga clientes de volta</b><small>Crie uma missão com cashback extra para quem sumiu.</small></span>
+            <svg class="promo-art" viewBox="0 0 140 120" aria-hidden="true"><ellipse cx="34" cy="22" rx="16" ry="9" fill="#fff" opacity=".8"/><ellipse cx="118" cy="104" rx="14" ry="8" fill="#fff" opacity=".7"/><rect x="38" y="52" width="68" height="52" rx="10" fill="#0fa36e"/><rect x="32" y="40" width="80" height="18" rx="8" fill="#47d398"/><rect x="66" y="40" width="12" height="64" fill="#fff" opacity=".85"/><path d="M72 40c-6-14-26-16-24-4 1 6 14 6 24 4zm0 0c6-14 26-16 24-4-1 6-14 6-24 4z" fill="none" stroke="#065f46" stroke-width="5" stroke-linejoin="round"/><circle cx="114" cy="40" r="11" fill="#ffd166"/><text x="114" y="45" text-anchor="middle" font-size="13" font-weight="800" fill="#8a5a00" font-family="Plus Jakarta Sans, sans-serif">$</text><circle cx="24" cy="78" r="8" fill="#ffd166"/></svg>
+          </a>
+        </aside>
       </div>
 
-      <div class="grid-2" style="margin-top:16px">
+      <div class="sec-title"><h2>Indicadores</h2></div>
+      <div class="kgroups">
+        <section class="card kg"><div class="kg-head"><span class="kg-ic">${icon('percent')}</span><h2>Cashback</h2></div>
+          <div class="kg-stats">${stat('Cashback utilizado')}${stat('Cashback pendente')}</div>
+          <div class="meter"><div class="meter-top"><span>Taxa de resgate</span><b>${num(resg, 1)}%</b></div><span class="bar"><i style="--w:${resg}%"></i></span><small>Do cashback concedido, quanto já voltou como compra.</small></div></section>
+        <section class="card kg"><div class="kg-head"><span class="kg-ic">${icon('users')}</span><h2>Clientes</h2></div>
+          <div class="kg-stats">${stat('Novos clientes')}${stat('Clientes recorrentes')}</div>
+          <div class="meter"><div class="meter-top"><span>Frequência média</span><b>${K['Frequência média'].v}</b></div><span class="bar"><i style="--w:${Math.round(132 / 184 * 100)}%"></i></span><small>${Math.round(132 / 184 * 100)}% dos clientes ativos já voltaram.</small></div></section>
+        <section class="card kg"><div class="kg-head"><span class="kg-ic">${icon('receipt')}</span><h2>Operação</h2></div>
+          <div class="kg-stats">${stat('NFC-e processadas')}${stat('Mesas confirmadas')}</div>
+          <div class="meter"><div class="meter-top"><span>Cupons confirmados</span><b>${num(CUPONS.filter(c => c.sit === 'VALIDADO').length / CUPONS.length * 100, 0)}%</b></div><span class="bar"><i style="--w:${CUPONS.filter(c => c.sit === 'VALIDADO').length / CUPONS.length * 100}%"></i></span><small>Confirmados pela SEFAZ entre os cupons recebidos.</small></div></section>
+      </div>
+
+      <div class="sec-title"><h2>Análises</h2></div>
+      <div class="grid-2">
         <div class="card span-2"><div class="card-head"><div><h2>Vendas e cashback</h2><p>Evolução das vendas verificadas nesta empresa. A linha mostra o cashback, em escala própria.</p></div></div>
-          ${barChart(sales, labels, { line: cash })}
+          ${barChart(sales, labels, { line: cash, w: 1100 })}
           <div class="legend"><span><i style="--c:#0fa36e"></i>Vendas</span><span><i style="--c:#e0a100"></i>Cashback</span></div></div>
         <div class="card"><div class="card-head"><div><h2>Clientes novos x recorrentes</h2><p>Novo: primeira compra nesta empresa no período. Recorrente: já comprava aqui antes.</p></div></div>
           ${barChart(novos, labels, { stack: recs, color: '#065f46' })}
@@ -220,7 +285,7 @@
       <div class="card">${atRisk.map(c => `<a class="item" href="#clientes/${c.id}" style="display:flex"><span class="item-ic" style="background:#fff6e0;color:#8a5a00;border-color:#f6e3b8">${icon('alert')}</span><div class="item-body"><b>${esc(c.n)}</b><p>Em risco · Recorrente sem comprar acima do intervalo habitual nesta empresa.</p></div>${icon('chev')}</a>`).join('') || '<p class="empty">Nenhum cliente em risco.</p>'}</div>`;
   };
   V.painel.bind = () => {
-    $('fPeriod').addEventListener('change', e => { DASH.period = e.target.value; if (DASH.period === 'custom') toast('Escolha de datas personalizada disponível em breve.'); render(); });
+    document.querySelectorAll('[data-period]').forEach(b => b.addEventListener('click', () => { DASH.period = b.dataset.period; render(); }));
     $('fUnit').addEventListener('change', e => { DASH.unit = e.target.value; render(); });
     $('fSort').addEventListener('change', e => { DASH.sort = e.target.value; render(); });
   };
@@ -366,7 +431,8 @@
       toast({ approved: 'Alerta aprovado.', review: 'Mantido em revisão.', confirmed: 'Risco confirmado e registrado na auditoria.' }[a]);
     }));
   };
-  const updateRiskCount = () => { const n = RISKS.filter(r => r.st === 'open').length; $('riskCount').textContent = n; $('riskCount').hidden = !n; };
+  const updateRiskCount = () => { const n = RISKS.filter(r => r.st === 'open').length; $('riskCount').textContent = n; $('riskCount').hidden = !n; $('topDot').hidden = !n; };
+  $('topSearch').addEventListener('submit', e => { e.preventDefault(); CL.q = $('topQ').value.trim(); CL.page = 1; if (location.hash === '#clientes') render(); else location.hash = '#clientes'; });
 
   // --- Cashback ---
   V.cashback = () => {
