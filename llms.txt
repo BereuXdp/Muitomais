@@ -1,0 +1,44 @@
+# Muito Mais
+
+> Muito Mais é uma plataforma de cashback para restaurantes. O restaurante imprime um QR Code no cupom fiscal (NFC-e); o cliente escaneia com a câmera do celular, a compra é confirmada pela SEFAZ e o cliente recebe cashback para usar na próxima visita. Sem cartão de fidelidade e sem instalar nada no PDV.
+
+O objetivo do Muito Mais é fazer o cliente voltar: cada cupom vira um motivo para a próxima visita. Funciona para restaurantes, redes, franquias e centros gastronômicos no Brasil. Site: https://muitomais.app
+
+## Como funciona
+
+1. O restaurante coloca o QR Code do Muito Mais no cupom fiscal (NFC-e). O sistema de caixa continua o mesmo.
+2. O cliente escaneia o QR Code com a câmera do celular e registra a compra.
+3. O Muito Mais confirma o cupom na SEFAZ e libera o cashback na carteira do cliente.
+4. Na próxima visita, o cliente usa o saldo no caixa por meio de um voucher com QR Code.
+
+## Para o restaurante
+
+- Programa de cashback configurável: percentual, valor mínimo da compra, teto e validade do saldo.
+- Missões e campanhas com cashback extra (por exemplo: "volte 3 vezes no mês").
+- Painel com faturamento, clientes novos e recorrentes, clientes em risco, produtos mais consumidos e dias de maior movimento.
+- Validação de NFC-e com certificado A1 de cada unidade.
+- Análise de risco para evitar fraude no cashback.
+- Várias unidades, equipe com diferentes acessos e chaves de API.
+
+## Para o cliente
+
+- Cashback direto no cupom, sem cartão e sem cadastro longo.
+- Carteira com saldo, histórico e restaurantes parceiros.
+- Opção de dividir o cashback com outra pessoa da mesa.
+
+## Planos (valor mensal por unidade)
+
+- Essencial — R$ 99/mês: cashback e missões.
+- Profissional — R$ 197/mês: tudo do Essencial, mais analytics, validação de NFC-e e segmentação de clientes.
+- Redes — R$ 597/mês por unidade: tudo do Profissional, mais gestão de várias unidades. Para redes e franquias.
+
+## Clientes
+
+Geppos Italiano, Cabaña del Primo, Jardins Open Mall e Geppos Praia já usam o Muito Mais.
+
+## Páginas
+
+- [Página inicial](https://muitomais.app/): o que é o Muito Mais, como funciona, para quem é, planos e dúvidas frequentes.
+- [Planos](https://muitomais.app/planos.html): comparação completa dos planos Essencial, Profissional e Redes.
+- [Cadastro](https://muitomais.app/assinar.html): cadastro do restaurante e escolha do plano.
+- [Entrar](https://muitomais.app/entrar.html): acesso do cliente (carteira de cashback) e da loja (painel).

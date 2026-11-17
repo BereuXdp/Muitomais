@@ -409,6 +409,15 @@
   .sec-head.center { flex-direction: column; align-items: center; text-align: center; }
   .sec-head.center .lead { max-width: 560px; }
 
+  /* Clientes: logos das casas que já usam */
+  .clients { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); }
+  .client { display: grid; gap: 14px; justify-items: center; text-align: center; }
+  .client img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 28px; box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 22px 44px -26px rgba(6,37,29,.45); transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s ease; }
+  .client:hover img { transform: translateY(-6px) rotate(-1deg); box-shadow: 0 30px 56px -28px rgba(6,37,29,.55); }
+  .client span { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink-deep); }
+  @media (max-width: 760px) { .clients { grid-template-columns: repeat(2, minmax(0, 1fr)); } .client img { border-radius: 22px; } .client span { font-size: 14px; } }
+  @media (prefers-reduced-motion: reduce) { .client img { transition: none; } .client:hover img { transform: none; } }
+
   /* ---------- Peças das telas (visor de QR etc.) ---------- */
   .mini-card {
     position: relative; background: #fff; border: 1px solid var(--line); border-radius: 22px;
@@ -962,6 +971,7 @@
   }, 350));
 </script>
 <noscript><style>[v-animateonscroll] { opacity: 1 !important; }</style></noscript>
+<style>.devmais-credit{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px 12px;font-size:12.5px;line-height:1;color:rgba(255,255,255,.55);margin:0}.devmais-credit .dm-logo{display:inline-flex;padding:4px;margin:-4px;border-radius:8px;transition:opacity .2s ease,transform .2s ease}.devmais-credit .dm-logo:hover{opacity:.85;transform:translateY(-1px)}.devmais-credit img{height:24px;width:auto;display:block}.devmais-credit .dm-mail{color:rgba(255,255,255,.75);text-decoration:underline;text-underline-offset:3px}.devmais-credit .dm-mail:hover{color:#fff}</style>
 </head>
 <body>
 <div class="edge-blur" aria-hidden="true"></div>
@@ -1151,6 +1161,23 @@
     </div>
   </section>
 
+  <!-- Clientes -->
+  <section data-vue class="sec" id="clientes">
+    <div class="wrap">
+      <div class="sec-head center">
+        <span class="eyebrow" v-animateonscroll="up">Quem já usa</span>
+        <h2 class="h2" v-animateonscroll="words">Casas que já trazem o cliente de volta</h2>
+        <p class="lead" v-animateonscroll="up" style="--aos-delay: 0.25s">Restaurantes e centros gastronômicos que já usam o Muito Mais no dia a dia.</p>
+      </div>
+      <ul class="clients">
+        <li class="client" v-animateonscroll="up"><img src="brand/clientes/geppos-italiano.webp" width="480" height="480" alt="Geppos Italiano" loading="lazy"><span>Geppos Italiano</span></li>
+        <li class="client" v-animateonscroll="up" style="--aos-delay: 0.06s"><img src="brand/clientes/cabana-del-primo.webp" width="480" height="480" alt="Cabaña del Primo" loading="lazy"><span>Cabaña del Primo</span></li>
+        <li class="client" v-animateonscroll="up" style="--aos-delay: 0.12s"><img src="brand/clientes/jardins-open-mall.webp" width="480" height="480" alt="Jardins Open Mall" loading="lazy"><span>Jardins Open Mall</span></li>
+        <li class="client" v-animateonscroll="up" style="--aos-delay: 0.18s"><img src="brand/clientes/geppos-praia.webp" width="480" height="480" alt="Geppos Praia" loading="lazy"><span>Geppos Praia</span></li>
+      </ul>
+    </div>
+  </section>
+
   <!-- Pricing -->
   <section data-vue class="sec" id="planos">
     <div class="wrap">
@@ -1290,6 +1317,7 @@
     <div class="foot-bottom">
       <span>© <span id="year">2026</span> Muito Mais</span>
       <span>Seu cliente volta. A gente ajuda nisso.</span>
+      <div class="devmais-credit"><span>Desenvolvido por</span><a href="https://devmais.com" target="_blank" rel="noopener" aria-label="Dev+ — abrir o site da Dev+" class="dm-logo"><img src="assets/devmais-logo.svg" alt="Dev+" width="94" height="24"></a><a href="mailto:atendimento@devmais.com" class="dm-mail">atendimento@devmais.com</a></div>
     </div>
     <div class="wordmark" aria-hidden="true">MuitoMais</div>
   </div>

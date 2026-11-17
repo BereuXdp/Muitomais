@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /admin-login.html
+Disallow: /empresa.html
+Disallow: /cliente.html
+
+Sitemap: https://muitomais.app/sitemap.xml
