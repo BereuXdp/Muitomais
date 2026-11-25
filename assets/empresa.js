@@ -65,7 +65,12 @@
     { id: 'r3', n: 'Larissa Melo', uid: '9b21e4c0', score: 72, lvl: 'HIGH', rule: 'TICKET_SPIKE', ruleTxt: 'Valor muito acima do ticket habitual', doc: '6310', at: '02/10/2026, 11:02', st: 'open', note: '' },
     { id: 'r4', n: 'Bruno Martins', uid: '41aa0f73', score: 28, lvl: 'LOW', rule: 'SHARED_DEVICE', ruleTxt: 'Mesmo aparelho usado em outra conta', doc: '5043', at: '28/09/2026, 20:40', st: 'approved', note: 'Casal usa o mesmo celular.' }
   ];
-  const PROGRAM = { name: 'Programa padrão', on: true, v: 3, pct: 10, min: 50, cap: 10000, days: 45, hours: 48, minRedeem: 1, maxUse: 30, split: true, people: 10, units: ['u1', 'u2', 'u3'] };
+  const PROGRAM = { name: 'Programa padrão', on: true, v: 3, pct: 10, min: 50, cap: 10000, days: 45, hours: 48, minRedeem: 1, maxRedeem: 25, maxUse: 30, split: true, people: 10, units: ['u1', 'u2', 'u3'] };
+  // demonstração: o limite de gasto fica salvo neste navegador para o app do cliente (cliente.html) ler.
+  // TODO: na versão real, o app do cliente busca o limite na API do restaurante.
+  const DEMO_LIMIT_KEY = 'mm-demo-limite-gasto';
+  try { const s = parseFloat(localStorage.getItem(DEMO_LIMIT_KEY)); if (s > 0) PROGRAM.maxRedeem = s; } catch (e) {}
+  const saveDemoLimit = () => { try { localStorage.setItem(DEMO_LIMIT_KEY, String(PROGRAM.maxRedeem)); } catch (e) {} };
   const VERSIONS = [
     { v: 3, pct: 10, min: 50, cap: 10000, days: 45 },
     { v: 2, pct: 5, min: 200, cap: 200, days: 90 },
@@ -79,8 +84,14 @@
   const STAFF = [
     { n: 'Ana Ribeiro', e: 'ana@bellamesa.com.br', r: 'Proprietária', st: 'ACTIVE', owner: true },
     { n: 'Marcos Lima', e: 'marcos@bellamesa.com.br', r: 'Gerente', st: 'ACTIVE' },
-    { n: 'Paula Dias', e: 'paula@bellamesa.com.br', r: 'Caixa', st: 'INVITED' }
+    { n: 'Paula Dias', e: 'paula@bellamesa.com.br', r: 'Caixa', st: 'INVITED' },
+    { n: 'Diego Santos', e: 'diego.garcom@bellamesa.com.br', r: 'Garçom', st: 'ACTIVE' }
   ];
+  // perfil de quem entrou (TODO: vir da autenticação real). Garçom só valida o QR do cliente no caixa.
+  const qsPerfil = new URLSearchParams(location.search).get('perfil');
+  const GARCOM = qsPerfil === 'garcom';
+  // telas que o garçom pode abrir (só consulta, além do caixa)
+  const GARCOM_ROUTES = ['caixa', 'clientes', 'cliente', 'transacoes', 'vouchers'];
   const KEYS = [{ id: 'k1', tail: 'mtQY', at: '15 set 2026' }];
   const COMPANY = { rs: 'BELLA MESA RESTAURANTES LTDA', fant: 'Grupo Bella Mesa', status: 'ACTIVE' };
   const PLANS = {
@@ -446,7 +457,8 @@
             ${f('cbPct', 'Percentual de cashback (%)', p.pct)}${f('cbMin', 'Compra mínima (R$)', p.min.toFixed(2))}
             ${f('cbCap', 'Cashback máximo por compra (R$)', p.cap.toFixed(2))}${f('cbDays', 'Validade (dias)', p.days, 'type="number"')}
             ${f('cbHours', 'Cadastrar NFC-e em até (horas)', p.hours, 'type="number"')}${f('cbRedeem', 'Resgate mínimo (R$)', p.minRedeem.toFixed(2))}
-            ${f('cbUse', 'Uso máximo (% da nova compra)', p.maxUse)}
+            ${f('cbMaxRedeem', 'Limite de gasto por compra (R$)', p.maxRedeem.toFixed(2))}${f('cbUse', 'Uso máximo (% da nova compra)', p.maxUse)}
+            <p class="muted" style="grid-column:1/-1;font-size:13px;margin-top:-4px">O cliente escolhe no app quanto quer gastar, até o limite de gasto por compra. O caixa ainda aplica o uso máximo (%) da compra.</p>
             <label class="field"><span>Permitir dividir cashback</span><select class="ctl" id="cbSplit"><option value="1" ${p.split ? 'selected' : ''}>Sim</option><option value="0" ${p.split ? '' : 'selected'}>Não</option></select></label>
             ${f('cbPeople', 'Máximo de pessoas na mesa', p.people, 'type="number"')}
             <div class="field full"><span>Unidades participantes</span><small>Nenhuma marcada = todas as unidades.</small>
@@ -467,9 +479,9 @@
   const pnum = v => { v = String(v).trim(); if (v.includes(',')) v = v.replace(/\./g, '').replace(',', '.'); const n = parseFloat(v); return isNaN(n) ? NaN : n; };
   V.cashback.bind = () => {
     const sim = () => {
-      const buy = pnum($('smBuy').value), bal = pnum($('smBal').value), pct = pnum($('cbPct').value), min = pnum($('cbMin').value), cap = pnum($('cbCap').value), use = pnum($('cbUse').value);
+      const buy = pnum($('smBuy').value), bal = pnum($('smBal').value), pct = pnum($('cbPct').value), min = pnum($('cbMin').value), cap = pnum($('cbCap').value), use = pnum($('cbUse').value), lim = pnum($('cbMaxRedeem').value);
       if ([buy, bal].some(isNaN)) { $('smOut').innerHTML = '<p class="muted" style="grid-column:1/-1">Preencha compra e saldo.</p>'; return; }
-      const gen = buy >= min ? Math.min(buy * pct / 100, cap) : 0, canUse = Math.min(bal, buy * use / 100);
+      const gen = buy >= min ? Math.min(buy * pct / 100, cap) : 0, canUse = Math.min(bal, buy * use / 100, lim > 0 ? lim : Infinity);
       $('smOut').innerHTML = `<div class="ok"><small>Cashback gerado</small><b>${brl(gen)}</b></div><div><small>Pode usar nesta compra</small><b>${brl(canUse)}</b></div>
         <div><small>Cliente paga</small><b>${brl(buy - canUse)}</b></div><div><small>Observação</small><b style="font-size:13.5px;letter-spacing:0">${buy < min ? 'Abaixo da compra mínima' : gen >= cap ? 'Chegou ao teto' : 'Dentro das regras'}</b></div>`;
     };
@@ -481,11 +493,13 @@
     });
     $('cbPublish').addEventListener('click', () => {
       const pct = pnum($('cbPct').value), min = pnum($('cbMin').value), cap = pnum($('cbCap').value), days = pnum($('cbDays').value);
-      const bad = [['cbPct', pct > 0 && pct <= 100], ['cbMin', min >= 0], ['cbCap', cap > 0], ['cbDays', days >= 1]].filter(([, ok]) => !ok);
+      const minRedeem = pnum($('cbRedeem').value) || 0, maxRedeem = pnum($('cbMaxRedeem').value);
+      const bad = [['cbPct', pct > 0 && pct <= 100], ['cbMin', min >= 0], ['cbCap', cap > 0], ['cbDays', days >= 1], ['cbMaxRedeem', maxRedeem > 0 && maxRedeem >= minRedeem]].filter(([, ok]) => !ok);
       document.querySelectorAll('.form-grid .ctl').forEach(i => i.classList.remove('err'));
       if (bad.length) { bad.forEach(([id]) => $(id).classList.add('err')); $(bad[0][0]).focus(); toast('Confira os campos marcados.'); return; }
-      Object.assign(PROGRAM, { name: $('cbName').value.trim() || 'Programa padrão', pct, min, cap, days, hours: pnum($('cbHours').value) || 48, minRedeem: pnum($('cbRedeem').value) || 0, maxUse: pnum($('cbUse').value) || 30, split: $('cbSplit').value === '1', people: pnum($('cbPeople').value) || 1, units: [...document.querySelectorAll('.checks-row input:checked')].map(i => i.value), v: PROGRAM.v + 1 });
+      Object.assign(PROGRAM, { name: $('cbName').value.trim() || 'Programa padrão', pct, min, cap, days, hours: pnum($('cbHours').value) || 48, minRedeem, maxRedeem, maxUse: pnum($('cbUse').value) || 30, split: $('cbSplit').value === '1', people: pnum($('cbPeople').value) || 1, units: [...document.querySelectorAll('.checks-row input:checked')].map(i => i.value), v: PROGRAM.v + 1 });
       VERSIONS.unshift({ v: PROGRAM.v, pct, min, cap, days });
+      saveDemoLimit();
       render(); toast('Versão ' + PROGRAM.v + ' publicada.');
     });
   };
@@ -545,7 +559,8 @@
   V.funcionarios.bind = () => {
     $('stInvite').addEventListener('click', () => openSheet('ok', sheetHead('ok', 'mail', 'Equipe', 'Convidar funcionário', 'A pessoa recebe um email para criar a senha.') + `
       <div class="sh-form"><label class="field"><span>Nome</span><input class="ctl" id="inName"></label><label class="field"><span>Email</span><input class="ctl" id="inMail" type="email"></label>
-      <label class="field"><span>Papel</span><select class="ctl" id="inRole"><option>Gerente</option><option>Caixa</option><option>Analista</option></select></label></div>
+      <label class="field"><span>Papel</span><select class="ctl" id="inRole"><option>Gerente</option><option>Caixa</option><option>Analista</option><option>Garçom</option></select></label>
+      <p class="sh-note">${icon('info')}<span>O garçom só acessa a tela de validar o QR Code do cliente para usar o cashback.</span></p></div>
       <div class="sh-actions"><button class="btn btn-primary" data-go="invite">Enviar convite</button></div>`));
     document.querySelectorAll('[data-sact]').forEach(b => b.addEventListener('click', () => {
       const s = STAFF[+b.closest('[data-s]').dataset.s];
@@ -666,11 +681,14 @@
       }
       const used = VOUCHERS.find(v => v.code === m[0]);
       if (used) { openSheet('warn', sheetHead('warn', 'alert', 'Aviso', 'Voucher já ' + used.st.toLowerCase(), `${used.code} · ${esc(used.c)} · ${brl(used.v)}`) + `<div class="sh-actions"><button class="btn btn-warn" data-go="close">Entendi</button></div>`); return; }
-      const c = CLIENTS[0], val = 37.40, buy = 180;
+      // valor que o cliente escolheu no app vem no fim do QR (MMV1:VCH-XXXX:cliente:valor)
+      const qv = parseFloat((raw.match(/:(\d+(?:\.\d{1,2})?)\s*$/) || [])[1]);
+      const c = CLIENTS[0], val = qv > 0 ? qv : 37.40, buy = 180;
       openSheet('ok', sheetHead('ok', 'check', 'Voucher válido', esc(c.n), `${m[0]} · ${unitName($('cxUnit').value)}`) + `
-        <div class="sh-box"><div class="line"><span>Saldo do voucher</span><b>${brl(val)}</b></div><div class="line"><span>Uso máximo (${PROGRAM.maxUse}% da compra de ${brl(buy)})</span><b>${brl(Math.min(val, buy * PROGRAM.maxUse / 100))}</b></div></div>
+        <div class="sh-box"><div class="line"><span>Valor que o cliente quer usar</span><b>${brl(val)}</b></div><div class="line"><span>Limite de gasto por compra</span><b>${brl(PROGRAM.maxRedeem)}</b></div><div class="line"><span>Uso máximo (${PROGRAM.maxUse}% da compra de ${brl(buy)})</span><b>${brl(Math.min(val, PROGRAM.maxRedeem, buy * PROGRAM.maxUse / 100))}</b></div></div>
+        ${val > PROGRAM.maxRedeem ? `<p class="sh-note">${icon('alert')}<span>O cliente pediu mais que o limite. Só ${brl(PROGRAM.maxRedeem)} será usado.</span></p>` : ''}
         <p class="sh-note">${icon('info')}<span>O valor fica reservado até a NFC-e desta venda ser registrada.</span></p>
-        <div class="sh-actions"><button class="btn btn-primary" data-go="reserve" data-code="${m[0]}">Reservar voucher</button><button class="btn btn-ghost" data-go="close">Cancelar</button></div>`);
+        <div class="sh-actions"><button class="btn btn-primary" data-go="reserve" data-code="${m[0]}" data-v="${Math.min(val, PROGRAM.maxRedeem)}">Reservar voucher</button><button class="btn btn-ghost" data-go="close">Cancelar</button></div>`);
     });
   };
 
@@ -705,7 +723,7 @@
       openSheet('ok', sheetHead('ok', 'check', 'Tudo certo', 'Plano ' + p.name + ' ativo!', 'Os recursos já estão liberados.') + `<div class="sh-actions"><button class="btn btn-primary" data-go="close">Fechar</button></div>`);
     }
     if (go === 'planCancel') { PLAN.current = null; $('sidePlan').textContent = 'Sem plano'; closeSheet(); render(true); toast('Assinatura cancelada.'); }
-    if (go === 'reserve') { VOUCHERS.unshift({ code: b.dataset.code, c: CLIENTS[0].n, v: 37.40, u: $('cxUnit').value, st: 'Reservado', dt: new Date().toLocaleString('pt-BR').slice(0, 17) }); closeSheet(); $('cxCode').value = ''; $('cxHint').textContent = 'Toque em “Ler QR Code” e aponte para o celular do cliente'; toast('Voucher reservado. Registre a NFC-e da venda.'); }
+    if (go === 'reserve') { VOUCHERS.unshift({ code: b.dataset.code, c: CLIENTS[0].n, v: +b.dataset.v || 37.40, u: $('cxUnit').value, st: 'Reservado', dt: new Date().toLocaleString('pt-BR').slice(0, 17) }); closeSheet(); $('cxCode').value = ''; $('cxHint').textContent = 'Toque em “Ler QR Code” e aponte para o celular do cliente'; toast('Voucher reservado. Registre a NFC-e da venda.'); }
   });
 
   // ================= rotas =================
@@ -718,9 +736,11 @@
   const route = { name: 'painel', param: null };
   const parse = () => {
     const h = location.hash.slice(1);
-    if (h === 'configuracoes/plano') return ['plano', null];
+    if (h === 'configuracoes/plano') return GARCOM ? ['caixa', null] : ['plano', null];
     if (h.startsWith('clientes/')) return ['cliente', h.split('/')[1]];
-    return [ROUTES[h] && h !== 'cliente' && h !== 'plano' ? h : 'painel', null];
+    const name = ROUTES[h] && h !== 'cliente' && h !== 'plano' ? h : 'painel';
+    if (GARCOM && !GARCOM_ROUTES.includes(name)) return ['caixa', null];
+    return [name, null];
   };
   function render(keepScroll) {
     const y = scrollY;
@@ -750,6 +770,12 @@
   $('menuBtn').addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
   $('scrim').addEventListener('click', () => setMenu(false));
 
+  if (GARCOM) {
+    document.body.classList.add('perfil-garcom');
+    const g = STAFF.find(s => s.r === 'Garçom');
+    $('userName').textContent = g.n; $('userRole').textContent = 'Garçom'; $('userAv').textContent = initials(g.n);
+    if (parse()[0] === 'caixa' && location.hash !== '#caixa') history.replaceState(null, '', location.pathname + location.search + '#caixa');
+  }
   if (PLAN.current) $('sidePlan').textContent = 'Plano ' + PLANS[PLAN.current].name;
   updateRiskCount();
   go();

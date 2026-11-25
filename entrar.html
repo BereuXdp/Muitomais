@@ -446,6 +446,8 @@
     setTimeout(() => {
       // demonstração: cada tipo de conta entra direto na sua área
       if (mode === 'cliente') { location.href = 'cliente.html'; return; }
+      // demonstração: email com "garcom" entra no perfil de garçom (só valida o QR no caixa)
+      if (/gar[cç]om/i.test(email.value)) { location.href = 'empresa.html?perfil=garcom#caixa'; return; }
       location.href = 'empresa.html#painel';
     }, 1100);
   });

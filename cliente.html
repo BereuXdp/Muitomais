@@ -257,6 +257,31 @@
   .sh-tips li span { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; flex: none; background: var(--bg); color: var(--tink); font-size: 12px; font-weight: 700; }
   .res-actions { margin-top: 20px; display: grid; gap: 10px; }
   .res-actions .btn { width: 100%; height: 52px; }
+  /* usar cashback: QR para o garçom/caixa */
+  .use-qr { margin: 18px auto 0; width: min(240px, 70vw); aspect-ratio: 1; padding: 14px; border-radius: 22px; background: #fff; border: 1px solid var(--line); box-shadow: 0 18px 40px -24px rgba(6,37,29,.45); display: grid; place-items: center; }
+  .use-qr svg { width: 100%; height: 100%; display: block; }
+  .use-qr.expired svg { opacity: .12; filter: blur(2px); }
+  .use-code { margin-top: 12px; text-align: center; font-size: 22px; font-weight: 800; letter-spacing: .12em; color: var(--ink-deep); font-variant-numeric: tabular-nums; }
+  .use-timer { margin-top: 4px; text-align: center; font-size: 14px; color: var(--ink-3); }
+  .use-timer b { color: var(--ink-deep); font-variant-numeric: tabular-nums; }
+  .use-timer.end b { color: #dc4b4b; }
+  .use-amount { margin-top: 18px; display: flex; align-items: baseline; justify-content: center; gap: 8px; padding: 16px; border-radius: 20px; background: var(--canvas); border: 1px solid var(--line); }
+  .use-amount:focus-within { border-color: var(--green-500); box-shadow: 0 0 0 4px rgba(15,163,110,.18); }
+  .use-amount span { font-size: 22px; font-weight: 700; color: var(--ink-3); }
+  .use-amount input { width: 6.5ch; border: 0; outline: 0; background: transparent; font: inherit; font-size: 40px; font-weight: 800; letter-spacing: -0.04em; color: var(--ink-deep); font-variant-numeric: tabular-nums; }
+  .use-quick { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .use-quick button { height: 38px; padding: 0 16px; border-radius: 19px; border: 1px solid var(--line); background: #fff; font: inherit; font-size: 14px; font-weight: 600; color: var(--ink-2); cursor: pointer; }
+  .use-quick button:hover { border-color: var(--green-500); }
+  .use-quick button[aria-pressed="true"] { background: var(--ink-deep); border-color: var(--ink-deep); color: #fff; }
+  .field-use { margin-top: 18px; display: grid; gap: 6px; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+  .field-use select { height: 48px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line); background: #fff; font: inherit; font-size: 15px; font-weight: 600; color: var(--ink-deep); }
+  .field-use select:focus { outline: 0; border-color: var(--green-500); box-shadow: 0 0 0 4px rgba(15,163,110,.18); }
+  .use-limit { margin-top: 10px; display: flex; gap: 8px; align-items: flex-start; font-size: 13.5px; line-height: 1.45; color: var(--ink-3); }
+  .use-limit .ic { width: 16px; height: 16px; flex: none; margin-top: 2px; color: var(--green-500); }
+  .use-limit b { color: var(--ink-deep); }
+  .use-range { margin-top: 14px; width: 100%; accent-color: var(--green-500); }
+  .use-scale { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-3); }
+  .btn-use { margin-top: 14px; height: 44px; width: 100%; }
   .btn-err { background: #dc4b4b; color: #fff; } .btn-err:hover { background: #c43c3c; }
   .btn-warn { background: #e0a100; color: #2b1d00; } .btn-warn:hover { background: #cc9200; }
   .btn-info { background: #2f7fd8; color: #fff; } .btn-info:hover { background: #2569b8; }
@@ -484,7 +509,8 @@
   <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
   <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c2 .7 3.2 2.5 3.6 5.2"/></symbol>
   <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
-  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3M21 14v.01M14 21h3M21 17v4h-1"/></symbol>
+  <symbol id="i-star"viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/></symbol>
 </svg>
 
 <div class="app" id="app">
@@ -544,7 +570,8 @@
                 <div><small>Ganho no mês</small><b class="money">R$ 21,20</b></div>
               </div>
               <div class="bal-actions">
-                <a class="btn btn-lime" href="#escanear"><svg class="ic"><use href="#i-scan"/></svg>Escanear cupom</a>
+                <button class="btn btn-lime" type="button" data-use><svg class="ic"><use href="#i-qr"/></svg>Usar cashback</button>
+                <a class="btn btn-glass" href="#escanear"><svg class="ic"><use href="#i-scan"/></svg>Escanear cupom</a>
                 <a class="btn btn-glass" href="#carteira"><svg class="ic"><use href="#i-wallet"/></svg>Ver carteira</a>
               </div>
             </div>
@@ -622,7 +649,7 @@
       <!-- ========== CARTEIRA ========== -->
       <section class="view" id="v-carteira" data-title="Carteira">
         <div class="wallet-top">
-          <div class="stat dark"><small>Disponível</small><strong class="money">R$ 48,30</strong><em>Pronto para usar nos parceiros</em></div>
+          <div class="stat dark"><small>Disponível</small><strong class="money">R$ 48,30</strong><em>Pronto para usar nos parceiros</em><button class="btn btn-lime btn-use" type="button" data-use><svg class="ic"><use href="#i-qr"/></svg>Usar cashback</button></div>
           <div class="stat"><small>A liberar</small><strong class="money">R$ 12,40</strong><em style="color:#a86b00">1 nota em validação</em></div>
           <div class="stat"><small>Total ganho</small><strong class="money">R$ 132,90</strong><em>desde 2025</em></div>
         </div>
@@ -709,6 +736,7 @@
 
 <div class="toast-x" id="toast" role="status" aria-live="polite"><i><svg class="ic" style="width:16px;height:16px"><use href="#i-check"/></svg></i><span id="toastText"></span></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id);
@@ -716,12 +744,15 @@
 
   // ---------- dados de exemplo (trocar pela API) ----------
   const RESTS = [
-    { n: 'Cantina Bella', t: 'Italiana', d: '450 m', cb: 10, c: '#c2410c' },
-    { n: 'Café Central', t: 'Café', d: '700 m', cb: 8, c: '#7c4a2d' },
-    { n: 'Burger House', t: 'Lanches', d: '1,2 km', cb: 6, c: '#b91c1c' },
-    { n: 'Sushi Kaze', t: 'Japonesa', d: '1,5 km', cb: 7, c: '#1e3a5f' },
-    { n: 'Sabor da Vila', t: 'Brasileira', d: '2,1 km', cb: 9, c: '#065f46' }
+    // lim = limite de gasto de cashback por compra, definido pelo restaurante no painel
+    { n: 'Cantina Bella', t: 'Italiana', d: '450 m', cb: 10, c: '#c2410c', lim: 25 },
+    { n: 'Café Central', t: 'Café', d: '700 m', cb: 8, c: '#7c4a2d', lim: 15 },
+    { n: 'Burger House', t: 'Lanches', d: '1,2 km', cb: 6, c: '#b91c1c', lim: 20 },
+    { n: 'Sushi Kaze', t: 'Japonesa', d: '1,5 km', cb: 7, c: '#1e3a5f', lim: 30 },
+    { n: 'Sabor da Vila', t: 'Brasileira', d: '2,1 km', cb: 9, c: '#065f46', lim: 20 }
   ];
+  // demonstração: o limite salvo no painel da loja (empresa.html → Cashback) vale para a Cantina Bella
+  try { const s = parseFloat(localStorage.getItem('mm-demo-limite-gasto')); if (s > 0) RESTS[0].lim = s; } catch (e) {}
   const TX = [
     { day: 'Hoje', n: 'Cantina Bella', s: 'Cupom escaneado · 12:42', v: 12.40, k: 'aliberar' },
     { day: 'Ontem', n: 'Missão: Volte 3x no mês', s: 'Café Central', v: 5.00, k: 'missao' },
@@ -1068,6 +1099,101 @@
     renderSplit();
   });
   $('splitBtn').addEventListener('click', () => openSplit());
+
+  // ---------- usar cashback: QR para o garçom/caixa validar ----------
+  // TODO: o código e o saldo devem vir da API (voucher criado no servidor).
+  const BALANCE = 48.30, USE_MIN = 10;
+  let useTimer = null;
+  const newVoucher = () => 'VCH-' + Array.from({ length: 4 }, () => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random() * 32)]).join('');
+  const qrSvg = text => {
+    if (typeof qrcode !== 'function') return '';
+    const q = qrcode(0, 'M'); q.addData(text); q.make();
+    return q.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+  };
+  const USE_MIN_VALUE = 1;   // valor mínimo de resgate (TODO: vir do programa do restaurante)
+  let useValue = null, useRest = 0;
+  const useMax = () => Math.min(RESTS[useRest].lim, BALANCE);
+  const showSheet = () => {
+    clearTimeout(sheet._t);
+    if (sheet.hidden) { sheet.hidden = false; requestAnimationFrame(() => requestAnimationFrame(() => sheet.classList.add('on'))); }
+  };
+  // passo 1: escolher quanto vai gastar
+  const openUse = (focusRest = false) => {
+    if (sheet.hidden) lastFocus = document.activeElement;
+    clearInterval(useTimer);
+    const max = useMax(), lim = RESTS[useRest].lim;
+    if (useValue === null || useValue > max) useValue = max;
+    const quick = [5, 10, 20].filter(v => v < max);
+    const fmtIn = v => v.toFixed(2).replace('.', ',');
+    $('sheetBox').className = 'sheet t-ok';
+    $('shBody').innerHTML = `<p class="sh-kicker">Usar cashback</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Quanto você quer gastar?</h2>
+      <p class="sh-sub">Você tem <b class="money">${brl(BALANCE)}</b> disponível.</p>
+      <form id="useForm" novalidate>
+        <label class="field-use"><span>Onde você vai usar</span>
+          <select id="useRest">${RESTS.map((r, i) => `<option value="${i}" ${i === useRest ? 'selected' : ''}>${esc(r.n)}</option>`).join('')}</select></label>
+        <p class="use-limit">${icon('info')}<span>Este restaurante deixa usar até <b class="money">${brl(lim)}</b> de cashback por compra${lim > BALANCE ? ', mas você tem ' + brl(BALANCE) : ''}.</span></p>
+        <label class="use-amount"><span>R$</span><input id="useVal" inputmode="decimal" autocomplete="off" value="${fmtIn(useValue)}" aria-label="Valor do cashback a gastar"></label>
+        <input type="range" class="use-range" id="useRange" min="${USE_MIN_VALUE}" max="${max}" step="0.5" value="${useValue}" aria-label="Ajustar valor">
+        <div class="use-scale"><span>${brl(USE_MIN_VALUE)}</span><span>${brl(max)}</span></div>
+        <div class="use-quick" role="group" aria-label="Valores rápidos">${quick.map(v => `<button type="button" data-q="${v}">${brl(v).replace(',00', '')}</button>`).join('')}<button type="button" data-q="${max}">Máximo</button></div>
+        <p class="sp-err" id="useErr" aria-live="polite"></p>
+        <div class="res-actions"><button class="btn btn-primary" type="submit" id="useGo">${icon('qr')}Gerar QR Code</button></div>
+      </form>`;
+    showSheet();
+    const inp = $('useVal'), range = $('useRange');
+    const check = () => {
+      const v = parseBRL(inp.value);
+      const msg = !v ? 'Digite o valor que você quer gastar.' : v < USE_MIN_VALUE ? 'O mínimo é ' + brl(USE_MIN_VALUE) + '.'
+        : v > max + 1e-9 ? (max < lim ? 'Você tem só ' + brl(BALANCE) + ' disponível.' : 'O limite deste restaurante é ' + brl(lim) + ' por compra.') : '';
+      $('useErr').textContent = inp.value.trim() ? msg : '';
+      $('useGo').disabled = !!msg;
+      if (!msg) range.value = v;
+      document.querySelectorAll('[data-q]').forEach(b => b.setAttribute('aria-pressed', Math.abs(+b.dataset.q - v) < 0.005));
+      return msg ? null : Math.round(v * 100) / 100;
+    };
+    inp.addEventListener('input', check);
+    range.addEventListener('input', () => { inp.value = fmtIn(+range.value); check(); });
+    document.querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => { inp.value = fmtIn(+b.dataset.q); check(); }));
+    $('useRest').addEventListener('change', e => { const v = check(); if (v) useValue = v; useRest = +e.target.value; openUse(true); });
+    $('useForm').addEventListener('submit', e => { e.preventDefault(); const v = check(); if (v) { useValue = v; showUseQr(); } else inp.focus(); });
+    check();
+    requestAnimationFrame(() => {
+      if (focusRest) $('useRest').focus({ preventScroll: true });
+      else { inp.focus({ preventScroll: true }); inp.select(); }
+    });
+  };
+  // passo 2: QR com o valor escolhido
+  const showUseQr = () => {
+    clearInterval(useTimer);
+    const code = newVoucher(), payload = `MMV1:${code}:c1:${useValue.toFixed(2)}`;
+    let left = USE_MIN * 60;
+    $('shBody').innerHTML = `<button class="sp-back" data-use>${icon('back')}Alterar valor</button>
+      <p class="sh-kicker">Usar cashback</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Mostre este QR ao garçom</h2>
+      <p class="sh-sub">Ele lê o código e o desconto entra na sua conta.</p>
+      <div class="use-qr" id="useQr">${qrSvg(payload) || `<p class="muted" style="text-align:center;font-size:14px">Não foi possível desenhar o QR. Informe o código abaixo.</p>`}</div>
+      <p class="use-code" aria-label="Código do voucher">${code}</p>
+      <p class="use-timer" id="useTimer">Válido por <b id="useLeft">${USE_MIN}:00</b></p>
+      <div class="sh-box"><div class="receipt-line"><span>Restaurante</span><b>${esc(RESTS[useRest].n)}</b></div><div class="receipt-line"><span>Valor a gastar</span><b class="big money">${brl(useValue)}</b></div>
+        <div class="receipt-line"><span>Fica na carteira</span><b class="money">${brl(Math.round((BALANCE - useValue) * 100) / 100)}</b></div></div>
+      <div class="res-actions"><button class="btn btn-ghost" data-use-new>Gerar novo código</button></div>`;
+    requestAnimationFrame(() => $('shTitle').focus({ preventScroll: true }));
+    useTimer = setInterval(() => {
+      if (sheet.hidden || !$('useLeft')) { clearInterval(useTimer); return; }
+      left--;
+      $('useLeft').textContent = Math.floor(left / 60) + ':' + String(left % 60).padStart(2, '0');
+      if (left <= 0) {
+        clearInterval(useTimer);
+        $('useQr').classList.add('expired'); $('useTimer').classList.add('end');
+        $('useTimer').innerHTML = '<b>Código expirado.</b> Gere um novo.';
+      }
+    }, 1000);
+  };
+  document.addEventListener('click', e => {
+    if (e.target.closest('[data-use]')) openUse(false);
+    else if (e.target.closest('[data-use-new]')) showUseQr();
+  });
 
   // ---------- navegação entre telas ----------
   const VIEWS = ['inicio', 'escanear', 'carteira', 'missoes', 'perfil'];
