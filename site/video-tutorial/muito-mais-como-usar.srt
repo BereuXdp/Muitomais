@@ -1,0 +1,176 @@
+1
+00:00:00,706 --> 00:00:07,619
+Este é o Muito Mais: cashback direto no cupom fiscal do seu restaurante.
+
+2
+00:00:07,922 --> 00:00:18,519
+Neste vídeo você vai ver, passo a passo, como o restaurante usa a plataforma, e como o cliente usa o aplicativo.
+
+3
+00:00:18,824 --> 00:00:22,682
+Primeiro, o lado do restaurante.
+
+4
+00:00:22,999 --> 00:00:31,119
+Tudo começa no cadastro. O restaurante escolhe o plano e o número de unidades.
+
+5
+00:00:31,432 --> 00:00:41,438
+Depois, preenche os dados: nome, telefone, e-mail, nome do restaurante, CNPJ e senha.
+
+6
+00:00:46,299 --> 00:00:50,915
+Aceita os termos e clica em criar cadastro.
+
+7
+00:00:51,218 --> 00:00:59,677
+Pronto! O cadastro está criado, e o restaurante já pode entrar no painel da loja.
+
+8
+00:00:59,996 --> 00:01:05,968
+Para entrar, abra a tela de login e escolha a opção Loja.
+
+9
+00:01:06,272 --> 00:01:10,952
+Digite o e-mail e a senha, e clique em entrar.
+
+10
+00:01:15,060 --> 00:01:23,641
+Este é o painel da loja. No topo, o faturamento e o cashback concedido no período.
+
+11
+00:01:23,944 --> 00:01:29,541
+É fácil trocar o período, e também filtrar por unidade.
+
+12
+00:01:30,320 --> 00:01:39,603
+Ao lado, ficam os alertas: missões ativas, riscos abertos e clientes que precisam voltar.
+
+13
+00:01:39,907 --> 00:01:47,399
+Mais abaixo, as últimas transações, os indicadores e os gráficos de vendas.
+
+14
+00:01:47,715 --> 00:01:57,493
+Em Cashback, o restaurante define as regras do programa: percentual, compra mínima, teto e validade.
+
+15
+00:01:57,804 --> 00:02:06,124
+É só ajustar os valores e publicar. A nova regra vale para as próximas compras.
+
+16
+00:02:06,440 --> 00:02:13,858
+Em Missões, você cria campanhas com cashback extra para trazer o cliente de volta.
+
+17
+00:02:14,168 --> 00:02:19,991
+Dê um nome, escolha a recompensa, e salve como rascunho.
+
+18
+00:02:21,680 --> 00:02:25,922
+Quando estiver pronta, é só publicar.
+
+19
+00:02:26,225 --> 00:02:35,381
+Em Unidades, você cadastra cada loja e o certificado digital A um, que confirma o cupom na Sefaz.
+
+20
+00:02:35,685 --> 00:02:46,388
+No dia a dia, o caixa usa a tela Validar no caixa. Quando o cliente mostra o QR Code do voucher, é só ler.
+
+21
+00:02:46,696 --> 00:02:53,562
+O sistema confirma o voucher e mostra o valor que pode ser usado nessa compra.
+
+22
+00:02:53,869 --> 00:03:01,350
+Ao reservar, o valor fica guardado até a N F C e da venda ser registrada.
+
+23
+00:03:01,659 --> 00:03:09,517
+Em Clientes, você vê quem compra, quanto gasta, e quem está há tempo sem voltar.
+
+24
+00:03:09,828 --> 00:03:15,885
+Cada cliente tem o seu histórico, só dentro do seu restaurante.
+
+25
+00:03:16,196 --> 00:03:22,730
+Em Transações, fica o histórico de todo o cashback gerado e usado.
+
+26
+00:03:23,033 --> 00:03:29,837
+Em Cupons fiscais, você acompanha a validação de cada nota na Sefaz.
+
+27
+00:03:30,142 --> 00:03:37,486
+E a análise de risco avisa quando algo foge do normal, antes de liberar o cashback.
+
+28
+00:03:37,790 --> 00:03:44,546
+Em Funcionários, convide a equipe e dê a cada pessoa o acesso certo.
+
+29
+00:03:44,857 --> 00:03:52,180
+Por fim, em Plano e cobrança, você acompanha e troca o plano quando quiser.
+
+30
+00:03:52,484 --> 00:03:55,869
+Agora, o lado do cliente.
+
+31
+00:03:56,184 --> 00:04:00,867
+O cliente entra no aplicativo com e-mail e senha.
+
+32
+00:04:04,955 --> 00:04:14,667
+Na tela inicial, ele vê o saldo de cashback, as últimas compras, as missões e os restaurantes parceiros.
+
+33
+00:04:14,980 --> 00:04:19,475
+Se preferir, ele pode esconder os valores.
+
+34
+00:04:19,789 --> 00:04:26,597
+Para ganhar cashback, é só escanear o QR Code impresso no cupom fiscal.
+
+35
+00:04:26,904 --> 00:04:34,406
+O aplicativo lê o código, e mostra o valor da compra e o cashback que será liberado.
+
+36
+00:04:34,713 --> 00:04:41,166
+Se estava em grupo, ele pode dividir o cashback com quem estava na mesa.
+
+37
+00:04:41,467 --> 00:04:47,138
+Escolhe as pessoas, a forma de dividir, e confirma.
+
+38
+00:04:49,055 --> 00:04:56,339
+Pronto: cada pessoa recebe a sua parte, e ganha um aviso no aplicativo.
+
+39
+00:04:56,642 --> 00:05:05,242
+Na carteira, ele acompanha o saldo liberado, o que ainda vai ser liberado, e todo o histórico.
+
+40
+00:05:06,405 --> 00:05:12,312
+Se o cupom já foi registrado antes, o aplicativo avisa.
+
+41
+00:05:14,781 --> 00:05:21,231
+E se o QR Code não for de um cupom fiscal, mostra como resolver.
+
+42
+00:05:22,641 --> 00:05:29,602
+Em Missões, o cliente vê as campanhas dos restaurantes e quanto ganha a mais.
+
+43
+00:05:30,600 --> 00:05:40,425
+Na próxima visita, ele usa o saldo no caixa. O restaurante só lê o voucher, e o cliente volta.
+
+44
+00:05:40,738 --> 00:05:47,405
+Muito Mais. Seu cliente volta, e a gente ajuda nisso.
+

@@ -1,0 +1,1942 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Início — Muito Mais</title>
+<meta name="description" content="Área do cliente Muito Mais: seu cashback, missões e restaurantes parceiros.">
+<meta name="theme-color" content="#06251d">
+<link rel="icon" type="image/svg+xml" href="brand/icon.svg">
+<link rel="alternate icon" type="image/png" href="brand/logo-icone.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/pages.css">
+<style>
+  /* ================= Estrutura do app ================= */
+  body { min-height: 100vh; min-height: 100svh; }
+  .app { display: grid; grid-template-columns: 264px minmax(0, 1fr); min-height: 100vh; min-height: 100svh; }
+  .ic { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* barra lateral (desktop) */
+  .side {
+    position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; flex-direction: column; gap: 6px;
+    padding: 22px 16px 18px; background: var(--forest-950); color: rgba(255,255,255,.75);
+  }
+  .side .brand { padding: 4px 10px 22px; }
+  .side .brand .muito { color: #fff; } .side .brand .mais { color: var(--green-300); }
+  .side-nav { display: grid; gap: 4px; }
+  .side-nav a {
+    display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 14px; border-radius: 14px;
+    font-size: 15px; font-weight: 500; transition: background-color .2s ease, color .2s ease;
+  }
+  .side-nav a:hover { background: rgba(255,255,255,.06); color: #fff; }
+  .side-nav a[aria-current="page"] { background: rgba(71,211,152,.14); color: #fff; font-weight: 600; }
+  .side-nav a[aria-current="page"] .ic { color: var(--green-300); }
+  .side-nav .scan-link { margin: 8px 0; background: var(--green-300); color: var(--forest-950); font-weight: 700; }
+  .side-nav .scan-link:hover, .side-nav .scan-link[aria-current="page"] { background: #5fe0aa; color: var(--forest-950); }
+  .side-nav .scan-link[aria-current="page"] .ic { color: var(--forest-950); }
+  .side-mini { margin-top: auto; padding: 16px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); }
+  .side-mini small { font-size: 12.5px; color: rgba(255,255,255,.55); }
+  .side-mini strong { display: block; margin-top: 2px; font-size: 24px; letter-spacing: -0.04em; color: #fff; }
+  .side-mini span { font-size: 12.5px; color: var(--green-300); }
+  .side-user { display: flex; align-items: center; gap: 10px; padding: 12px 6px 0; }
+  .side-user div { flex: 1; min-width: 0; line-height: 1.3; }
+  .side-user b { display: block; color: #fff; font-size: 14px; }
+  .side-user small { font-size: 12.5px; color: rgba(255,255,255,.5); }
+  .side-user a { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; color: rgba(255,255,255,.6); }
+  .side-user a:hover { background: rgba(255,255,255,.08); color: #fff; }
+  .av { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; flex: none; background: var(--mint-200); color: var(--forest-800); font-weight: 800; }
+
+  /* topo do conteúdo */
+  .main { min-width: 0; padding: 0 clamp(16px, 3vw, 40px) 48px; }
+  .topbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 76px; background: rgba(248,250,249,.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); margin: 0 calc(clamp(16px, 3vw, 40px) * -1); padding: 0 clamp(16px, 3vw, 40px); }
+  .topbar h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.03em; color: var(--ink-deep); }
+  .topbar .brand { display: none; }
+  .top-actions { display: flex; align-items: center; gap: 8px; }
+  .icon-btn {
+    position: relative; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line);
+    background: var(--paper); color: var(--ink-2); transition: border-color .2s ease, color .2s ease;
+  }
+  .icon-btn:hover { border-color: var(--forest-800); color: var(--forest-800); }
+  .icon-btn .dot { position: absolute; top: 10px; right: 11px; width: 8px; height: 8px; border-radius: 50%; background: var(--green-500); box-shadow: 0 0 0 2px #fff; }
+  .wrap-app { max-width: 1120px; margin: 0 auto; }
+
+  /* telas */
+  .view { display: none; }
+  .view.on { display: block; animation: view-in .5s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes view-in { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } }
+
+  /* barra inferior (celular) */
+  .tabbar { display: none; }
+
+  /* ================= Componentes ================= */
+  .card { background: var(--paper); border: 1px solid var(--line); border-radius: 24px; padding: 22px; }
+  .card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+  .card-head h2 { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink-deep); }
+  .more { display: inline-flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 600; color: var(--forest-800); }
+  .more:hover { text-decoration: underline; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 600; }
+  .pill.ok { background: var(--mint-150); color: var(--forest-800); }
+  .pill.wait { background: #fdf3dc; color: #8a5a00; }
+  .muted { color: var(--ink-3); }
+
+  /* --- Início --- */
+  .home { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+  .home > div { display: grid; gap: 20px; min-width: 0; }
+  .hello { margin: 4px 0 18px; }
+  .hello p { color: var(--ink-3); font-size: 15px; }
+  .hello h2 { font-size: clamp(26px, 3vw, 34px); font-weight: 800; letter-spacing: -0.04em; color: var(--ink-deep); }
+
+  .balance {
+    position: relative; overflow: hidden; border-radius: 28px; padding: 26px; color: #fff;
+    background:
+      radial-gradient(420px 260px at 100% 0%, rgba(71,211,152,.5), transparent 65%),
+      radial-gradient(360px 260px at 0% 120%, rgba(15,163,110,.45), transparent 65%),
+      linear-gradient(160deg, #0a3328 0%, #06251d 100%);
+  }
+  .balance::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px); background-size: 20px 20px;
+    -webkit-mask-image: linear-gradient(120deg, transparent 30%, #000); mask-image: linear-gradient(120deg, transparent 30%, #000);
+  }
+  .balance > * { position: relative; z-index: 1; }
+  .bal-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 14px; color: rgba(255,255,255,.7); }
+  .eye-btn { width: 36px; height: 36px; border-radius: 50%; border: 0; display: grid; place-items: center; background: rgba(255,255,255,.1); color: #fff; }
+  .eye-btn:hover { background: rgba(255,255,255,.18); }
+  .bal-val { margin-top: 6px; font-size: clamp(40px, 5vw, 54px); font-weight: 800; letter-spacing: -0.05em; line-height: 1.05; }
+  .bal-val small { font-size: .45em; font-weight: 600; opacity: .7; margin-right: 4px; letter-spacing: 0; }
+  .hide-money .money { filter: blur(9px); user-select: none; }
+  .money { transition: filter .25s ease; }
+  .bal-sub { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .bal-sub div { padding: 12px 14px; border-radius: 16px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); }
+  .bal-sub small { display: block; font-size: 12.5px; color: rgba(255,255,255,.6); }
+  .bal-sub b { font-size: 18px; letter-spacing: -0.02em; }
+  .bal-sub .wait b { color: #ffd77a; }
+  .bal-actions { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .bal-actions .btn { height: 50px; }
+  .btn-glass { background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.18); }
+  .btn-glass:hover { background: rgba(255,255,255,.14); }
+  .btn .ic { width: 18px; height: 18px; }
+
+  .act-list { list-style: none; margin: 0; padding: 0; }
+  .act { display: flex; align-items: center; gap: 14px; padding: 12px 0; }
+  .act + .act { border-top: 1px solid var(--line); }
+  .act-ic { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; flex: none; background: var(--mint-50); color: var(--forest-800); border: 1px solid var(--mint-150); }
+  .act-ic.gift { background: #fff6e3; color: #a86b00; border-color: #f6e3b8; }
+  .act-body { flex: 1; min-width: 0; }
+  .act-body b { display: block; font-size: 15px; font-weight: 600; color: var(--ink-deep); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .act-body small { font-size: 13px; color: var(--ink-3); }
+  .act-val { text-align: right; flex: none; }
+  .act-val b { display: block; font-size: 15px; color: var(--green-500); }
+  .act-val .pill { margin-top: 4px; height: 22px; font-size: 11px; }
+
+  .mission { padding: 14px; border-radius: 18px; border: 1px solid var(--line); background: var(--canvas); }
+  .mission + .mission { margin-top: 10px; }
+  .m-top { display: flex; align-items: flex-start; gap: 12px; }
+  .m-ic { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex: none; background: var(--forest-800); color: #fff; }
+  .m-top div { flex: 1; min-width: 0; line-height: 1.35; }
+  .m-top b { display: block; font-size: 15px; color: var(--ink-deep); }
+  .m-top small { font-size: 13px; color: var(--ink-3); }
+  .m-prize { flex: none; font-size: 13px; font-weight: 700; color: var(--forest-800); background: var(--mint-150); padding: 4px 9px; border-radius: var(--radius-pill); }
+  .m-bar { margin-top: 12px; height: 8px; border-radius: 8px; background: var(--mint-150); overflow: hidden; }
+  .m-bar i { display: block; height: 100%; width: var(--p); border-radius: inherit; background: linear-gradient(90deg, #0fa36e, #47d398); transform-origin: left; animation: bar-in 1s cubic-bezier(.2,.8,.2,1) both .2s; }
+  @keyframes bar-in { from { transform: scaleX(0); } }
+  .m-meta { margin-top: 8px; display: flex; justify-content: space-between; font-size: 12.5px; color: var(--ink-3); }
+  .m-meta b { color: var(--ink-deep); }
+  .mission.done { background: var(--mint-50); border-color: var(--mint-150); }
+  .mission.done .m-ic { background: var(--green-300); color: var(--forest-950); }
+
+  .rest-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; }
+  .rest-row + .rest-row { border-top: 1px solid var(--line); }
+  .logo-r { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; flex: none; color: #fff; font-weight: 800; font-size: 16px; background: var(--c); }
+  .rest-row div { flex: 1; min-width: 0; line-height: 1.35; }
+  .rest-row b { display: block; font-size: 15px; color: var(--ink-deep); }
+  .rest-row small { font-size: 13px; color: var(--ink-3); }
+  .cb { flex: none; font-size: 13px; font-weight: 700; color: var(--forest-800); background: var(--mint-150); padding: 5px 10px; border-radius: var(--radius-pill); }
+
+  .how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .how div { padding: 14px; border-radius: 16px; background: var(--mint-50); border: 1px solid var(--mint-150); }
+  .how span { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--forest-800); color: #fff; font-size: 12.5px; font-weight: 700; }
+  .how p { margin-top: 10px; font-size: 13.5px; color: var(--ink-2); line-height: 1.4; }
+
+  /* --- Escanear --- */
+  .scan { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+  .viewer {
+    position: relative; aspect-ratio: 4 / 5; max-height: 640px; border-radius: 28px; overflow: hidden; display: grid; place-items: center;
+    background:
+      radial-gradient(60% 50% at 50% 45%, rgba(71,211,152,.18), transparent 70%),
+      linear-gradient(160deg, #10241e, #050d0b);
+  }
+  .viewer .frame { position: relative; width: 62%; aspect-ratio: 1; }
+  .viewer .frame::before, .viewer .frame::after, .viewer .frame i::before, .viewer .frame i::after {
+    content: ""; position: absolute; width: 22%; height: 22%; border: 4px solid var(--green-300);
+  }
+  .viewer .frame::before { top: 0; left: 0; border-right: 0; border-bottom: 0; border-top-left-radius: 22px; }
+  .viewer .frame::after { top: 0; right: 0; border-left: 0; border-bottom: 0; border-top-right-radius: 22px; }
+  .viewer .frame i::before { bottom: 0; left: 0; border-right: 0; border-top: 0; border-bottom-left-radius: 22px; }
+  .viewer .frame i::after { bottom: 0; right: 0; border-left: 0; border-top: 0; border-bottom-right-radius: 22px; }
+  .viewer .qr { position: absolute; inset: 18%; display: grid; grid-template-columns: repeat(7, 1fr); gap: 4%; opacity: .55; }
+  .viewer .qr span { border-radius: 2px; background: #e9fff5; }
+  .viewer .qr span.o { background: transparent; }
+  .viewer .line { position: absolute; left: 6%; right: 6%; height: 3px; border-radius: 3px; background: var(--green-300); box-shadow: 0 0 18px 4px rgba(71,211,152,.6); animation: scanline 2.2s ease-in-out infinite; }
+  @keyframes scanline { 0%, 100% { top: 8%; } 50% { top: 90%; } }
+  .viewer .hint-cam { position: absolute; left: 0; right: 0; bottom: 22px; text-align: center; color: rgba(255,255,255,.8); font-size: 14px; }
+  .viewer.reading .line { animation-duration: .7s; }
+  .viewer.done .line, .viewer.done .qr { opacity: 0; transition: opacity .3s ease; }
+  .viewer .ok-burst { position: absolute; width: 88px; height: 88px; border-radius: 50%; display: grid; place-items: center; background: var(--green-300); color: var(--forest-950); transform: scale(0); transition: transform .45s cubic-bezier(.2,1.4,.4,1); }
+  .viewer.done .ok-burst { transform: scale(1); }
+  .viewer .ok-burst .ic { width: 40px; height: 40px; stroke-width: 3; }
+
+  .scan-side { display: grid; gap: 16px; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: s; }
+  .steps li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; color: var(--ink-2); }
+  .steps li::before { counter-increment: s; content: counter(s); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; flex: none; background: var(--mint-150); color: var(--forest-800); font-weight: 700; font-size: 13px; }
+  .steps b { color: var(--ink-deep); }
+  .code-row { display: flex; gap: 8px; }
+  .code-row .input { flex: 1; }
+  .code-row .btn { height: 54px; }
+  .input {
+    position: relative; display: flex; align-items: center; height: 54px; border-radius: 16px; background: var(--paper);
+    border: 1px solid var(--line-strong); transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .input:focus-within { border-color: var(--green-500); box-shadow: 0 0 0 4px rgba(15,163,110,.14); }
+  .input > .ic { position: absolute; left: 16px; color: var(--sage); pointer-events: none; }
+  .input input { width: 100%; height: 100%; border: 0; outline: 0; background: none; padding: 0 16px 0 46px; font: inherit; font-size: 15px; color: var(--ink-deep); border-radius: inherit; }
+  /* botões de demonstração */
+  .sim-label { margin: 18px 0 8px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  .sim-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .sim {
+    display: flex; align-items: center; gap: 8px; height: 42px; padding: 0 14px; border-radius: 12px;
+    border: 1px solid var(--line); background: var(--canvas); font-size: 14px; font-weight: 600; color: var(--ink-2); transition: all .2s ease;
+  }
+  .sim:hover { border-color: var(--forest-800); color: var(--ink-deep); background: #fff; }
+  .sim i { width: 10px; height: 10px; border-radius: 50%; background: var(--c); }
+
+  /* tons dos resultados */
+  .t-ok { --c: #0fa36e; --bg: #e7f8f0; --tink: #065f46; }
+  .t-warn { --c: #e0a100; --bg: #fff6e0; --tink: #8a5a00; }
+  .t-err { --c: #dc4b4b; --bg: #fdecec; --tink: #a52a2a; }
+  .t-info { --c: #2f7fd8; --bg: #e8f1fc; --tink: #1d5aa6; }
+
+  /* visor muda de cor conforme o resultado */
+  .viewer .ok-burst.t-warn, .viewer .ok-burst.t-err, .viewer .ok-burst.t-info { background: var(--c); color: #fff; }
+  .viewer.done.err .frame::before, .viewer.done.err .frame::after, .viewer.done.err .frame i::before, .viewer.done.err .frame i::after { border-color: #ff8a8a; }
+
+  /* janela de resultado */
+  .sheet-bg {
+    position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 20px;
+    background: rgba(6,37,29,.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    opacity: 0; transition: opacity .3s ease;
+  }
+  .sheet-bg[hidden] { display: none; }
+  .sheet-bg.on { opacity: 1; }
+  .sheet {
+    position: relative; width: min(460px, 100%); max-height: calc(100vh - 40px); overflow: auto; padding: 28px; border-radius: 28px; background: #fff;
+    box-shadow: 0 40px 80px -30px rgba(6,37,29,.6); transform: translateY(20px) scale(.97); transition: transform .45s cubic-bezier(.2,.9,.2,1);
+  }
+  .sheet-bg.on .sheet { transform: none; }
+  .sh-close { position: absolute; top: 16px; right: 16px; width: 38px; height: 38px; border-radius: 50%; border: 0; display: grid; place-items: center; background: var(--canvas); color: var(--ink-2); }
+  .sh-close:hover { background: var(--mint-150); color: var(--ink-deep); }
+  .sh-ic { width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center; background: var(--bg); color: var(--c); animation: pop .5s cubic-bezier(.2,1.5,.4,1) both .1s; }
+  .sh-ic .ic { width: 30px; height: 30px; stroke-width: 2.4; }
+  @keyframes pop { from { transform: scale(.4); opacity: 0; } }
+  .sh-kicker { margin-top: 18px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--tink); }
+  .sh-title { margin-top: 6px; font-size: 24px; line-height: 1.15; font-weight: 800; letter-spacing: -0.03em; color: var(--ink-deep); }
+  .sh-sub { margin-top: 6px; font-size: 15px; color: var(--ink-3); }
+  .sh-box { margin-top: 18px; padding: 4px 16px; border-radius: 18px; background: var(--canvas); border: 1px solid var(--line); }
+  .receipt-line { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; font-size: 15px; color: var(--ink-2); }
+  .receipt-line + .receipt-line { border-top: 1px dashed var(--line); }
+  .receipt-line b { color: var(--ink-deep); }
+  .receipt-line .big { font-size: 22px; color: var(--green-500); letter-spacing: -0.03em; }
+  .receipt-line .strike { text-decoration: line-through; color: var(--ink-3); font-weight: 600; }
+  .sh-note { margin-top: 14px; display: flex; gap: 10px; padding: 12px 14px; border-radius: 14px; background: var(--bg); color: var(--tink); font-size: 14px; line-height: 1.45; }
+  .sh-note .ic { width: 18px; height: 18px; margin-top: 1px; }
+  .sh-tips { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 10px; }
+  .sh-tips li { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; color: var(--ink-2); }
+  .sh-tips li span { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; flex: none; background: var(--bg); color: var(--tink); font-size: 12px; font-weight: 700; }
+  .res-actions { margin-top: 20px; display: grid; gap: 10px; }
+  .res-actions .btn { width: 100%; height: 52px; }
+  /* usar cashback: QR para o garçom/caixa */
+  .use-qr { margin: 18px auto 0; width: min(240px, 70vw); aspect-ratio: 1; padding: 14px; border-radius: 22px; background: #fff; border: 1px solid var(--line); box-shadow: 0 18px 40px -24px rgba(6,37,29,.45); display: grid; place-items: center; }
+  .use-qr svg { width: 100%; height: 100%; display: block; }
+  .use-qr.expired svg { opacity: .12; filter: blur(2px); }
+  .use-code { margin-top: 12px; text-align: center; font-size: 22px; font-weight: 800; letter-spacing: .12em; color: var(--ink-deep); font-variant-numeric: tabular-nums; }
+  .use-timer { margin-top: 4px; text-align: center; font-size: 14px; color: var(--ink-3); }
+  .use-timer b { color: var(--ink-deep); font-variant-numeric: tabular-nums; }
+  .use-timer.end b { color: #dc4b4b; }
+  .use-status { margin-top: 10px; text-align: center; }
+  .use-status:empty { display: none; }
+  .use-status .pill { height: auto; padding: 6px 12px; white-space: normal; }
+  .use-amount { margin-top: 18px; display: flex; align-items: baseline; justify-content: center; gap: 8px; padding: 16px; border-radius: 20px; background: var(--canvas); border: 1px solid var(--line); }
+  .use-amount:focus-within { border-color: var(--green-500); box-shadow: 0 0 0 4px rgba(15,163,110,.18); }
+  .use-amount span { font-size: 22px; font-weight: 700; color: var(--ink-3); }
+  .use-amount input { width: 6.5ch; border: 0; outline: 0; background: transparent; font: inherit; font-size: 40px; font-weight: 800; letter-spacing: -0.04em; color: var(--ink-deep); font-variant-numeric: tabular-nums; }
+  .use-quick { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .use-quick button { height: 38px; padding: 0 16px; border-radius: 19px; border: 1px solid var(--line); background: #fff; font: inherit; font-size: 14px; font-weight: 600; color: var(--ink-2); cursor: pointer; }
+  .use-quick button:hover { border-color: var(--green-500); }
+  .use-quick button[aria-pressed="true"] { background: var(--ink-deep); border-color: var(--ink-deep); color: #fff; }
+  .field-use { margin-top: 18px; display: grid; gap: 6px; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+  .field-use select { height: 48px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line); background: #fff; font: inherit; font-size: 15px; font-weight: 600; color: var(--ink-deep); }
+  .field-use select:focus { outline: 0; border-color: var(--green-500); box-shadow: 0 0 0 4px rgba(15,163,110,.18); }
+  .use-limit { margin-top: 10px; display: flex; gap: 8px; align-items: flex-start; font-size: 13.5px; line-height: 1.45; color: var(--ink-3); }
+  .use-limit .ic { width: 16px; height: 16px; flex: none; margin-top: 2px; color: var(--green-500); }
+  .use-limit b { color: var(--ink-deep); }
+  .use-range { margin-top: 14px; width: 100%; accent-color: var(--green-500); }
+  .use-scale { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-3); }
+  .btn-use { margin-top: 14px; height: 44px; width: 100%; }
+  .btn-err { background: #dc4b4b; color: #fff; } .btn-err:hover { background: #c43c3c; }
+  .btn-warn { background: #e0a100; color: #2b1d00; } .btn-warn:hover { background: #cc9200; }
+  .btn-info { background: #2f7fd8; color: #fff; } .btn-info:hover { background: #2569b8; }
+
+  /* --- Carteira --- */
+  .wallet-top { display: grid; grid-template-columns: minmax(0, 1.2fr) repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .stat { padding: 20px; border-radius: 22px; background: var(--paper); border: 1px solid var(--line); }
+  .stat small { font-size: 13px; color: var(--ink-3); }
+  .stat strong { display: block; margin-top: 4px; font-size: 28px; font-weight: 800; letter-spacing: -0.04em; color: var(--ink-deep); }
+  .stat em { font-style: normal; font-size: 13px; font-weight: 600; color: var(--green-500); }
+  .stat.dark { background: linear-gradient(160deg, #0a3328, #06251d); border-color: transparent; color: #fff; }
+  .stat.dark small { color: rgba(255,255,255,.65); } .stat.dark strong { color: #fff; } .stat.dark em { color: var(--green-300); }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 22px 0 6px; }
+  .chip-f {
+    height: 38px; padding: 0 16px; border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--paper);
+    font-size: 14px; font-weight: 600; color: var(--ink-2); transition: all .2s ease;
+  }
+  .chip-f:hover { border-color: var(--forest-800); color: var(--forest-800); }
+  .chip-f[aria-pressed="true"] { background: var(--forest-800); border-color: var(--forest-800); color: #fff; }
+  .day { margin: 18px 0 2px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  .empty { padding: 36px 0; text-align: center; color: var(--ink-3); }
+
+  /* --- Dividir cashback --- */
+  .w-actions { margin-top: 16px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 14px 16px; border-radius: 20px; background: var(--mint-50); border: 1px solid var(--mint-150); }
+  .w-actions .act-ic { width: 42px; height: 42px; background: #fff; }
+  .w-actions p { flex: 1; min-width: 200px; font-size: 14.5px; color: var(--ink-2); line-height: 1.4; }
+  .w-actions p b { color: var(--ink-deep); }
+  .w-actions .btn { height: 48px; }
+  .act-ic.users { background: #e8f1fc; color: #1d5aa6; border-color: #cfe0f7; }
+  .act-val b.neg { color: var(--ink-2); }
+  .pill.split { background: #e8f1fc; color: #1d5aa6; }
+
+  .sp-back { display: inline-flex; align-items: center; gap: 6px; margin: -6px 0 10px -6px; height: 32px; padding: 0 10px 0 6px; border: 0; border-radius: 10px; background: none; font-size: 13.5px; font-weight: 600; color: var(--ink-3); }
+  .sp-back:hover { background: var(--canvas); color: var(--ink-deep); }
+  .sp-back .ic { width: 16px; height: 16px; }
+  .sp-dots { display: flex; gap: 6px; margin: 0 48px 16px 0; }
+  .sp-dots i { height: 4px; flex: 1; border-radius: 4px; background: var(--line); transition: background-color .3s ease; }
+  .sp-dots i.on { background: var(--green-500); }
+  .sheet .sh-kicker:first-child { margin-top: 0; }
+  .sp-list { margin-top: 16px; display: grid; gap: 8px; }
+  .sp-opt { position: relative; display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 16px; border: 1.5px solid var(--line); cursor: pointer; transition: border-color .2s ease, background-color .2s ease; }
+  .sp-opt:hover { border-color: var(--green-500); }
+  .sp-opt input { position: absolute; opacity: 0; pointer-events: none; }
+  .sp-opt:has(input:checked) { border-color: var(--forest-800); background: var(--mint-50); }
+  .sp-opt:has(input:focus-visible) { outline: 2px solid var(--green-500); outline-offset: 2px; }
+  .sp-opt .act-ic { width: 40px; height: 40px; border-radius: 12px; }
+  .sp-txt { flex: 1; min-width: 0; line-height: 1.3; }
+  .sp-txt b { display: block; font-size: 15px; color: var(--ink-deep); }
+  .sp-txt small { font-size: 12.5px; color: var(--ink-3); }
+  .sp-v { text-align: right; flex: none; }
+  .sp-v b { display: block; font-size: 15px; color: var(--green-500); }
+  .sp-v .pill { height: 20px; margin-top: 3px; font-size: 10.5px; }
+  .sp-add { margin-top: 16px; display: flex; gap: 8px; }
+  .sp-add .input { flex: 1; height: 50px; }
+  .sp-add .btn { height: 50px; }
+  .sp-contacts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .sp-chip {
+    display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px 0 5px; border-radius: var(--radius-pill);
+    border: 1.5px solid var(--line); background: #fff; font-size: 14px; font-weight: 600; color: var(--ink-2); transition: all .2s ease;
+  }
+  .sp-chip:hover { border-color: var(--green-500); }
+  .sp-chip[aria-pressed="true"] { border-color: var(--forest-800); background: var(--mint-50); color: var(--ink-deep); }
+  .sp-av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; flex: none; background: var(--c, #4b5563); color: #fff; font-size: 12.5px; font-weight: 700; }
+  .sp-people, .sp-split { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+  .sp-people li, .sp-split li { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 14px; background: var(--canvas); border: 1px solid var(--line); animation: pd-in .35s cubic-bezier(.2,.8,.2,1) both; }
+  .sp-people li div, .sp-split li div { flex: 1; min-width: 0; line-height: 1.3; }
+  .sp-people b, .sp-split li div b { display: block; font-size: 14.5px; color: var(--ink-deep); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sp-people small, .sp-split small { font-size: 12.5px; color: var(--ink-3); }
+  .sp-x { width: 32px; height: 32px; border-radius: 50%; border: 0; background: none; display: grid; place-items: center; color: var(--ink-3); }
+  .sp-x:hover { background: #fff; color: #c43c3c; }
+  .sp-x .ic { width: 16px; height: 16px; }
+  .sp-seg { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; padding: 4px; border-radius: var(--radius-pill); background: var(--canvas); border: 1px solid var(--line); }
+  .sp-seg button { height: 40px; border: 0; border-radius: var(--radius-pill); background: none; font-size: 14px; font-weight: 600; color: var(--ink-2); transition: all .2s ease; }
+  .sp-seg button[aria-pressed="true"] { background: var(--forest-800); color: #fff; }
+  .sp-split { margin-top: 14px; }
+  .sp-split li > b { font-size: 16px; color: var(--ink-deep); letter-spacing: -0.02em; }
+  .sp-split li.you { background: var(--mint-50); border-color: var(--mint-150); }
+  .sp-money { display: flex; align-items: center; gap: 4px; width: 112px; height: 42px; padding: 0 10px; border-radius: 12px; border: 1px solid var(--line-strong); background: #fff; font-size: 14px; color: var(--ink-3); flex: none; }
+  .sp-money:focus-within { border-color: var(--green-500); box-shadow: 0 0 0 3px rgba(15,163,110,.14); }
+  .sp-money input { width: 100%; min-width: 0; border: 0; outline: 0; background: none; font: inherit; font-size: 15px; font-weight: 600; color: var(--ink-deep); text-align: right; }
+  .sp-err { margin-top: 10px; font-size: 13.5px; font-weight: 600; color: #c43c3c; }
+  .sp-err:empty { display: none; }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+
+  /* --- Missões --- */
+  .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .sec-t { margin: 26px 0 12px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  .sec-t:first-child { margin-top: 0; }
+  .grid-2 .mission + .mission { margin-top: 0; }
+  .grid-2 .mission { background: var(--paper); padding: 18px; }
+  .m-banner {
+    display: flex; align-items: center; gap: 16px; padding: 20px 22px; border-radius: 24px; color: #fff;
+    background: radial-gradient(300px 200px at 100% 0%, rgba(71,211,152,.5), transparent 70%), linear-gradient(160deg, #0fa36e, #065f46);
+  }
+  .m-banner .m-ic { width: 52px; height: 52px; border-radius: 16px; background: rgba(255,255,255,.16); }
+  .m-banner b { display: block; font-size: 20px; letter-spacing: -0.02em; }
+  .m-banner small { color: rgba(255,255,255,.8); font-size: 14px; }
+
+  /* --- Perfil --- */
+  .profile { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 20px; align-items: start; }
+  .p-card { text-align: center; }
+  .p-card .av { width: 84px; height: 84px; margin: 6px auto 0; font-size: 32px; }
+  .p-card h2 { margin-top: 14px; font-size: 22px; font-weight: 800; letter-spacing: -0.03em; color: var(--ink-deep); }
+  .p-card p { color: var(--ink-3); font-size: 14.5px; }
+  .p-stats { margin-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); padding-top: 16px; }
+  .p-stats div + div { border-left: 1px solid var(--line); }
+  .p-stats b { display: block; font-size: 20px; color: var(--ink-deep); letter-spacing: -0.03em; }
+  .p-stats small { font-size: 12.5px; color: var(--ink-3); }
+  .set-list { list-style: none; margin: 0; padding: 0; }
+  .set-list li { display: flex; align-items: center; gap: 14px; padding: 14px 0; }
+  .set-list li + li { border-top: 1px solid var(--line); }
+  .set-list .act-ic { width: 40px; height: 40px; border-radius: 12px; }
+  .set-list div { flex: 1; min-width: 0; line-height: 1.35; }
+  .set-list b { display: block; font-size: 15px; font-weight: 600; color: var(--ink-deep); }
+  .set-list small { font-size: 13px; color: var(--ink-3); }
+  .switch { position: relative; width: 48px; height: 28px; flex: none; }
+  .switch input { position: absolute; inset: 0; opacity: 0; cursor: pointer; z-index: 1; margin: 0; }
+  .switch span { position: absolute; inset: 0; border-radius: 28px; background: var(--line-strong); transition: background-color .25s ease; }
+  .switch span::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.2); transition: transform .3s cubic-bezier(.2,.8,.2,1); }
+  .switch input:checked + span { background: var(--forest-800); }
+  .switch input:checked + span::after { transform: translateX(20px); }
+  .switch input:focus-visible + span { outline: 2px solid var(--green-500); outline-offset: 2px; }
+  .chev { color: var(--ink-3); }
+  .logout { margin-top: 16px; width: 100%; height: 52px; color: #c43c3c; background: #fff; border: 1px solid #f1d1d1; }
+  .logout:hover { background: #fff5f5; }
+
+  /* toast */
+  .toast-x {
+    position: fixed; left: 50%; bottom: 28px; z-index: 80; display: flex; align-items: center; gap: 10px; max-width: calc(100vw - 32px);
+    padding: 12px 18px 12px 12px; border-radius: 16px; background: var(--forest-950); color: #fff; font-size: 14.5px;
+    box-shadow: 0 20px 40px -18px rgba(0,0,0,.5); transform: translate(-50%, 20px); opacity: 0; pointer-events: none; transition: all .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .toast-x.on { transform: translate(-50%, 0); opacity: 1; }
+  .toast-x i { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--green-300); color: var(--forest-950); flex: none; }
+
+  /* --- Mesa: dividir a conta --- */
+  .mz, .mz-start { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+  .mz-col { display: grid; gap: 20px; min-width: 0; }
+  .mz-kick { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--green-300); }
+  .mz-hero h2 { margin-top: 8px; max-width: 20ch; font-size: clamp(24px, 3vw, 32px); line-height: 1.12; font-weight: 800; letter-spacing: -0.04em; }
+  .mz-hero .mz-txt { margin-top: 10px; max-width: 44ch; font-size: 15px; line-height: 1.5; color: rgba(255,255,255,.75); }
+  .mz-code { color: #fff; letter-spacing: .1em; }
+  .mz-live { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; flex: none; border-radius: var(--radius-pill); background: rgba(71,211,152,.16); color: var(--green-300); font-size: 12px; font-weight: 700; }
+  .mz-live i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: mz-pulse 1.6s ease-in-out infinite; }
+  .mz-live.off { background: rgba(255,255,255,.12); color: #fff; }
+  .mz-live.off i { animation: none; }
+  @keyframes mz-pulse { 50% { opacity: .25; } }
+  .mz-lbl { margin-top: 16px; font-size: 14px; color: rgba(255,255,255,.7); }
+  .mz-items .act-body small { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mz-items .act-val b { color: var(--ink-deep); }
+  .mz-items .act-val small { display: block; font-size: 12px; color: var(--ink-3); }
+  .mz-items .sp-x { flex: none; margin-left: -6px; }
+  .mz-new { animation: mz-flash 1.8s ease both; border-radius: 14px; }
+  @keyframes mz-flash { from { background: var(--mint-150); box-shadow: 0 0 0 8px var(--mint-150); } }
+  .mz-seg { margin-top: 0; grid-template-columns: repeat(4, 1fr); }
+  .mz-seg button:disabled { opacity: .5; cursor: not-allowed; }
+  .mz-people { margin-top: 0; }
+  .mz-people li > b { white-space: nowrap; }
+  .mz-people em { margin-left: 6px; padding: 1px 6px; border-radius: 6px; border: 1px solid var(--line); background: #fff; font-style: normal; font-size: 11px; font-weight: 700; color: var(--ink-3); }
+  .mz-total { margin-top: 6px; padding: 0 4px; }
+  .mz-btns { display: grid; gap: 10px; }
+  .mz-btns .btn { width: 100%; height: 52px; }
+  .mz-in { width: 100%; height: 48px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line); background: #fff; font: inherit; font-size: 16px; font-weight: 600; color: var(--ink-deep); }
+  .mz-in:focus { outline: 0; border-color: var(--green-500); box-shadow: 0 0 0 4px rgba(15,163,110,.18); }
+  .mz-wait { margin-top: 6px; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; font-size: 15px; color: rgba(255,255,255,.75); }
+  .mz-wait b { font-size: 40px; font-weight: 800; letter-spacing: -0.04em; color: #fff; line-height: 1.05; }
+  .mz-wait span { flex-basis: 100%; font-size: 13.5px; color: rgba(255,255,255,.6); }
+  .mz-quick { margin-top: 18px; display: flex; gap: 10px; }
+  .mz-quick .mz-money { flex: 1; min-width: 0; height: 54px; border: 0; }
+  .mz-quick .mz-money .ic { color: var(--sage); }
+  .mz-quick .mz-money input { font-size: 17px; font-weight: 600; }
+  .mz-quick .mz-money input::placeholder { font-weight: 500; color: var(--sage); }
+  .mz-sug { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .mz-sug button { height: 32px; padding: 0 12px; border-radius: 16px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.08); font: inherit; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.85); cursor: pointer; }
+  .mz-sug button:hover { background: rgba(255,255,255,.16); color: #fff; }
+  .mz-cam { position: relative; overflow: hidden; cursor: pointer; }
+  .mz-cam input { position: absolute; inset: 0; opacity: 0; cursor: pointer; font-size: 0; }
+  .mz-cam:focus-within { outline: 2px solid var(--green-300); outline-offset: 2px; }
+  .mz-src { text-transform: uppercase; font-size: 11.5px; letter-spacing: .02em; }
+  .pill.mz-miss { background: #fdecec; color: #a52a2a; }
+  .mz-lines .act { gap: 12px; flex-wrap: wrap; }
+  .mz-lines { scroll-margin-top: 90px; }
+  .mz-forgot { display: flex; gap: 10px; margin: -4px 0 8px; padding: 12px 14px; border-radius: 14px; background: var(--mint-50); border: 1px solid var(--mint-150); font-size: 13.5px; line-height: 1.45; color: var(--ink-2); }
+  .mz-forgot .ic { width: 18px; height: 18px; flex: none; color: var(--green-500); margin-top: 1px; }
+  .mz-forgot b { color: var(--ink-deep); }
+  .mz-also .ic { width: 16px; height: 16px; }
+  .mz-q { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex: none; background: var(--canvas); border: 1px solid var(--line); font-size: 13px; font-weight: 800; color: var(--ink-2); }
+  .mz-loose .mz-q { background: #fff6e0; border-color: #f6e3b8; color: #8a5a00; }
+  .mz-loose .act-body small { color: #8a5a00; font-weight: 600; }
+  .mz-claim { display: flex; gap: 6px; flex-basis: 100%; padding-left: 52px; }
+  .mz-claim .btn { height: 38px; padding: 0 14px; font-size: 13.5px; }
+  .mz-paid { height: 20px; margin-left: 6px; padding: 0 8px; font-size: 10.5px; vertical-align: 2px; }
+  .mz-sum { margin-top: 14px; }
+  .mz-shot { position: relative; margin-top: 18px; height: 300px; border-radius: 18px; overflow: hidden; background: #0b1512; }
+  .mz-shot img { width: 100%; height: 100%; object-fit: contain; opacity: .85; }
+  .mz-scan { position: absolute; left: 0; right: 0; height: 3px; background: var(--green-300); box-shadow: 0 0 18px 4px rgba(71,211,152,.6); animation: scanline 1.6s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) { .mz-scan { animation: none; top: 50%; } }
+  .mz-quick .btn { height: 54px; flex: none; }
+  .mz-mic { position: relative; width: 54px; height: 54px; flex: none; display: grid; place-items: center; border-radius: 16px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.08); color: #fff; cursor: pointer; transition: background-color .2s ease, border-color .2s ease; }
+  .mz-mic:hover { background: rgba(255,255,255,.16); }
+  .mz-mic .ic { width: 22px; height: 22px; }
+  .mz-mic[aria-pressed="true"] { background: #dc4b4b; border-color: #dc4b4b; }
+  .mz-mic[aria-pressed="true"]::after { content: ""; position: absolute; inset: -4px; border-radius: 20px; border: 2px solid #ff8a8a; animation: mz-ring 1.2s ease-out infinite; }
+  @keyframes mz-ring { from { opacity: .9; transform: scale(.94); } to { opacity: 0; transform: scale(1.2); } }
+  @media (prefers-reduced-motion: reduce) { .mz-mic[aria-pressed="true"]::after { animation: none; opacity: .6; } }
+  .mz-mic-hint { margin-top: 8px; font-size: 13.5px; color: #ffd77a; font-weight: 600; }
+  .mz-mic-hint:empty { display: none; }
+  /* campo + microfone em cima, botão de adicionar embaixo ocupando a largura toda */
+  .mz-quick { flex-wrap: wrap; }
+  .mz-quick .btn[type="submit"] { flex-basis: 100%; height: 50px; }
+  @media (max-width: 640px) {
+    .mz .bal-actions .mz-cam { flex-basis: 100%; }
+  }
+  .mz-items .sp-av { width: 40px; height: 40px; }
+  .mz-items .act-val .pill { margin-top: 0; }
+  .mz-money { display: flex; align-items: center; gap: 6px; height: 48px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line); background: #fff; }
+  .mz-money:focus-within { border-color: var(--green-500); box-shadow: 0 0 0 4px rgba(15,163,110,.18); }
+  .mz-money i { font-style: normal; font-weight: 600; color: var(--ink-3); }
+  .mz-money input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; font: inherit; font-size: 18px; font-weight: 700; color: var(--ink-deep); }
+  .mz-stack { display: flex; margin-top: 16px; }
+  .mz-stack .sp-av { box-shadow: 0 0 0 3px #fff; }
+  .mz-stack .sp-av + .sp-av { margin-left: -8px; }
+  .mz-home .w-actions { margin-top: 0; }
+  .mz-home .w-actions .act-ic { color: var(--forest-800); }
+  .mz-home p b.money { display: inline; }
+  @media (max-width: 960px) { .mz, .mz-start { grid-template-columns: 1fr; } }
+
+  /* ================= Responsivo ================= */
+  @media (max-width: 960px) {
+    .app { grid-template-columns: 1fr; }
+    .side { display: none; }
+    .main { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
+    .topbar { height: 68px; }
+    .topbar .brand { display: inline-flex; }
+    .topbar h1 { display: none; font-size: 21px; }
+    /* fora do Início, o topo mostra o nome da tela no lugar do logo */
+    body:not([data-view="inicio"]) .topbar h1 { display: block; }
+    body:not([data-view="inicio"]) .topbar .brand { display: none; }
+    .home, .scan, .profile { grid-template-columns: 1fr; }
+    .wallet-top { grid-template-columns: 1fr 1fr; }
+    .wallet-top .stat.dark { grid-column: 1 / -1; }
+    .viewer { max-height: 520px; }
+    .tabbar {
+      position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 50;
+      display: grid; grid-template-columns: repeat(5, 1fr); align-items: center; height: 70px; padding: 0 6px;
+      border-radius: 24px; background: rgba(6,37,29,.94); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 20px 40px -16px rgba(6,37,29,.6);
+    }
+    .tabbar a { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,.55); transition: color .2s ease; }
+    .tabbar a[aria-current="page"] { color: #fff; }
+    .tabbar a[aria-current="page"] .ic { color: var(--green-300); }
+    .tabbar .fab { position: relative; top: -16px; }
+    .tabbar .fab span {
+      width: 60px; height: 60px; border-radius: 20px; display: grid; place-items: center; background: var(--green-300); color: var(--forest-950);
+      box-shadow: 0 0 0 6px var(--canvas), 0 14px 24px -10px rgba(15,163,110,.8);
+    }
+    .tabbar .fab span .ic { width: 26px; height: 26px; }
+    .tabbar .fab[aria-current="page"] { color: #fff; }
+    .tabbar .fab[aria-current="page"] .ic { color: var(--forest-950); }
+    .toast-x { bottom: calc(96px + env(safe-area-inset-bottom)); }
+    /* no celular o resultado sobe como gaveta */
+    .sheet-bg { place-items: end center; padding: 0; }
+    .sheet { width: 100%; max-height: 92vh; border-radius: 28px 28px 0 0; padding: 26px 20px calc(22px + env(safe-area-inset-bottom)); transform: translateY(100%); }
+    .sheet::before { content: ""; display: block; width: 44px; height: 5px; margin: -12px auto 16px; border-radius: 5px; background: var(--line-strong); }
+  }
+  @media (max-width: 640px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .how { grid-template-columns: 1fr; }
+    .how div { display: flex; gap: 12px; align-items: center; }
+    .how p { margin-top: 0; }
+    .card { padding: 18px; border-radius: 22px; }
+    .balance { padding: 22px; border-radius: 24px; }
+    .bal-actions .btn { flex: 1; }
+    .code-row { flex-direction: column; gap: 10px; }
+    .w-actions .btn { width: 100%; }
+    .code-row .input { flex: none; height: 56px; }   /* empilhado, o flex:1 encolhia a altura */
+    .code-row .input input { font-size: 16px; letter-spacing: .02em; }
+    .code-row .btn { width: 100%; height: 54px; }
+    .wallet-top { gap: 10px; }
+    .stat { padding: 16px; }
+    .stat strong { font-size: 22px; }
+  }
+  /* logo nova: cubo + nome em duas linhas */
+  .brand .mm-logo { display: block; width: auto; height: 36px; flex: none; }
+  .brand .wm { display: flex; flex-direction: column; line-height: .9; font-size: .8em; font-weight: 800; letter-spacing: .02em; text-transform: uppercase; }
+  .brand .wm .muito { color: #2db160; }
+  .brand .wm .mais { color: #0c9444; }
+  footer .brand .wm .muito, .side .brand .wm .muito { color: #fff; }
+  footer .brand .wm .mais, .side .brand .wm .mais { color: var(--green-300); }
+</style>
+</head>
+<body>
+<!-- ícones -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><linearGradient id="mm-icon" x1="40" y1="0" x2="40" y2="80" gradientUnits="userSpaceOnUse"><stop stop-color="#065F46"/><stop offset=".55" stop-color="#0FA36E"/><stop offset="1" stop-color="#47D398"/></linearGradient></defs>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M8 8h3v3H8zM13 13h3v3h-3zM13 8h3M8 16h3v-2"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><path d="M3 7v11a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1H5a2 2 0 0 1-2-2z"/><path d="M16 14h.01"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9l1.5-5h13L20 9"/><path d="M4 9a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0A2.7 2.7 0 0 0 20 9"/><path d="M5 11v9h14v-9M10 20v-5h4v5"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 3v18l2-1.5L9 21l2-1.5L13 21l2-1.5L17 21l2-1.5V3l-2 1.5L15 3l-2 1.5L11 3 9 4.5 7 3z"/><path d="M9 9h6M9 13h6"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l-5-5 5-5M5 12h11"/></symbol>
+  <symbol id="i-hash" viewBox="0 0 24 24"><path d="M5 9h14M5 15h14M10 4L8 20M16 4l-2 16"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 4.9.7c0 1.7-2.4 2.3-2.4 3.8M12 17h.01"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c2 .7 3.2 2.5 3.6 5.2"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3M21 14v.01M14 21h3M21 17v4h-1"/></symbol>
+  <symbol id="i-mesa" viewBox="0 0 24 24"><path d="M7 3v18M4 3v5a3 3 0 0 0 6 0V3M18 21V3c-2.2 0-4 2.5-4 7v3h4"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></symbol>
+  <symbol id="i-star"viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/></symbol>
+</svg>
+
+<div class="app" id="app">
+  <!-- Barra lateral -->
+  <aside class="side" aria-label="Menu">
+    <a href="index.html" class="brand" aria-label="Muito Mais — site">
+      <img class="mm-logo" src="brand/icon.svg" width="36" height="30" alt="">
+      <span class="wm"><span class="muito">Muito</span><span class="mais">Mais</span></span>
+    </a>
+    <nav class="side-nav">
+      <a href="#inicio" data-nav="inicio"><svg class="ic"><use href="#i-home"/></svg>Início</a>
+      <a href="#escanear" data-nav="escanear" class="scan-link"><svg class="ic"><use href="#i-scan"/></svg>Escanear cupom</a>
+      <a href="#carteira" data-nav="carteira"><svg class="ic"><use href="#i-wallet"/></svg>Carteira</a>
+      <a href="#mesa" data-nav="mesa"><svg class="ic"><use href="#i-mesa"/></svg>Mesa</a>
+      <a href="#missoes" data-nav="missoes"><svg class="ic"><use href="#i-target"/></svg>Missões</a>
+      <a href="#perfil" data-nav="perfil"><svg class="ic"><use href="#i-user"/></svg>Perfil</a>
+    </nav>
+    <div class="side-mini">
+      <small>Disponível</small>
+      <strong class="money">R$ 48,30</strong>
+      <span>+ R$ 12,40 a liberar</span>
+    </div>
+    <div class="side-user">
+      <span class="av">M</span>
+      <div><b>Marina Souza</b><small>Cliente desde 2025</small></div>
+      <a href="entrar.html" aria-label="Sair"><svg class="ic"><use href="#i-logout"/></svg></a>
+    </div>
+  </aside>
+
+  <!-- Conteúdo -->
+  <main class="main">
+    <header class="topbar">
+      <h1 id="viewTitle">Início</h1>
+      <a href="#inicio" class="brand" aria-label="Muito Mais — início">
+        <img class="mm-logo" src="brand/icon.svg" width="34" height="28" alt="">
+        <span class="wm"><span class="muito">Muito</span><span class="mais">Mais</span></span>
+      </a>
+      <div class="top-actions">
+        <button class="icon-btn" id="notifBtn" aria-label="Notificações"><svg class="ic"><use href="#i-bell"/></svg><span class="dot"></span></button>
+        <a href="#perfil" class="av" aria-label="Perfil">M</a>
+      </div>
+    </header>
+
+    <div class="wrap-app">
+      <!-- ========== INÍCIO ========== -->
+      <section class="view" id="v-inicio" data-title="Início">
+        <div class="hello">
+          <p id="greet">Boa tarde,</p>
+          <h2>Marina 👋</h2>
+        </div>
+        <div class="home">
+          <div>
+            <div class="balance">
+              <div class="bal-top"><span>Seu cashback disponível</span><button class="eye-btn" id="hideBtn" aria-label="Esconder valores" aria-pressed="false"><svg class="ic"><use href="#i-eye"/></svg></button></div>
+              <div class="bal-val money"><small>R$</small><span data-count="48.30">48,30</span></div>
+              <div class="bal-sub">
+                <div class="wait"><small>A liberar</small><b class="money">R$ 12,40</b></div>
+                <div><small>Ganho no mês</small><b class="money">R$ 21,20</b></div>
+              </div>
+              <div class="bal-actions">
+                <button class="btn btn-lime" type="button" data-use><svg class="ic"><use href="#i-qr"/></svg>Usar cashback</button>
+                <a class="btn btn-glass" href="#escanear"><svg class="ic"><use href="#i-scan"/></svg>Escanear cupom</a>
+                <a class="btn btn-glass" href="#carteira"><svg class="ic"><use href="#i-wallet"/></svg>Ver carteira</a>
+              </div>
+            </div>
+
+            <div class="mz-home" id="mzHome"></div>
+
+            <div class="card">
+              <div class="card-head"><h2>Atividade recente</h2><a class="more" href="#carteira">Ver tudo <svg class="ic" style="width:16px;height:16px"><use href="#i-chev"/></svg></a></div>
+              <ul class="act-list" id="recentList"></ul>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <div class="card-head"><h2>Missões ativas</h2><a class="more" href="#missoes">Todas <svg class="ic" style="width:16px;height:16px"><use href="#i-chev"/></svg></a></div>
+              <div id="homeMissions"></div>
+            </div>
+            <div class="card">
+              <div class="card-head"><h2>Perto de você</h2></div>
+              <div id="homeRests"></div>
+            </div>
+            <div class="card">
+              <div class="card-head"><h2>Como ganhar</h2></div>
+              <div class="how">
+                <div><span>1</span><p>Peça o <b>cupom</b> no restaurante parceiro.</p></div>
+                <div><span>2</span><p><b>Escaneie</b> o QR Code impresso.</p></div>
+                <div><span>3</span><p>Receba quando a <b>nota for confirmada</b>.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== ESCANEAR ========== -->
+      <section class="view" id="v-escanear" data-title="Escanear cupom">
+        <div class="scan">
+          <div class="viewer" id="viewer">
+            <div class="frame"><i></i>
+              <div class="qr" id="qrGrid"></div>
+              <span class="line"></span>
+            </div>
+            <span class="ok-burst" id="burst"><svg class="ic"><use href="#i-check"/></svg></span>
+            <p class="hint-cam" id="camHint">Aponte para o QR Code do cupom</p>
+          </div>
+
+          <div class="scan-side">
+            <div class="card" id="scanHelp">
+              <div class="card-head"><h2>Como escanear</h2></div>
+              <ol class="steps">
+                <li><span>Peça o <b>cupom fiscal</b> no caixa do restaurante parceiro.</span></li>
+                <li><span>Aponte a câmera para o <b>QR Code</b> impresso no cupom.</span></li>
+                <li><span>Pronto: o cashback fica <b>a liberar</b> até a nota ser confirmada.</span></li>
+              </ol>
+              <button class="btn btn-primary" data-sim="ok" style="margin-top:18px;width:100%;height:52px"><svg class="ic"><use href="#i-scan"/></svg>Simular leitura do QR</button>
+              <!-- demonstração: abre cada tela de resultado da leitura -->
+              <p class="sim-label">Ver telas de resultado</p>
+              <div class="sim-row">
+                <button class="sim" data-sim="ok"><i class="t-ok"></i>Sucesso</button>
+                <button class="sim" data-sim="warn"><i class="t-warn"></i>Aviso</button>
+                <button class="sim" data-sim="err"><i class="t-err"></i>Erro</button>
+                <button class="sim" data-sim="info"><i class="t-info"></i>Informativo</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-head"><h2>QR Code não lê?</h2></div>
+              <p class="muted" style="font-size:14px;margin-bottom:12px">Digite a chave de acesso de 44 números impressa no cupom.</p>
+              <form class="code-row" id="codeForm">
+                <label class="input"><svg class="ic"><use href="#i-hash"/></svg><input id="codeInput" inputmode="numeric" placeholder="0000 0000 0000 …" aria-label="Chave de acesso da nota"></label>
+                <button class="btn btn-outline" type="submit">Registrar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== CARTEIRA ========== -->
+      <section class="view" id="v-carteira" data-title="Carteira">
+        <div class="wallet-top">
+          <div class="stat dark"><small>Disponível</small><strong class="money">R$ 48,30</strong><em>Pronto para usar nos parceiros</em><button class="btn btn-lime btn-use" type="button" data-use><svg class="ic"><use href="#i-qr"/></svg>Usar cashback</button></div>
+          <div class="stat"><small>A liberar</small><strong class="money">R$ 12,40</strong><em style="color:#a86b00">1 nota em validação</em></div>
+          <div class="stat"><small>Total ganho</small><strong class="money">R$ 132,90</strong><em>desde 2025</em></div>
+        </div>
+        <div class="w-actions">
+          <span class="act-ic"><svg class="ic"><use href="#i-users"/></svg></span>
+          <p><b>Comeu em grupo?</b> Divida o cashback de uma compra com quem estava com você.</p>
+          <button class="btn btn-primary" id="splitBtn"><svg class="ic"><use href="#i-users"/></svg>Dividir cashback</button>
+        </div>
+        <div class="chips" role="group" aria-label="Filtrar extrato">
+          <button class="chip-f" data-f="todos" aria-pressed="true">Tudo</button>
+          <button class="chip-f" data-f="liberado" aria-pressed="false">Liberado</button>
+          <button class="chip-f" data-f="aliberar" aria-pressed="false">A liberar</button>
+          <button class="chip-f" data-f="missao" aria-pressed="false">Missões</button>
+          <button class="chip-f" data-f="dividido" aria-pressed="false">Divididos</button>
+        </div>
+        <div class="card" style="margin-top:12px"><div id="statement"></div></div>
+      </section>
+
+      <!-- ========== MESA (dividir a conta) ========== -->
+      <section class="view" id="v-mesa" data-title="Mesa">
+        <div id="mzRoot"></div>
+      </section>
+
+      <!-- ========== MISSÕES ========== -->
+      <section class="view" id="v-missoes" data-title="Missões">
+        <div class="m-banner">
+          <span class="m-ic"><svg class="ic" style="width:26px;height:26px"><use href="#i-target"/></svg></span>
+          <div><b>3 missões em andamento</b><small>Complete e ganhe até R$ 15,00 a mais este mês.</small></div>
+        </div>
+        <h3 class="sec-t" style="margin-top:26px">Em andamento</h3>
+        <div class="grid-2" id="activeMissions"></div>
+        <h3 class="sec-t">Concluídas</h3>
+        <div class="grid-2" id="doneMissions"></div>
+      </section>
+
+      <!-- ========== PERFIL ========== -->
+      <section class="view" id="v-perfil" data-title="Perfil">
+        <div class="profile">
+          <div class="card p-card">
+            <span class="av">M</span>
+            <h2>Marina Souza</h2>
+            <p>marina@exemplo.com</p>
+            <div class="p-stats">
+              <div><b>23</b><small>Cupons</small></div>
+              <div><b>6</b><small>Missões</small></div>
+              <div><b>5</b><small>Restaurantes</small></div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <div class="card-head"><h2>Preferências</h2></div>
+              <ul class="set-list">
+                <li><span class="act-ic"><svg class="ic"><use href="#i-bell"/></svg></span><div><b>Cashback liberado</b><small>Avisar quando uma nota for confirmada</small></div><label class="switch"><input type="checkbox" checked aria-label="Avisar cashback liberado"><span></span></label></li>
+                <li><span class="act-ic"><svg class="ic"><use href="#i-target"/></svg></span><div><b>Novas missões</b><small>Avisar sobre missões dos meus restaurantes</small></div><label class="switch"><input type="checkbox" checked aria-label="Avisar novas missões"><span></span></label></li>
+                <li><span class="act-ic"><svg class="ic"><use href="#i-eye"/></svg></span><div><b>Esconder valores</b><small>Ocultar saldo ao abrir o app</small></div><label class="switch"><input type="checkbox" id="hidePref" aria-label="Esconder valores"><span></span></label></li>
+              </ul>
+            </div>
+            <div class="card" style="margin-top:16px">
+              <div class="card-head"><h2>Conta</h2></div>
+              <ul class="set-list">
+                <li><span class="act-ic"><svg class="ic"><use href="#i-user"/></svg></span><div><b>Dados pessoais</b><small>Nome, email e telefone</small></div><svg class="ic chev"><use href="#i-chev"/></svg></li>
+                <li><span class="act-ic"><svg class="ic"><use href="#i-lock"/></svg></span><div><b>Senha e segurança</b><small>Alterar senha</small></div><svg class="ic chev"><use href="#i-chev"/></svg></li>
+                <li><span class="act-ic"><svg class="ic"><use href="#i-help"/></svg></span><div><b>Ajuda</b><small>Dúvidas sobre cashback e missões</small></div><svg class="ic chev"><use href="#i-chev"/></svg></li>
+              </ul>
+            </div>
+            <a class="btn logout" href="entrar.html"><svg class="ic"><use href="#i-logout"/></svg>Sair da conta</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- barra inferior (celular) -->
+<nav class="tabbar" aria-label="Menu">
+  <a href="#inicio" data-nav="inicio"><svg class="ic"><use href="#i-home"/></svg>Início</a>
+  <a href="#carteira" data-nav="carteira"><svg class="ic"><use href="#i-wallet"/></svg>Carteira</a>
+  <a href="#escanear" data-nav="escanear" class="fab" aria-label="Escanear cupom"><span><svg class="ic"><use href="#i-scan"/></svg></span></a>
+  <a href="#missoes" data-nav="missoes"><svg class="ic"><use href="#i-target"/></svg>Missões</a>
+  <a href="#perfil" data-nav="perfil"><svg class="ic"><use href="#i-user"/></svg>Perfil</a>
+</nav>
+
+<div class="sheet-bg" id="sheet" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle" id="sheetBox">
+    <button class="sh-close" id="shClose" aria-label="Fechar"><svg class="ic"><use href="#i-x"/></svg></button>
+    <div id="shBody"></div>
+  </div>
+</div>
+
+<div class="toast-x" id="toast" role="status" aria-live="polite"><i><svg class="ic" style="width:16px;height:16px"><use href="#i-check"/></svg></i><span id="toastText"></span></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const icon = (n, s = '') => `<svg class="ic"${s ? ` style="${s}"` : ''}><use href="#i-${n}"/></svg>`;
+
+  // ---------- dados de exemplo (trocar pela API) ----------
+  const RESTS = [
+    // lim = limite de gasto de cashback por compra, definido pelo restaurante no painel
+    { n: 'Cantina Bella', t: 'Italiana', d: '450 m', cb: 10, c: '#c2410c', lim: 25 },
+    { n: 'Café Central', t: 'Café', d: '700 m', cb: 8, c: '#7c4a2d', lim: 15 },
+    { n: 'Burger House', t: 'Lanches', d: '1,2 km', cb: 6, c: '#b91c1c', lim: 20 },
+    { n: 'Sushi Kaze', t: 'Japonesa', d: '1,5 km', cb: 7, c: '#1e3a5f', lim: 30 },
+    { n: 'Sabor da Vila', t: 'Brasileira', d: '2,1 km', cb: 9, c: '#065f46', lim: 20 }
+  ];
+  // demonstração: o limite salvo no painel da loja (empresa.html → Cashback) vale para a Cantina Bella
+  try { const s = parseFloat(localStorage.getItem('mm-demo-limite-gasto')); if (s > 0) RESTS[0].lim = s; } catch (e) {}
+  const TX = [
+    { day: 'Hoje', n: 'Cantina Bella', s: 'Cupom escaneado · 12:42', v: 12.40, k: 'aliberar' },
+    { day: 'Ontem', n: 'Missão: Volte 3x no mês', s: 'Café Central', v: 5.00, k: 'missao' },
+    { day: 'Ontem', n: 'Café Central', s: 'Nota confirmada', v: 3.80, k: 'liberado' },
+    { day: '12 de outubro', n: 'Sushi Kaze', s: 'Nota confirmada', v: 9.60, k: 'liberado' },
+    { day: '12 de outubro', n: 'Burger House', s: 'Nota confirmada', v: 2.80, k: 'liberado' },
+    { day: '5 de outubro', n: 'Missão: Primeira visita', s: 'Burger House', v: 3.00, k: 'missao' },
+    { day: '5 de outubro', n: 'Sabor da Vila', s: 'Nota confirmada', v: 6.30, k: 'liberado' }
+  ];
+  const MISSIONS = [
+    { n: 'Volte 3x no mês', r: 'Cantina Bella', p: 2, of: 3, prize: 5, end: 'Termina em 15 dias' },
+    { n: 'Almoço na semana', r: 'Café Central', p: 3, of: 5, prize: 6, end: 'Termina em 4 dias' },
+    { n: 'Experimente um prato novo', r: 'Sabor da Vila', p: 0, of: 1, prize: 4, end: 'Termina em 20 dias' }
+  ];
+  const DONE = [
+    { n: 'Volte 3x no mês', r: 'Café Central', prize: 5, end: 'Concluída ontem' },
+    { n: 'Primeira visita', r: 'Burger House', prize: 3, end: 'Concluída em 5 de outubro' }
+  ];
+
+  const brl = v => 'R$ ' + v.toFixed(2).replace('.', ',');
+  const initials = n => n.split(' ').filter(w => /^[A-ZÀ-Ú]/.test(w)).map(w => w[0]).join('').slice(0, 2);
+
+  // ---------- renderizações ----------
+  const txItem = t => {
+    const neg = t.v < 0, ic = t.k === 'missao' ? 'gift' : t.k === 'dividido' ? 'users' : 'receipt';
+    const pill = t.k === 'aliberar' ? `<span class="pill wait">${icon('clock', 'width:12px;height:12px')}A liberar</span>`
+      : t.k === 'dividido' ? '<span class="pill split">Dividido</span>' : '<span class="pill ok">Liberado</span>';
+    return `<li class="act">
+      <span class="act-ic${t.k === 'missao' ? ' gift' : t.k === 'dividido' ? ' users' : ''}">${icon(ic)}</span>
+      <div class="act-body"><b>${t.n}</b><small>${t.s}${t.split ? ' · dividido' : ''}</small></div>
+      <div class="act-val"><b class="money${neg ? ' neg' : ''}">${neg ? '−' : '+'} ${brl(Math.abs(t.v))}</b>${pill}</div>
+    </li>`;
+  };
+  $('recentList').innerHTML = TX.slice(0, 4).map(txItem).join('');
+
+  const renderStatement = f => {
+    const list = TX.filter(t => f === 'todos' || t.k === f);
+    if (!list.length) { $('statement').innerHTML = '<p class="empty">Nada por aqui ainda.</p>'; return; }
+    let html = '', day = null;
+    list.forEach(t => {
+      if (t.day !== day) { if (day) html += '</ul>'; html += `<p class="day">${t.day}</p><ul class="act-list">`; day = t.day; }
+      html += txItem(t);
+    });
+    $('statement').innerHTML = html + '</ul>';
+  };
+  renderStatement('todos');
+  document.querySelectorAll('[data-f]').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('[data-f]').forEach(x => x.setAttribute('aria-pressed', x === b));
+    renderStatement(b.dataset.f);
+  }));
+
+  const missionHTML = (m, done) => `<div class="mission${done ? ' done' : ''}">
+      <div class="m-top"><span class="m-ic">${icon(done ? 'check' : 'target')}</span><div><b>${m.n}</b><small>${m.r}</small></div><span class="m-prize">+ ${brl(m.prize)}</span></div>
+      ${done ? `<div class="m-meta"><span>${m.end}</span><b>Recompensa liberada</b></div>` :
+      `<div class="m-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${m.of}" aria-valuenow="${m.p}" aria-label="${m.n}"><i style="--p:${Math.max(4, m.p / m.of * 100)}%"></i></div>
+       <div class="m-meta"><span>${m.end}</span><b>${m.p} de ${m.of}</b></div>`}
+    </div>`;
+  $('homeMissions').innerHTML = MISSIONS.slice(0, 2).map(m => missionHTML(m)).join('');
+  $('activeMissions').innerHTML = MISSIONS.map(m => missionHTML(m)).join('');
+  $('doneMissions').innerHTML = DONE.map(m => missionHTML(m, true)).join('');
+
+  $('homeRests').innerHTML = RESTS.slice(0, 3).map(r => `<div class="rest-row">
+      <span class="logo-r" style="--c:${r.c}">${initials(r.n)}</span>
+      <div><b>${r.n}</b><small>${r.t} · ${r.d}</small></div><span class="cb">${r.cb}% de volta</span></div>`).join('');
+
+  // QR desenhado no visor
+  const QR = '1110111100100110111010101110011010100001101011111110111';
+  $('qrGrid').innerHTML = Array.from({ length: 49 }, (_, i) => `<span class="${QR[i] === '1' ? '' : 'o'}"></span>`).join('');
+
+  // ---------- saudação e saldo ----------
+  const h = new Date().getHours();
+  $('greet').textContent = (h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite') + ',';
+  const counter = document.querySelector('[data-count]');
+  const countUp = () => {
+    const end = +counter.dataset.count, t0 = performance.now();
+    const step = t => {
+      const k = Math.min(1, (t - t0) / 900), e = 1 - Math.pow(1 - k, 3);
+      counter.textContent = (end * e).toFixed(2).replace('.', ',');
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  // esconder valores (fica salvo neste navegador)
+  const store = { get: k => { try { return localStorage.getItem(k); } catch (e) { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} } };
+  const setHidden = on => {
+    document.body.classList.toggle('hide-money', on);
+    $('hideBtn').setAttribute('aria-pressed', on);
+    $('hideBtn').setAttribute('aria-label', on ? 'Mostrar valores' : 'Esconder valores');
+    $('hidePref').checked = on;
+    store.set('mm-hide', on ? '1' : '0');
+  };
+  setHidden(store.get('mm-hide') === '1');
+  $('hideBtn').addEventListener('click', () => setHidden(!document.body.classList.contains('hide-money')));
+  $('hidePref').addEventListener('change', e => setHidden(e.target.checked));
+
+  // ---------- toast ----------
+  let tt;
+  const toast = msg => {
+    $('toastText').textContent = msg; $('toast').classList.add('on');
+    clearTimeout(tt); tt = setTimeout(() => $('toast').classList.remove('on'), 2600);
+  };
+  $('notifBtn').addEventListener('click', () => { toast('Seu cashback do Café Central foi liberado.'); $('notifBtn').querySelector('.dot').remove?.(); });
+  document.querySelectorAll('.set-list .chev').forEach(c => c.parentElement.style.cursor = 'pointer');
+  document.querySelectorAll('.set-list li').forEach(li => { if (li.querySelector('.chev')) li.addEventListener('click', () => toast('Disponível em breve.')); });
+
+  // ---------- escanear (simulado) ----------
+  // as 4 telas que podem aparecer depois da leitura do QR Code
+  const ICONS = { ok: 'check', warn: 'alert', err: 'x', info: 'info' };
+  const RESULTS = {
+    ok: {
+      kicker: 'Sucesso', title: 'Compra registrada!', sub: 'Cantina Bella · agora',
+      box: [['Valor da compra', '<b>R$ 124,00</b>'], ['Cashback (10%)', '<b class="big">+ R$ 12,40</b>'], ['Status', '<span class="pill wait">' + icon('clock', 'width:12px;height:12px') + 'Validando nota</span>']],
+      note: 'O valor é liberado na sua carteira assim que a nota fiscal for confirmada.',
+      actions: [['Ver na carteira', 'btn-primary', 'wallet'], ['Dividir com quem estava junto', 'btn-ghost', 'split'], ['Escanear outro', 'btn-ghost', 'again']],
+      hint: 'QR Code lido', toast: 'Compra registrada: + R$ 12,40 a liberar'
+    },
+    warn: {
+      kicker: 'Aviso', title: 'Este cupom já foi registrado', sub: 'Café Central · registrado ontem às 19:20',
+      box: [['Valor da compra', '<b>R$ 38,00</b>'], ['Cashback desse cupom', '<b>+ R$ 3,80</b>'], ['Status', '<span class="pill ok">Liberado</span>']],
+      note: 'Cada cupom gera cashback uma única vez. Esse valor já está na sua carteira.',
+      actions: [['Ver na carteira', 'btn-warn', 'wallet'], ['Escanear outro', 'btn-ghost', 'again']],
+      hint: 'Cupom repetido'
+    },
+    err: {
+      kicker: 'Erro', title: 'Não conseguimos ler o cupom', sub: 'Esse QR Code não é de um cupom fiscal (NFC-e).',
+      tips: ['Use o QR Code impresso no <b>cupom fiscal</b>, não o do cardápio ou da mesa.', 'Limpe a câmera e evite reflexo de luz no papel.', 'Mantenha o cupom reto, inteiro dentro da moldura.'],
+      actions: [['Tentar de novo', 'btn-err', 'again'], ['Digitar a chave de acesso', 'btn-ghost', 'code']],
+      hint: 'Não foi possível ler'
+    },
+    info: {
+      kicker: 'Informativo', title: 'Restaurante ainda não é parceiro', sub: 'Padaria São Jorge · R$ 32,50',
+      box: [['Cashback desta compra', '<span class="strike">R$ 0,00</span>']],
+      note: 'Essa compra não gera cashback. Registramos seu interesse e avisamos quando esse restaurante entrar no Muito Mais.',
+      actions: [['Entendi', 'btn-info', 'close'], ['Escanear outro', 'btn-ghost', 'again']],
+      hint: 'Cupom lido'
+    }
+  };
+
+  const viewer = $('viewer'), sheet = $('sheet'), burst = $('burst');
+  let lastFocus = null;
+  const resetScan = () => {
+    viewer.classList.remove('reading', 'done', 'err');
+    burst.className = 'ok-burst';
+    burst.innerHTML = icon('check');
+    $('camHint').textContent = 'Aponte para o QR Code do cupom';
+  };
+  const closeSheet = () => {
+    if (sheet.hidden) return;
+    sheet.classList.remove('on');
+    sheet._t = setTimeout(() => { sheet.hidden = true; }, 300);
+    if (lastFocus) lastFocus.focus();
+  };
+  const openSheet = k => {
+    const R = RESULTS[k];
+    $('sheetBox').className = 'sheet t-' + k;
+    $('shBody').innerHTML = `<span class="sh-ic">${icon(ICONS[k])}</span>
+      <p class="sh-kicker">${R.kicker}</p>
+      <h2 class="sh-title" id="shTitle">${R.title}</h2>
+      <p class="sh-sub">${R.sub}</p>
+      ${R.box ? `<div class="sh-box">${R.box.map(([a, b]) => `<div class="receipt-line"><span>${a}</span>${b}</div>`).join('')}</div>` : ''}
+      ${R.tips ? `<ul class="sh-tips">${R.tips.map((t, i) => `<li><span>${i + 1}</span><p>${t}</p></li>`).join('')}</ul>` : ''}
+      ${R.note ? `<p class="sh-note">${icon(ICONS[k] === 'check' ? 'clock' : ICONS[k])}<span>${R.note}</span></p>` : ''}
+      <div class="res-actions">${R.actions.map(([t, c, a]) => `<button class="btn ${c}" data-act="${a}">${t}</button>`).join('')}</div>`;
+    clearTimeout(sheet._t); sheet.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => sheet.classList.add('on')));
+    $('shBody').querySelector('.res-actions .btn').focus();
+    if (R.toast) toast(R.toast);
+  };
+  const runScan = k => {
+    lastFocus = document.activeElement;
+    resetScan();
+    viewer.classList.add('reading'); $('camHint').textContent = 'Lendo QR Code…';
+    setTimeout(() => {
+      viewer.classList.remove('reading'); viewer.classList.add('done');
+      if (k === 'err') viewer.classList.add('err');
+      burst.className = 'ok-burst t-' + k; burst.innerHTML = icon(ICONS[k]);
+      $('camHint').textContent = RESULTS[k].hint;
+      openSheet(k);
+    }, 1100);
+  };
+  document.querySelectorAll('[data-sim]').forEach(b => b.addEventListener('click', () => runScan(b.dataset.sim)));
+  $('shBody').addEventListener('click', e => {
+    const a = e.target.closest('[data-act]'); if (!a) return;
+    const act = a.dataset.act;
+    if (act === 'split') { openSplit(TX.find(t => t.n === 'Cantina Bella' && !t.split)); return; }
+    closeSheet();
+    if (act === 'wallet') location.hash = 'carteira';
+    if (act === 'again') resetScan();
+    if (act === 'code') { resetScan(); setTimeout(() => { $('codeInput').scrollIntoView({ block: 'center' }); $('codeInput').focus(); }, 320); }
+  });
+  $('shClose').addEventListener('click', closeSheet);
+  sheet.addEventListener('click', e => { if (e.target === sheet) closeSheet(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+  $('codeForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const digits = $('codeInput').value.replace(/\D/g, '');
+    if (digits.length !== 44) { toast('A chave tem 44 números. Você digitou ' + digits.length + '.'); $('codeInput').focus(); return; }
+    runScan('ok');
+  });
+
+  // ---------- dividir cashback com outros usuários ----------
+  const CONTACTS = [
+    { n: 'Lucas Lima', u: '@lucaslima', c: '#2f7fd8' },
+    { n: 'Ana Paula', u: '@anapaula', c: '#c2410c' },
+    { n: 'João Pedro', u: '@joaop', c: '#7c4a2d' },
+    { n: 'Bia Rocha', u: '@biarocha', c: '#0c6b4a' }
+  ];
+  const MAX_PEOPLE = 5;
+  const SP = {};
+  const cents = v => Math.round(v * 100);
+  const fmtC = c => brl(c / 100);
+  const parseBRL = v => { v = String(v).trim(); if (v.includes(',')) v = v.replace(/\./g, '').replace(',', '.'); const n = parseFloat(v.replace(/[^\d.]/g, '')); return isNaN(n) ? 0 : n; };
+  const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const avatar = p => `<span class="sp-av" style="--c:${p.c || '#4b5563'}">${esc(initials(p.n) || p.n.replace('@', '')[0].toUpperCase())}</span>`;
+  const firstName = p => p.n.startsWith('@') || p.n.includes('@') ? p.n : p.n.split(' ')[0];
+  const splittable = () => TX.filter(t => (t.k === 'liberado' || t.k === 'aliberar') && !t.split);
+  const shares = () => {
+    const C = cents(SP.tx.v), n = SP.people.length + 1;
+    if (SP.mode === 'iguais') { const each = Math.floor(C / n); return { you: C - each * (n - 1), others: SP.people.map(() => each) }; }
+    const others = SP.people.map(p => cents(parseBRL(SP.custom[p.u] || 0)));
+    return { you: C - others.reduce((a, b) => a + b, 0), others };
+  };
+  const statusPill = t => t.k === 'aliberar' ? '<span class="pill wait">A liberar</span>' : '<span class="pill ok">Liberado</span>';
+
+  const openSplit = tx => {
+    Object.assign(SP, { step: tx ? 2 : 1, tx: tx || null, people: [], mode: 'iguais', custom: {} });
+    if (sheet.hidden) lastFocus = document.activeElement;
+    renderSplit();
+    clearTimeout(sheet._t);
+    if (sheet.hidden) { sheet.hidden = false; requestAnimationFrame(() => requestAnimationFrame(() => sheet.classList.add('on'))); }
+  };
+  const renderSplit = () => {
+    const st = SP.step;
+    const top = st < 4 ? `${st > 1 ? `<button class="sp-back" data-sp="back">${icon('back')}Voltar</button>` : ''}
+      <div class="sp-dots" aria-hidden="true">${[1, 2, 3].map(i => `<i class="${i <= st ? 'on' : ''}"></i>`).join('')}</div>
+      <p class="sh-kicker">Dividir cashback · ${st} de 3</p>` : '';
+    let html = '';
+    if (st === 1) {
+      const list = splittable();
+      html = `${top}<h2 class="sh-title" id="shTitle" tabindex="-1">Qual cashback?</h2>
+        <p class="sh-sub">Escolha a compra que você quer dividir.</p>
+        <div class="sp-list">${list.map(t => `<label class="sp-opt"><input type="radio" name="sptx" value="${TX.indexOf(t)}" ${SP.tx === t ? 'checked' : ''}>
+          <span class="act-ic">${icon('receipt')}</span><span class="sp-txt"><b>${t.n}</b><small>${t.day} · ${t.s}</small></span>
+          <span class="sp-v"><b>${brl(t.v)}</b>${statusPill(t)}</span></label>`).join('') || '<p class="empty">Nenhum cashback para dividir.</p>'}</div>
+        <div class="res-actions"><button class="btn btn-primary" data-sp="next" ${SP.tx ? '' : 'disabled'}>Continuar</button></div>`;
+    } else if (st === 2) {
+      const sel = u => SP.people.some(p => p.u === u);
+      html = `${top}<h2 class="sh-title" id="shTitle" tabindex="-1">Com quem?</h2>
+        <p class="sh-sub">${SP.tx.n} · ${brl(SP.tx.v)} de cashback. Adicione até ${MAX_PEOPLE} pessoas.</p>
+        <form class="sp-add" id="spForm"><label class="input"><svg class="ic"><use href="#i-user"/></svg><input id="spInput" placeholder="Email, telefone ou @usuário" aria-label="Email, telefone ou usuário"></label><button class="btn btn-outline" type="submit">Adicionar</button></form>
+        <p class="sim-label">Recentes</p>
+        <div class="sp-contacts">${CONTACTS.map(p => `<button type="button" class="sp-chip" data-sp="toggle" data-u="${p.u}" aria-pressed="${sel(p.u)}">${avatar(p)}${firstName(p)}</button>`).join('')}</div>
+        ${SP.people.length ? `<p class="sim-label">Dividir com ${SP.people.length} ${SP.people.length > 1 ? 'pessoas' : 'pessoa'}</p>
+        <ul class="sp-people">${SP.people.map(p => `<li>${avatar(p)}<div><b>${esc(p.n)}</b><small>${esc(p.u)}</small></div><button type="button" class="sp-x" data-sp="remove" data-u="${esc(p.u)}" aria-label="Remover ${esc(p.n)}">${icon('x')}</button></li>`).join('')}</ul>` : ''}
+        <div class="res-actions"><button class="btn btn-primary" data-sp="next" ${SP.people.length ? '' : 'disabled'}>Continuar</button></div>`;
+    } else if (st === 3) {
+      const sh = shares(), iguais = SP.mode === 'iguais';
+      html = `${top}<h2 class="sh-title" id="shTitle" tabindex="-1">Como dividir?</h2>
+        <p class="sh-sub">${SP.tx.n} · ${brl(SP.tx.v)} de cashback</p>
+        <div class="sp-seg" role="group" aria-label="Forma de divisão"><button data-sp="mode" data-m="iguais" aria-pressed="${iguais}">Partes iguais</button><button data-sp="mode" data-m="custom" aria-pressed="${!iguais}">Valor personalizado</button></div>
+        <ul class="sp-split">
+          <li class="you"><span class="sp-av" style="--c:#065f46">M</span><div><b>Você</b><small>fica com</small></div><b id="spYou">${fmtC(sh.you)}</b></li>
+          ${SP.people.map((p, i) => iguais
+            ? `<li>${avatar(p)}<div><b>${esc(p.n)}</b><small>recebe</small></div><b>${fmtC(sh.others[i])}</b></li>`
+            : `<li>${avatar(p)}<div><b>${esc(p.n)}</b><small>recebe</small></div><label class="sp-money"><span>R$</span><input data-sp-val="${esc(p.u)}" inputmode="decimal" value="${esc(SP.custom[p.u] || '')}" placeholder="0,00" aria-label="Valor para ${esc(p.n)}"></label></li>`).join('')}
+        </ul>
+        <p class="sp-err" id="spErr" aria-live="polite"></p>
+        <p class="sh-note">${icon(SP.tx.k === 'aliberar' ? 'clock' : 'info')}<span>${SP.tx.k === 'aliberar' ? 'Esse cashback ainda está a liberar. Cada pessoa recebe a parte dela quando a nota for confirmada.' : 'Cada parte cai na hora na carteira da pessoa, e ela recebe um aviso.'}</span></p>
+        <div class="res-actions"><button class="btn btn-primary" data-sp="confirm" id="spGo">Dividir cashback</button></div>`;
+    } else {
+      const sh = SP.result;
+      html = `<span class="sh-ic">${icon('check')}</span>
+        <p class="sh-kicker">Sucesso</p>
+        <h2 class="sh-title" id="shTitle" tabindex="-1">Cashback dividido!</h2>
+        <p class="sh-sub">${SP.tx.n} · ${brl(SP.tx.v)}</p>
+        <div class="sh-box">${SP.people.map((p, i) => `<div class="receipt-line"><span>${esc(p.n)}</span><b>${fmtC(sh.others[i])}</b></div>`).join('')}
+          <div class="receipt-line"><span>Você fica com</span><b class="big">${fmtC(sh.you)}</b></div></div>
+        <p class="sh-note">${icon('users')}<span>Avisamos ${SP.people.length > 1 ? 'as pessoas' : firstName(SP.people[0])} no app. ${SP.tx.k === 'aliberar' ? 'As partes são liberadas junto com a nota.' : 'As partes já estão na carteira de cada um.'}</span></p>
+        <div class="res-actions"><button class="btn btn-primary" data-act="wallet">Ver na carteira</button><button class="btn btn-ghost" data-act="close">Fechar</button></div>`;
+    }
+    $('sheetBox').className = 'sheet t-ok';
+    $('shBody').innerHTML = html;
+    if (st === 3) validateSplit();
+    requestAnimationFrame(() => (st === 2 ? $('spInput') : $('shTitle')).focus({ preventScroll: true }));
+    $('sheetBox').scrollTop = 0;
+  };
+  const validateSplit = () => {
+    const sh = shares(), err = $('spErr');
+    $('spYou').textContent = fmtC(Math.max(0, sh.you));
+    let msg = '';
+    if (SP.mode === 'custom') {
+      if (sh.others.some(v => v <= 0)) msg = 'Coloque um valor para cada pessoa.';
+      else if (sh.you < 0) msg = 'A soma passou do total de ' + brl(SP.tx.v) + '.';
+    }
+    err.textContent = msg;
+    $('spGo').disabled = !!msg;
+  };
+  const addPerson = p => {
+    if (SP.people.some(x => x.u === p.u)) return;
+    if (SP.people.length >= MAX_PEOPLE) { toast('Dá para dividir com até ' + MAX_PEOPLE + ' pessoas.'); return; }
+    SP.people.push(p);
+  };
+  const confirmSplit = () => {
+    const sh = shares();
+    SP.result = sh;
+    SP.tx.split = true;
+    const names = SP.people.map(firstName);
+    const who = names.length === 1 ? names[0] : names.length === 2 ? names.join(' e ') : names[0] + ' e mais ' + (names.length - 1);
+    TX.unshift({ day: 'Hoje', n: 'Dividido com ' + who, s: SP.tx.n, v: -(sh.others.reduce((a, b) => a + b, 0) / 100), k: 'dividido' });
+    $('recentList').innerHTML = TX.slice(0, 4).map(txItem).join('');
+    renderStatement(document.querySelector('[data-f][aria-pressed="true"]').dataset.f);
+    SP.step = 4; renderSplit();
+    toast('Cashback dividido com ' + who);
+  };
+  $('shBody').addEventListener('click', e => {
+    const b = e.target.closest('[data-sp]'); if (!b) return;
+    const a = b.dataset.sp;
+    if (a === 'next') { SP.step++; renderSplit(); }
+    if (a === 'back') { SP.step--; renderSplit(); }
+    if (a === 'toggle') {
+      const p = CONTACTS.find(c => c.u === b.dataset.u);
+      if (SP.people.some(x => x.u === p.u)) SP.people = SP.people.filter(x => x.u !== p.u); else addPerson(p);
+      renderSplit();
+    }
+    if (a === 'remove') { SP.people = SP.people.filter(x => x.u !== b.dataset.u); delete SP.custom[b.dataset.u]; renderSplit(); }
+    if (a === 'mode') { SP.mode = b.dataset.m; renderSplit(); }
+    if (a === 'confirm') confirmSplit();
+  });
+  $('shBody').addEventListener('change', e => {
+    if (e.target.name === 'sptx') { SP.tx = TX[+e.target.value]; $('shBody').querySelector('[data-sp="next"]').disabled = false; }
+  });
+  $('shBody').addEventListener('input', e => {
+    const u = e.target.dataset.spVal; if (u === undefined) return;
+    SP.custom[u] = e.target.value; validateSplit();
+  });
+  $('shBody').addEventListener('submit', e => {
+    if (e.target.id !== 'spForm') return;
+    e.preventDefault();
+    const v = $('spInput').value.trim();
+    if (v.length < 3) { toast('Digite o email, telefone ou @usuário da pessoa.'); $('spInput').focus(); return; }
+    const known = CONTACTS.find(c => c.u.toLowerCase() === v.toLowerCase());
+    addPerson(known || { n: v, u: v });
+    renderSplit();
+  });
+  $('splitBtn').addEventListener('click', () => openSplit());
+
+  // ---------- usar cashback: QR para o garçom/caixa validar ----------
+  // TODO: o código e o saldo devem vir da API (voucher criado no servidor).
+  const BALANCE = 48.30, USE_MIN = 10;
+  let useTimer = null;
+  const newVoucher = () => 'VCH-' + Array.from({ length: 4 }, () => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random() * 32)]).join('');
+  const qrSvg = text => {
+    if (typeof qrcode !== 'function') return '';
+    const q = qrcode(0, 'M'); q.addData(text); q.make();
+    return q.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+  };
+  const USE_MIN_VALUE = 1;   // valor mínimo de resgate (TODO: vir do programa do restaurante)
+  let useValue = null, useRest = 0, useCode = null;   // a mesa é o garçom que digita, antes de ler o QR
+  const useMax = () => Math.min(RESTS[useRest].lim, BALANCE);
+  const showSheet = () => {
+    clearTimeout(sheet._t);
+    if (sheet.hidden) { sheet.hidden = false; requestAnimationFrame(() => requestAnimationFrame(() => sheet.classList.add('on'))); }
+  };
+  // passo 1: escolher quanto vai gastar
+  const openUse = (focusRest = false) => {
+    if (sheet.hidden) lastFocus = document.activeElement;
+    clearInterval(useTimer);
+    const max = useMax(), lim = RESTS[useRest].lim;
+    if (useValue === null || useValue > max) useValue = max;
+    const quick = [5, 10, 20].filter(v => v < max);
+    const fmtIn = v => v.toFixed(2).replace('.', ',');
+    $('sheetBox').className = 'sheet t-ok';
+    $('shBody').innerHTML = `<p class="sh-kicker">Usar cashback</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Quanto você quer gastar?</h2>
+      <p class="sh-sub">Você tem <b class="money">${brl(BALANCE)}</b> disponível.</p>
+      <form id="useForm" novalidate>
+        <label class="field-use"><span>Onde você vai usar</span>
+          <select id="useRest">${RESTS.map((r, i) => `<option value="${i}" ${i === useRest ? 'selected' : ''}>${esc(r.n)}</option>`).join('')}</select></label>
+        <p class="use-limit">${icon('info')}<span>Este restaurante deixa usar até <b class="money">${brl(lim)}</b> de cashback por compra${lim > BALANCE ? ', mas você tem ' + brl(BALANCE) : ''}.</span></p>
+        <label class="use-amount"><span>R$</span><input id="useVal" inputmode="decimal" autocomplete="off" value="${fmtIn(useValue)}" aria-label="Valor do cashback a gastar"></label>
+        <input type="range" class="use-range" id="useRange" min="${USE_MIN_VALUE}" max="${max}" step="0.5" value="${useValue}" aria-label="Ajustar valor">
+        <div class="use-scale"><span>${brl(USE_MIN_VALUE)}</span><span>${brl(max)}</span></div>
+        <div class="use-quick" role="group" aria-label="Valores rápidos">${quick.map(v => `<button type="button" data-q="${v}">${brl(v).replace(',00', '')}</button>`).join('')}<button type="button" data-q="${max}">Máximo</button></div>
+        <p class="sp-err" id="useErr" aria-live="polite"></p>
+        <div class="res-actions"><button class="btn btn-primary" type="submit" id="useGo">${icon('qr')}Gerar QR Code</button></div>
+      </form>`;
+    showSheet();
+    const inp = $('useVal'), range = $('useRange');
+    const check = () => {
+      const v = parseBRL(inp.value);
+      const msg = !v ? 'Digite o valor que você quer gastar.' : v < USE_MIN_VALUE ? 'O mínimo é ' + brl(USE_MIN_VALUE) + '.'
+        : v > max + 1e-9 ? (max < lim ? 'Você tem só ' + brl(BALANCE) + ' disponível.' : 'O limite deste restaurante é ' + brl(lim) + ' por compra.') : '';
+      $('useErr').textContent = inp.value.trim() ? msg : '';
+      $('useGo').disabled = !!msg;
+      if (!msg) range.value = v;
+      document.querySelectorAll('[data-q]').forEach(b => b.setAttribute('aria-pressed', Math.abs(+b.dataset.q - v) < 0.005));
+      return msg ? null : Math.round(v * 100) / 100;
+    };
+    inp.addEventListener('input', check);
+    range.addEventListener('input', () => { inp.value = fmtIn(+range.value); check(); });
+    document.querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => { inp.value = fmtIn(+b.dataset.q); check(); }));
+    $('useRest').addEventListener('change', e => { const v = check(); if (v) useValue = v; useRest = +e.target.value; openUse(true); });
+    $('useForm').addEventListener('submit', e => { e.preventDefault(); const v = check(); if (v) { useValue = v; showUseQr(); } else inp.focus(); });
+    check();
+    requestAnimationFrame(() => {
+      if (focusRest) $('useRest').focus({ preventScroll: true });
+      else { inp.focus({ preventScroll: true }); inp.select(); }
+    });
+  };
+  // passo 2: QR com o valor escolhido
+  const showUseQr = () => {
+    clearInterval(useTimer);
+    // QR: MMV1:VCH-XXXX:cliente:valor
+    const code = newVoucher(), payload = `MMV1:${code}:c1:${useValue.toFixed(2)}`;
+    useCode = code;
+    // demonstração: o leitor do garçom (empresa.html) pega este QR neste mesmo navegador
+    store.set('mm-demo-ultimo-voucher', JSON.stringify({ payload, code, nome: 'Marina Souza', at: Date.now() }));
+    let left = USE_MIN * 60;
+    $('shBody').innerHTML = `<button class="sp-back" data-use>${icon('back')}Alterar valor</button>
+      <p class="sh-kicker">Usar cashback</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Mostre este QR ao garçom</h2>
+      <p class="sh-sub">Ele lê o código e o caixa aprova o desconto na sua conta.</p>
+      <div class="use-qr" id="useQr">${qrSvg(payload) || `<p class="muted" style="text-align:center;font-size:14px">Não foi possível desenhar o QR. Informe o código abaixo.</p>`}</div>
+      <p class="use-code" aria-label="Código do voucher">${code}</p>
+      <p class="use-timer" id="useTimer">Válido por <b id="useLeft">${USE_MIN}:00</b></p>
+      <p class="use-status" id="useStatus" aria-live="polite"></p>
+      <div class="sh-box"><div class="receipt-line"><span>Restaurante</span><b>${esc(RESTS[useRest].n)}</b></div><div class="receipt-line"><span>Valor a gastar</span><b class="big money">${brl(useValue)}</b></div>
+        <div class="receipt-line"><span>Fica na carteira</span><b class="money">${brl(Math.round((BALANCE - useValue) * 100) / 100)}</b></div></div>
+      <div class="res-actions"><button class="btn btn-ghost" data-use-new>Gerar novo código</button></div>`;
+    requestAnimationFrame(() => $('shTitle').focus({ preventScroll: true }));
+    useTimer = setInterval(() => {
+      if (sheet.hidden || !$('useLeft')) { clearInterval(useTimer); return; }
+      left--;
+      $('useLeft').textContent = Math.floor(left / 60) + ':' + String(left % 60).padStart(2, '0');
+      if (left <= 0) {
+        clearInterval(useTimer);
+        $('useQr').classList.add('expired'); $('useTimer').classList.add('end');
+        $('useTimer').innerHTML = '<b>Código expirado.</b> Gere um novo.';
+      }
+    }, 1000);
+  };
+  // resposta do caixa chega no app (garçom enviou -> caixa aprovou ou recusou)
+  // TODO(API): na versão real vem do servidor (push / tempo real), não do localStorage.
+  addEventListener('storage', e => {
+    if (e.key !== 'mm-caixa-fila' || !useCode || sheet.hidden) return;
+    let r = null; try { r = (JSON.parse(e.newValue) || []).find(x => x.code === useCode); } catch (x) {}
+    if (!r) return;
+    if (r.st === 'pendente') {
+      if ($('useStatus')) $('useStatus').innerHTML = `<span class="pill wait">${icon('clock', 'width:12px;height:12px')}O garçom enviou para o caixa. Aguardando aprovação…</span>`;
+      return;
+    }
+    clearInterval(useTimer); useCode = null;
+    $('sheetBox').className = 'sheet t-' + (r.st === 'aprovado' ? 'ok' : 'err');
+    $('shBody').innerHTML = r.st === 'aprovado'
+      ? `<span class="sh-ic">${icon('check')}</span><p class="sh-kicker">Aprovado pelo caixa</p>
+        <h2 class="sh-title" id="shTitle" tabindex="-1">Cashback usado!</h2>
+        <p class="sh-sub">${esc(RESTS[useRest].n)}${r.mesa ? ' · Mesa ' + esc(r.mesa) : ''}</p>
+        <div class="sh-box"><div class="receipt-line"><span>Descontado da sua conta</span><b class="big money">${brl(r.aprovado)}</b></div>
+          <div class="receipt-line"><span>Fica na carteira</span><b class="money">${brl(Math.round((BALANCE - r.aprovado) * 100) / 100)}</b></div></div>
+        ${r.aprovado < r.valor ? `<p class="sh-note">${icon('info')}<span>Você pediu ${brl(r.valor)}, mas as regras do restaurante liberaram ${brl(r.aprovado)} nesta compra. O resto continua na sua carteira.</span></p>` : ''}
+        <p class="sh-note">${icon('receipt')}<span>Peça o cupom fiscal e escaneie para ganhar cashback desta compra também.</span></p>
+        <div class="res-actions"><button class="btn btn-primary" data-act="close">Fechar</button></div>`
+      : `<span class="sh-ic">${icon('x')}</span><p class="sh-kicker">Recusado pelo caixa</p>
+        <h2 class="sh-title" id="shTitle" tabindex="-1">O cashback não foi usado</h2>
+        <p class="sh-sub">Motivo: ${esc(r.motivo || 'não informado')}</p>
+        <p class="sh-note">${icon('info')}<span>Seu saldo continua na carteira. Fale com o garçom se precisar.</span></p>
+        <div class="res-actions"><button class="btn btn-err" data-use>Tentar de novo</button><button class="btn btn-ghost" data-act="close">Fechar</button></div>`;
+    requestAnimationFrame(() => $('shTitle').focus({ preventScroll: true }));
+    toast(r.st === 'aprovado' ? `Cashback aprovado: ${brl(r.aprovado)}` : 'O caixa recusou o uso do cashback');
+  });
+  document.addEventListener('click', e => {
+    if (e.target.closest('[data-use]')) openUse(false);
+    else if (e.target.closest('[data-use-new]')) showUseQr();
+  });
+
+  // ---------- mesa: dividir a conta em tempo real ----------
+  // 1) cada pessoa entra pelo link/QR e diz o que pediu (só o nome);
+  // 2) alguém tira foto da pré-conta e a IA lê os itens, coloca o valor no pedido de cada um,
+  //    e mostra o total da conta e quanto ainda falta pagar.
+  // PROTÓTIPO: a mesa fica no localStorage e sincroniza entre abas do mesmo navegador (evento "storage").
+  // TODO(API): trocar MZ_DB por um backend em tempo real (WebSocket, Supabase Realtime, Firebase…) para sincronizar entre celulares.
+  const MZ_API = 'api/analisar-pre-conta';   // função de servidor que chama a IA (ver api/analisar-pre-conta.js)
+  const MZ_SERV = [0, 10, 12, 15];
+  const MZ_COLORS = ['#2f7fd8', '#c2410c', '#9333ea', '#0c6b4a', '#b91c1c', '#1e3a5f', '#a16207', '#7c4a2d'];
+  const MZ_ME_NAME = 'Marina Souza';   // TODO: vir da conta logada
+  const MZ_SUG = ['Chopp', 'Refrigerante', 'Água', 'Suco', 'Porção de fritas', 'Pizza', 'Sobremesa'];
+  const safe = f => { try { return f(); } catch (e) { return null; } };
+  const MZ_DB = {
+    key: c => 'mm-mesa:' + c,
+    get: c => safe(() => JSON.parse(localStorage.getItem('mm-mesa:' + c))),
+    put: m => safe(() => localStorage.setItem('mm-mesa:' + m.code, JSON.stringify(m)))
+  };
+  // quem você é nesta aba (sessionStorage deixa testar duas pessoas em duas abas)
+  const MZ_SES = {
+    get: last => safe(() => JSON.parse(sessionStorage.getItem('mm-mesa') || (last ? localStorage.getItem('mm-mesa-ultima') : null))),
+    set: s => {
+      const v = s ? JSON.stringify(s) : null;
+      safe(() => v ? sessionStorage.setItem('mm-mesa', v) : sessionStorage.removeItem('mm-mesa'));
+      safe(() => v ? localStorage.setItem('mm-mesa-ultima', v) : localStorage.removeItem('mm-mesa-ultima'));
+    }
+  };
+  let mz = null, me = null, mzPending = null;
+  const mzFlash = new Set();
+  const mzId = () => Math.random().toString(36).slice(2, 9);
+  const mzNewCode = () => Array.from({ length: 6 }, () => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random() * 32)]).join('');
+  const mzLink = code => { const u = new URL(location.href); u.search = '?mesa=' + code; u.hash = 'mesa'; return u.href; };
+  const mzPerson = (id, m = mz) => m.people.find(p => p.id === id);
+  const mzName = (id, m = mz) => id === me ? 'Você' : ((mzPerson(id, m) || { n: 'Alguém' }).n.split(' ')[0]);
+  const mzAv = p => avatar({ n: p.n, c: p.c });
+  const joinNames = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' e ' + a[a.length - 1];
+  const mzNorm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+  const mzCap = s => s ? s[0].toUpperCase() + s.slice(1) : s;
+
+  // contas: cada linha da pré-conta é dividida entre os pedidos ligados a ela (2 pessoas pediram a mesma pizza = metade cada).
+  // linha sem pedido ligado fica "sem dono" até alguém dizer que é dela ou dividir com todos.
+  const mzCalc = m => {
+    const per = {}, itemVal = {}; m.people.forEach(p => { per[p.id] = 0; });
+    let loose = 0;
+    const share = (tot, ids, add) => { const each = Math.floor(tot / ids.length); let extra = tot - each * ids.length; ids.forEach(id => add(id, each + (extra-- > 0 ? 1 : 0))); };
+    (m.conta ? m.conta.linhas : []).forEach(l => {
+      const its = l.items.map(id => m.items.find(i => i.id === id)).filter(i => i && i.by in per);
+      if (its.length) share(l.v, its.map(i => i.id), (id, v) => { itemVal[id] = (itemVal[id] || 0) + v; const it = its.find(i => i.id === id); per[it.by] += v; });
+      else if (l.dono === 'todos') share(l.v, m.people.map(p => p.id), (id, v) => { per[id] += v; });
+      else if (l.dono && l.dono in per) per[l.dono] += l.v;
+      else loose += l.v;
+    });
+    const serv = v => Math.round(v * m.service / 100);
+    const rows = m.people.map(p => ({ p, sub: per[p.id], serv: serv(per[p.id]), tot: per[p.id] + serv(per[p.id]) }));
+    const looseTot = loose + serv(loose);
+    const total = rows.reduce((a, r) => a + r.tot, 0) + looseTot;
+    const paid = rows.filter(r => r.p.paid).reduce((a, r) => a + r.tot, 0);
+    return { rows, itemVal, loose, looseTot, total, paid, falta: Math.max(0, total - paid) };
+  };
+  // grava sempre em cima da versão mais nova (outra pessoa pode ter mexido)
+  const mzSave = fn => { const m = MZ_DB.get(mz.code) || mz; fn(m); m.at = Date.now(); MZ_DB.put(m); mz = m; renderMesa(); };
+
+  const renderMesa = () => {
+    const root = $('mzRoot'), home = $('mzHome');
+    if (!mz) {
+      home.innerHTML = `<div class="w-actions"><span class="act-ic">${icon('mesa')}</span>
+        <p><b>Na mesa com mais gente?</b> Cada um diz o que pediu, a IA lê a pré-conta e mostra quanto cada um paga.</p>
+        <button class="btn btn-primary" data-mz="new">${icon('plus')}Abrir mesa</button></div>`;
+      root.innerHTML = `<div class="mz-start">
+        <div class="balance mz-hero">
+          <p class="mz-kick">Dividir a conta</p>
+          <h2>Cada um diz o que pediu. A IA faz a conta.</h2>
+          <p class="mz-txt">Chame quem está com você pelo link ou QR Code. No fim, tire uma foto da pré-conta: a IA coloca o valor de cada pedido e mostra quanto falta pagar.</p>
+          <div class="bal-actions"><button class="btn btn-lime" data-mz="new">${icon('plus')}Abrir uma mesa</button></div>
+        </div>
+        <div class="scan-side">
+          <div class="card">
+            <div class="card-head"><h2>Recebeu um código?</h2></div>
+            <form class="code-row" id="mzCodeForm"><label class="input">${icon('hash')}<input id="mzCode" maxlength="6" autocomplete="off" autocapitalize="characters" placeholder="Código da mesa" aria-label="Código da mesa"></label><button class="btn btn-outline" type="submit">Entrar</button></form>
+            <p class="muted" style="font-size:13.5px;margin-top:10px">Ou leia com a câmera o QR Code que alguém da mesa mostrar.</p>
+          </div>
+          <div class="card">
+            <div class="card-head"><h2>Como funciona</h2></div>
+            <ol class="steps">
+              <li><span><b>Abra a mesa</b> e chame a galera pelo <b>link ou QR Code</b>.</span></li>
+              <li><span>Cada um escreve <b>o que pediu</b>. Só o nome, sem valor.</span></li>
+              <li><span>Peça a pré-conta e <b>tire uma foto</b>. A IA lê os itens e os preços.</span></li>
+              <li><span>Cada um vê <b>quanto consumiu</b>, o total da conta e <b>quanto falta pagar</b>.</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>`;
+      return;
+    }
+    const c = mzCalc(mz), mine = c.rows.find(r => r.p.id === me) || { sub: 0, serv: 0, tot: 0 }, myP = mzPerson(me) || {};
+    const closed = mz.closed, pct = mz.service, n = mz.people.length, conta = mz.conta;
+    const typing = $('mzItemName'), keep = typing ? typing.value : '', hadFocus = typing && document.activeElement === typing;
+    home.innerHTML = `<div class="w-actions"><span class="act-ic">${icon('mesa')}</span>
+      <p><b>${closed ? 'Conta fechada' : 'Mesa aberta'} · ${mz.code}</b><br>${conta ? `Sua parte: <b class="money">${fmtC(mine.tot)}</b>` : 'Aguardando a pré-conta'} · ${n} ${n > 1 ? 'pessoas' : 'pessoa'}</p>
+      <a class="btn btn-primary" href="#mesa">Ver mesa</a></div>`;
+    const hora = t => t ? new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '';
+    const items = mz.items.slice().reverse();
+    const lineOf = id => conta && conta.linhas.find(l => l.items.includes(id));
+    root.innerHTML = `<div class="mz">
+      <div class="mz-col">
+        <div class="balance">
+          <div class="bal-top"><span>Mesa <b class="mz-code">${mz.code}</b> · ${n} ${n > 1 ? 'pessoas' : 'pessoa'}</span>${closed ? '<span class="mz-live off"><i></i>Conta fechada</span>' : '<span class="mz-live"><i></i>Ao vivo</span>'}</div>
+          ${conta ? `<p class="mz-lbl">Você consumiu${pct ? ` (com ${pct}% de serviço)` : ''}</p>
+            <div class="bal-val money"><small>R$</small>${(mine.tot / 100).toFixed(2).replace('.', ',')}</div>
+            <div class="bal-sub">
+              <div><small>Total da conta</small><b class="money">${fmtC(c.total)}</b></div>
+              <div class="${c.falta ? 'wait' : ''}"><small>Falta pagar</small><b class="money">${fmtC(c.falta)}</b></div>
+            </div>`
+          : `<p class="mz-lbl">Seus pedidos</p>
+            <div class="mz-wait"><b>${mz.items.filter(i => i.by === me).length}</b> ${mz.items.filter(i => i.by === me).length === 1 ? 'item' : 'itens'}<span>Os valores aparecem quando alguém tirar a foto da pré-conta.</span></div>`}
+          ${closed ? '' : `<form class="mz-quick" id="mzItemForm" novalidate>
+            <label class="mz-money">${icon('receipt')}<input id="mzItemName" maxlength="40" autocomplete="off" placeholder="O que você pediu?" aria-label="O que você pediu"></label>
+            <button class="mz-mic" type="button" data-mz="mic" aria-pressed="false" aria-label="Falar o pedido">${icon('mic')}</button>
+            <button class="btn btn-lime" type="submit">${icon('plus')}Adicionar pedido</button>
+          </form>
+          <p class="mz-mic-hint" id="mzMicHint" aria-live="polite"></p>
+          <div class="mz-sug" aria-label="Sugestões">${MZ_SUG.map(s => `<button type="button" data-mzs="${s}">${s}</button>`).join('')}</div>`}
+          <div class="bal-actions">${closed
+            ? `<a class="btn btn-lime" href="#escanear">${icon('scan')}Escanear cupom</a>`
+            : `<button class="btn btn-glass mz-cam" data-mz="photo">${icon('scan')}${conta ? 'Nova foto da pré-conta' : 'Foto da pré-conta'}</button>
+               <button class="btn btn-glass" data-mz="share">${icon('qr')}Convidar</button>`}</div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Pedidos da mesa</h2><span class="muted" style="font-size:14px">${mz.items.length} ${mz.items.length === 1 ? 'pedido' : 'pedidos'}</span></div>
+          ${items.length ? `<ul class="act-list mz-items">${items.map(it => {
+            const who = mzPerson(it.by) || { n: '?', c: '#4b5563' }, v = c.itemVal[it.id], l = lineOf(it.id);
+            const shared = l && l.items.length > l.q;   // mais pedidos que unidades = dividiram
+            return `<li class="act${mzFlash.has(it.id) ? ' mz-new' : ''}">
+              ${mzAv(who)}
+              <div class="act-body"><b>${esc(it.d)}</b><small>${esc(mzName(it.by))} · ${hora(it.at)}${shared ? ` · dividido em ${l.items.length}` : ''}${l ? ` · <span class="mz-src">${esc(l.desc)}</span>` : ''}</small></div>
+              <div class="act-val">${v !== undefined ? `<b class="money">${fmtC(v)}</b>` : conta ? '<span class="pill mz-miss">Não achado</span>' : '<span class="pill wait">Sem valor</span>'}</div>
+              ${it.by === me && !closed ? `<button class="sp-x" data-mz="del" data-id="${it.id}" aria-label="Remover ${esc(it.d)}">${icon('x')}</button>` : ''}
+            </li>`;
+          }).join('')}</ul>` : '<p class="empty">Ninguém disse o que pediu ainda.</p>'}
+          ${conta && mz.items.some(it => c.itemVal[it.id] === undefined) ? `<p class="use-limit">${icon('info')}<span><b>Não achado</b>: a IA não encontrou esse pedido na pré-conta. Confira o nome ou veja os itens sem dono abaixo.</span></p>` : ''}
+        </div>
+        ${conta ? `<div class="card">
+          <div class="card-head"><h2>Pré-conta lida pela IA</h2><span class="muted" style="font-size:13px">${hora(conta.at)}${conta.demo ? ' · demonstração' : ''}</span></div>
+          ${closed ? '' : `<p class="mz-forgot">${icon('info')}<span><b>Esqueceu de anotar algo?</b> Toque em <b>É meu</b> no item sem dono, ou em <b>Eu também</b> se dividiu com alguém.</span></p>`}
+          <ul class="act-list mz-lines" id="mzLines">${conta.linhas.map(l => {
+            const owners = l.items.map(id => (mz.items.find(i => i.id === id) || {}).by).filter(Boolean);
+            const who = owners.length ? joinNames([...new Set(owners)].map(id => mzName(id))) : l.dono === 'todos' ? 'Dividido com todos' : l.dono ? mzName(l.dono) : '';
+            const mineL = l.dono === me || owners.includes(me);
+            return `<li class="act${who ? '' : ' mz-loose'}">
+              <span class="mz-q">${l.q}×</span>
+              <div class="act-body"><b>${esc(l.desc)}</b><small>${who ? esc(who) : 'Sem dono'}</small></div>
+              <div class="act-val"><b class="money">${fmtC(l.v)}</b></div>
+              ${closed ? '' : !who ? `<div class="mz-claim"><button class="btn btn-outline" data-mz="claim" data-id="${l.id}">É meu</button><button class="btn btn-ghost" data-mz="all" data-id="${l.id}">Dividir</button></div>`
+                : l.dono ? `<button class="sp-x" data-mz="unclaim" data-id="${l.id}" aria-label="Desfazer">${icon('x')}</button>`
+                : !mineL ? `<div class="mz-claim"><button class="btn btn-ghost mz-also" data-mz="also" data-id="${l.id}">${icon('plus')}Eu também</button></div>` : ''}
+            </li>`;
+          }).join('')}</ul>
+          <div class="receipt-line mz-total"><span>Total na pré-conta</span><b class="money">${fmtC(conta.total)}</b></div>
+          ${Math.abs(conta.total - c.total) > 2 ? `<p class="use-limit">${icon('info')}<span>A soma da mesa (${fmtC(c.total)}) está diferente da pré-conta. Confira a taxa de serviço e os itens sem dono.</span></p>` : ''}
+        </div>` : ''}
+      </div>
+      <div class="mz-col">
+        <div class="card">
+          <div class="card-head"><h2>Taxa de serviço</h2></div>
+          <div class="sp-seg mz-seg" role="group" aria-label="Taxa de serviço">${MZ_SERV.map(v => `<button data-mz="serv" data-v="${v}" aria-pressed="${v === pct}"${closed ? ' disabled' : ''}>${v ? v + '%' : 'Sem'}</button>`).join('')}</div>
+          <p class="use-limit">${icon('info')}<span>Vale para a mesa toda. ${pct ? `Cada um paga ${pct}% sobre o que consumiu.` : 'Ninguém paga taxa de serviço.'}</span></p>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Quem está na mesa</h2>${closed ? '' : `<button class="more" data-mz="share" style="border:0;background:none">${icon('plus', 'width:16px;height:16px')}Convidar</button>`}</div>
+          <ul class="sp-split mz-people">${c.rows.map(r => {
+            const cnt = mz.items.filter(i => i.by === r.p.id).length;
+            return `<li class="${r.p.id === me ? 'you' : ''}">${mzAv(r.p)}
+            <div><b>${r.p.id === me ? 'Você' : esc(r.p.n)}${r.p.paid ? '<span class="pill ok mz-paid">Pagou</span>' : ''}</b><small class="money">${conta ? (r.sub ? fmtC(r.sub) + (pct ? ' + ' + fmtC(r.serv) + ' de serviço' : '') : 'Nada na pré-conta') : cnt ? cnt + (cnt > 1 ? ' pedidos' : ' pedido') : 'Ainda não pediu nada'}</small></div>
+            ${conta ? `<b class="money">${fmtC(r.tot)}</b>` : ''}</li>`;
+          }).join('')}</ul>
+          ${conta ? `<div class="sh-box mz-sum">
+            <div class="receipt-line"><span>Total da conta</span><b class="money">${fmtC(c.total)}</b></div>
+            ${c.looseTot ? `<div class="receipt-line"><span>Sem dono</span><b class="money">${fmtC(c.looseTot)}</b></div>` : ''}
+            <div class="receipt-line"><span>Já pago</span><b class="money">${fmtC(c.paid)}</b></div>
+            <div class="receipt-line"><span>Falta pagar</span><b class="big money">${fmtC(c.falta)}</b></div></div>` : ''}
+        </div>
+        <div class="mz-btns">${closed
+          ? `<button class="btn btn-primary" data-mz="new">${icon('plus')}Abrir nova mesa</button><button class="btn btn-ghost" data-mz="leave">Sair da mesa</button>`
+          : `${conta ? `<button class="btn ${myP.paid ? 'btn-ghost' : 'btn-primary'}" data-mz="paid"${mine.tot || myP.paid ? '' : ' disabled'}>${icon('check')}${myP.paid ? 'Desfazer: ainda não paguei' : 'Já paguei minha parte'}</button>` : ''}
+             <button class="btn ${conta ? 'btn-outline' : 'btn-primary'}" data-mz="bill"${conta ? '' : ' disabled'}>${icon('receipt')}Fechar a conta</button>
+             <button class="btn btn-ghost" data-mz="leave">Sair da mesa</button>`}</div>
+      </div>
+    </div>`;
+    if (mzFlash.size) setTimeout(() => mzFlash.clear(), 1800);
+    if (keep && $('mzItemName')) $('mzItemName').value = keep;
+    if (hadFocus && $('mzItemName')) $('mzItemName').focus({ preventScroll: true });
+    if (mzRec) mzMicUi(true);   // a mesa atualizou enquanto a pessoa falava
+  };
+
+  const mzSheet = (html, focus) => {
+    if (sheet.hidden) lastFocus = document.activeElement;
+    clearInterval(useTimer);
+    $('sheetBox').className = 'sheet t-ok';
+    $('shBody').innerHTML = html;
+    $('sheetBox').scrollTop = 0;
+    showSheet();
+    requestAnimationFrame(() => ($(focus) || $('shTitle')).focus({ preventScroll: true }));
+  };
+  const goMesa = () => { if (location.hash !== '#mesa') { history.pushState(null, '', '#mesa'); route(); } };
+
+  // abrir mesa: já abre e mostra o convite
+  const mzCreate = () => {
+    const id = mzId();
+    mz = { code: mzNewCode(), service: 10, closed: false, at: Date.now(), people: [{ id, n: MZ_ME_NAME, c: '#065f46' }], items: [], conta: null };
+    me = id;
+    MZ_DB.put(mz); MZ_SES.set({ code: mz.code, me });
+    goMesa(); renderMesa();
+    mzOpenShare();
+  };
+
+  // convidar: link ou QR Code
+  const mzOpenShare = () => {
+    const link = mzLink(mz.code);
+    mzSheet(`<p class="sh-kicker">Convidar para a mesa</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Chame a galera</h2>
+      <p class="sh-sub">Quem ler o QR Code ou abrir o link entra direto na mesa.</p>
+      <div class="use-qr">${qrSvg(link) || '<p class="muted" style="text-align:center;font-size:14px">Não foi possível desenhar o QR. Use o código abaixo.</p>'}</div>
+      <p class="use-code" aria-label="Código da mesa">${mz.code}</p>
+      <div class="res-actions"><button class="btn btn-primary" data-mz="send">${icon('share')}Enviar link</button><button class="btn btn-ghost" data-mz="copy">${icon('copy')}Copiar link</button></div>`);
+  };
+  const mzCopy = text => {
+    const fallback = () => { const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); const ok = safe(() => document.execCommand('copy')); t.remove(); return ok; };
+    const done = ok => toast(ok ? 'Link copiado. Cole no grupo da mesa.' : 'Não deu para copiar. Código da mesa: ' + mz.code);
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(() => done(true), () => done(fallback()));
+    else done(fallback());
+  };
+  const mzSend = () => {
+    const url = mzLink(mz.code);
+    const text = `Entra na nossa mesa no Muito Mais para dividir a conta. Código: ${mz.code}`;
+    if (navigator.share) navigator.share({ title: 'Mesa no Muito Mais', text, url }).catch(() => {});
+    else window.open('https://wa.me/?text=' + encodeURIComponent(text + '\n' + url), '_blank', 'noopener');
+  };
+
+  // entrar numa mesa (link, QR ou código)
+  const mzDemo = code => {   // demonstração: código que não existe neste navegador vira uma mesa de exemplo
+    const a = mzId(), b = mzId(), t = Date.now();
+    const it = (by, d, ago) => ({ id: mzId(), d, by, at: t - ago * 60000 });
+    return { code, service: 10, closed: false, at: t, demo: true, conta: null,
+      people: [{ id: a, n: 'Lucas Lima', c: MZ_COLORS[0] }, { id: b, n: 'Ana Paula', c: MZ_COLORS[1] }],
+      items: [it(a, 'Pizza margherita', 40), it(b, 'Pizza margherita', 40), it(a, 'Chopp', 35), it(b, 'Suco de laranja', 34), it(a, 'Chopp', 12)] };
+  };
+  const mzOpenJoin = code => {
+    if (mz && mz.code === code) { goMesa(); toast('Você já está nesta mesa.'); return; }
+    let m = MZ_DB.get(code);
+    if (!m) { m = mzDemo(code); MZ_DB.put(m); }
+    if (m.closed) { toast('Essa mesa já fechou a conta.'); return; }
+    mzPending = code;
+    mzSheet(`<p class="sh-kicker">Convite para mesa</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Entrar na mesa</h2>
+      <p class="sh-sub">Mesa ${m.code} · ${esc(joinNames(m.people.map(p => p.n.split(' ')[0])))} ${m.people.length > 1 ? 'estão' : 'está'} lá.</p>
+      <div class="mz-stack">${m.people.map(mzAv).join('')}</div>
+      <form id="mzJoinForm" novalidate>
+        <label class="field-use"><span>Seu nome na mesa</span><input class="mz-in" id="mzMyName" maxlength="24" autocomplete="given-name" placeholder="Como a galera vai te ver"></label>
+        <p class="sp-err" id="mzJoinErr" aria-live="polite"></p>
+        <div class="res-actions"><button class="btn btn-primary" type="submit">Entrar na mesa</button><button class="btn btn-ghost" type="button" data-mz="close">Agora não</button></div>
+      </form>`, 'mzMyName');
+  };
+  const mzJoin = name => {
+    const m = MZ_DB.get(mzPending); if (!m) return;
+    const id = mzId();
+    m.people.push({ id, n: name, c: MZ_COLORS[m.people.length % MZ_COLORS.length] }); m.at = Date.now();
+    MZ_DB.put(m);
+    mz = m; me = id; MZ_SES.set({ code: m.code, me });
+    closeSheet(); goMesa(); renderMesa();
+    toast('Você entrou na mesa. Escreva o que pedir.');
+    setTimeout(() => $('mzItemName') && $('mzItemName').focus({ preventScroll: true }), 350);
+  };
+
+  // dizer o que pediu: só o nome
+  const mzAddItem = () => {
+    const inp = $('mzItemName'), d = mzCap(inp.value.trim().replace(/\s+/g, ' '));
+    if (d.length < 2) { toast('Escreva o que você pediu.'); inp.focus(); return; }
+    const it = { id: mzId(), d, by: me, at: Date.now() };
+    mzFlash.add(it.id);
+    inp.value = '';
+    // se já existe pré-conta lida, tenta achar o item novo nela
+    mzSave(m => { m.items.push(it); if (m.conta) mzMatch(m.conta.linhas, [it], true); });
+    toast(`${d} adicionado aos seus pedidos`);
+    $('mzItemName').focus({ preventScroll: true });
+  };
+
+  // ---------- falar o pedido (voz) ----------
+  // Usa o reconhecimento de voz do navegador (Chrome, Edge, Safari). "dois chopps e uma porção de fritas" vira 3 pedidos.
+  const MZ_SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const MZ_NUM = { um: 1, uma: 1, dois: 2, duas: 2, tres: 3, quatro: 4, cinco: 5, seis: 6, sete: 7, oito: 8, nove: 9, dez: 10 };
+  let mzRec = null;
+  const mzParseSpeech = text => mzNorm(text) === '' ? [] : text.toLowerCase().replace(/[.!?;]/g, ',')
+    .split(/,|\s+e\s+|\s+mais\s+|\s+tamb[eé]m\s+/)
+    .map(s => s.trim().replace(/^(e|eu|a gente|n[oó]s)\s+/, '').replace(/^(pedi|pedimos|quero|queria|vou querer|anota|anotar|coloca|me v[eê]|traz|foi)\s+/, '').replace(/^(o|a|os|as)\s+/, ''))
+    .filter(Boolean)
+    .flatMap(s => {
+      const m = s.match(/^(\d+|um|uma|dois|duas|tr[eê]s|quatro|cinco|seis|sete|oito|nove|dez)\s+(.+)$/);
+      let q = 1, name = s;
+      if (m) { q = /^\d+$/.test(m[1]) ? +m[1] : MZ_NUM[mzNorm(m[1])] || 1; name = m[2]; }
+      name = name.replace(/^(de|do|da)\s+/, '').trim();
+      if (q > 1) name = name.replace(/^(\S{3,}?)(s)(\s|$)/, (all, w, s, sp) => /ss$/.test(w + s) ? all : w + sp);   // "chopps" -> "chopp"
+      return name.length < 2 ? [] : Array(Math.min(q, 10)).fill(mzCap(name.slice(0, 40)));
+    });
+  const mzMicUi = on => {
+    const b = document.querySelector('[data-mz="mic"]'), h = $('mzMicHint'), inp = $('mzItemName');
+    if (b) { b.setAttribute('aria-pressed', on); b.setAttribute('aria-label', on ? 'Parar de ouvir' : 'Falar o pedido'); }
+    if (h) h.textContent = on ? 'Ouvindo… Diga, por exemplo: "dois chopps e uma porção de fritas"' : '';
+    if (inp) inp.placeholder = on ? 'Fale o que você pediu' : 'O que você pediu?';
+  };
+  const mzAddSpoken = text => {
+    const names = mzParseSpeech(text);
+    if (!names.length) { toast('Não entendi o pedido. Tente de novo.'); return; }
+    const t = Date.now(), its = names.map((d, i) => ({ id: mzId(), d, by: me, at: t + i }));
+    its.forEach(it => mzFlash.add(it.id));
+    if ($('mzItemName')) $('mzItemName').value = '';
+    mzSave(m => { m.items.push(...its); if (m.conta) mzMatch(m.conta.linhas, its, true); });
+    const count = {}; names.forEach(n => { count[n] = (count[n] || 0) + 1; });
+    toast('Anotado: ' + joinNames(Object.entries(count).map(([n, q]) => (q > 1 ? q + ' ' : '') + n)));
+  };
+  const mzMic = () => {
+    if (mzRec) { mzRec.stop(); return; }
+    if (!MZ_SR) { toast('Este navegador não aceita voz. Use o Chrome ou o Safari, ou escreva o pedido.'); return; }
+    const rec = new MZ_SR();
+    rec.lang = 'pt-BR'; rec.interimResults = true; rec.continuous = false; rec.maxAlternatives = 1;
+    let heard = '', failed = false;
+    rec.onresult = e => {
+      let interim = '';
+      for (let i = e.resultIndex; i < e.results.length; i++) { if (e.results[i].isFinal) heard += e.results[i][0].transcript + ' '; else interim += e.results[i][0].transcript; }
+      if ($('mzItemName')) $('mzItemName').value = (heard + interim).trim();
+    };
+    rec.onerror = e => {
+      failed = true;
+      toast(e.error === 'not-allowed' || e.error === 'service-not-allowed' ? 'Libere o microfone para o site nas configurações do navegador.'
+        : e.error === 'no-speech' ? 'Não ouvi nada. Toque no microfone e fale de novo.'
+        : e.error === 'network' ? 'Sem internet para reconhecer a voz. Escreva o pedido.' : 'Não deu para ouvir. Tente de novo.');
+    };
+    rec.onend = () => {
+      mzRec = null; mzMicUi(false);
+      const t = heard.trim();
+      if (t) mzAddSpoken(t); else if (!failed && $('mzItemName')) $('mzItemName').value = '';
+    };
+    try { rec.start(); } catch (e) { toast('Não deu para ligar o microfone.'); return; }
+    mzRec = rec; mzMicUi(true);
+  };
+
+  // ---------- foto da pré-conta + IA ----------
+  // reduz a foto antes de enviar (celular tira fotos de 4-12 MB)
+  const mzShrink = file => new Promise((ok, fail) => {
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => {
+      const k = Math.min(1, 1600 / Math.max(img.width, img.height)), cv = document.createElement('canvas');
+      cv.width = Math.round(img.width * k); cv.height = Math.round(img.height * k);
+      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      URL.revokeObjectURL(url); ok(cv.toDataURL('image/jpeg', 0.82));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); fail(new Error('imagem')); };
+    img.src = url;
+  });
+  // liga cada pedido a uma linha da pré-conta pelo nome (usado na demonstração e quando alguém pede depois da foto)
+  const mzScore = (a, b) => {
+    const A = mzNorm(a).split(' ').filter(w => w.length > 2), B = mzNorm(b).split(' ').filter(w => w.length > 2);
+    let s = 0;
+    A.forEach(x => { if (B.some(y => y === x || (x.length >= 4 && y.startsWith(x.slice(0, 4))) || (y.length >= 4 && x.startsWith(y.slice(0, 4))))) s++; });
+    return s;
+  };
+  const mzMatch = (linhas, items, onlyNew) => {
+    items.forEach(it => {
+      if (onlyNew && linhas.some(l => l.items.includes(it.id))) return;
+      let best = null, bs = 0;
+      linhas.forEach(l => {
+        if (l.dono) return;
+        const sc = mzScore(it.d, l.desc) * 10 + (l.items.length < l.q ? 5 : 0);   // prefere linha que ainda tem unidade sobrando
+        if (mzScore(it.d, l.desc) && sc > bs) { bs = sc; best = l; }
+      });
+      if (best) best.items.push(it.id);
+    });
+  };
+  // DEMONSTRAÇÃO: sem servidor, inventa uma pré-conta com os pedidos da mesa + itens que ninguém disse
+  const MZ_PRICES = [['chopp', 1490], ['cerveja', 1290], ['refri', 790], ['coca', 790], ['guarana', 790], ['agua', 550], ['suco', 990], ['caipirinha', 2490], ['drink', 2990], ['vinho', 3900],
+    ['pizza', 8990], ['porcao', 4990], ['fritas', 3490], ['batata', 3490], ['sobremesa', 2290], ['pudim', 1890], ['petit', 2690], ['prato', 5490], ['file', 6990], ['hamburguer', 3990], ['burger', 3990], ['salada', 3290], ['cafe', 690]];
+  const mzDemoConta = m => {
+    const groups = {};
+    m.items.forEach(it => { const k = mzNorm(it.d); (groups[k] = groups[k] || []).push(it); });
+    const linhas = Object.values(groups).map(g => {
+      const k = mzNorm(g[0].d), price = (MZ_PRICES.find(([w]) => k.includes(w)) || [0, 2990])[1];
+      const shared = /pizza|porcao|fritas|batata/.test(k);   // comida de dividir: 1 unidade para quem pediu junto
+      const q = shared ? 1 : g.length;
+      return { id: mzId(), desc: g[0].d.toUpperCase().slice(0, 28), q, v: price * q, items: [], dono: null };
+    });
+    linhas.push({ id: mzId(), desc: 'COUVERT ARTISTICO', q: m.people.length, v: 1200 * m.people.length, items: [], dono: null });
+    linhas.push({ id: mzId(), desc: 'AGUA S/ GAS 500ML', q: 1, v: 550, items: [], dono: null });
+    const sub = linhas.reduce((a, l) => a + l.v, 0), serv = Math.round(sub * 0.1);
+    return { linhas, sub, serv, total: sub + serv, demo: true };
+  };
+  // chama o servidor (IA). Se não houver servidor (site estático / protótipo), cai na demonstração.
+  const mzAnalyze = async dataUrl => {
+    const m = MZ_DB.get(mz.code) || mz;
+    const itens = m.items.map(i => ({ id: i.id, nome: i.d, pessoa: (mzPerson(i.by, m) || {}).n || '' }));
+    // demonstração só quando não existe servidor da IA (arquivo local ou rota inexistente).
+    // Com servidor no ar, erro vira mensagem: nunca mostrar preço inventado para cliente de verdade.
+    const local = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+    const NO_SERVER = 'sem servidor';
+    try {
+      if (location.protocol === 'file:') throw new Error(NO_SERVER);
+      const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 90000);
+      let r;
+      try {
+        r = await fetch(MZ_API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl.signal,
+          body: JSON.stringify({ imagem: dataUrl.split(',')[1], media_type: 'image/jpeg', itens }) });
+      } catch (e) {
+        if (local) throw new Error(NO_SERVER);
+        return { erro: e.name === 'AbortError' ? 'A leitura demorou demais. Tente de novo.' : 'Sem conexão. Confira a internet e tente de novo.' };
+      } finally { clearTimeout(to); }
+      if (r.status === 404 && local) throw new Error(NO_SERVER);
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) return { erro: j.erro || 'A leitura da pré-conta falhou. Tente de novo.' };
+      if (j.erro) return { erro: j.erro };
+      const ids = new Set(itens.map(i => i.id));
+      const linhas = (j.linhas || []).map(l => ({ id: mzId(), desc: String(l.descricao || 'Item').slice(0, 40), q: Math.max(1, l.quantidade | 0), v: cents(+l.valor_total || 0), items: (l.item_ids || []).filter(id => ids.has(id)), dono: null })).filter(l => l.v > 0);
+      if (!linhas.length) return { erro: 'Não encontramos itens nessa foto. Tente de novo, com a pré-conta inteira e sem reflexo.' };
+      const sub = linhas.reduce((a, l) => a + l.v, 0);
+      return { linhas, sub, serv: cents(+j.taxa_servico || 0), total: cents(+j.total || 0) || sub + cents(+j.taxa_servico || 0), demo: false };
+    } catch (e) {
+      if (e.message !== NO_SERVER) return { erro: 'A leitura da pré-conta falhou. Tente de novo.' };
+      await new Promise(ok => setTimeout(ok, 1800));
+      const conta = mzDemoConta(m); mzMatch(conta.linhas, m.items);
+      return conta;
+    }
+  };
+  // duas formas de mandar a pré-conta: câmera (capture) ou foto já salva na galeria
+  const mzPhotoBtns = (camLabel = 'Tirar foto') => `<label class="btn btn-primary mz-cam">${icon('scan')}${camLabel}<input type="file" class="mz-file" accept="image/*" capture="environment"></label>
+    <label class="btn btn-outline mz-cam">${icon('image')}Escolher da galeria<input type="file" class="mz-file" accept="image/*"></label>`;
+  const mzOpenPhoto = () => mzSheet(`<p class="sh-kicker">Pré-conta</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Mande a foto da pré-conta</h2>
+      <p class="sh-sub">A IA lê os itens e coloca o valor no pedido de cada um.</p>
+      <ul class="sh-tips">
+        <li><span>1</span><p>Pegue a pré-conta <b>inteira</b>, do primeiro item até o total.</p></li>
+        <li><span>2</span><p>Evite <b>reflexo</b> e sombra no papel.</p></li>
+      </ul>
+      <div class="res-actions">${mzPhotoBtns()}</div>`);
+  const mzPhoto = async file => {
+    if (!file) return;
+    let dataUrl;
+    try { dataUrl = await mzShrink(file); } catch (e) { toast('Não deu para abrir essa foto. Tente outra.'); return; }
+    mzSheet(`<p class="sh-kicker">Pré-conta</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Lendo a pré-conta…</h2>
+      <p class="sh-sub">A IA está lendo os itens e ligando cada um ao pedido de quem está na mesa.</p>
+      <div class="mz-shot"><img src="${dataUrl}" alt="Foto da pré-conta"><span class="mz-scan"></span></div>`);
+    const conta = await mzAnalyze(dataUrl);
+    if (!mz) return;
+    if (conta.erro) {
+      $('shBody').innerHTML = `<span class="sh-ic" style="--bg:#fdecec;--c:#dc4b4b">${icon('x')}</span><p class="sh-kicker" style="color:#a52a2a">Não deu certo</p>
+        <h2 class="sh-title" id="shTitle" tabindex="-1">Não conseguimos ler</h2><p class="sh-sub">${esc(conta.erro)}</p>
+        <div class="res-actions">${mzPhotoBtns('Tirar outra foto')}<button class="btn btn-ghost" data-mz="close">Fechar</button></div>`;
+      return;
+    }
+    conta.at = Date.now(); conta.by = me;
+    const pct = conta.sub ? Math.round(conta.serv / conta.sub * 100) : null;
+    mzSave(m => { m.conta = conta; if (MZ_SERV.includes(pct)) m.service = pct; m.people.forEach(p => { p.paid = false; }); });
+    const c = mzCalc(mz), mine = c.rows.find(r => r.p.id === me) || { tot: 0 }, loose = conta.linhas.filter(l => !l.items.length).length;
+    $('shBody').innerHTML = `<span class="sh-ic">${icon('check')}</span>
+      <p class="sh-kicker">Pré-conta lida${conta.demo ? ' · demonstração' : ''}</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Pronto, a conta está feita</h2>
+      <p class="sh-sub">${conta.linhas.length} itens encontrados na pré-conta.</p>
+      <div class="sh-box">
+        <div class="receipt-line"><span>Você consumiu</span><b class="big money">${fmtC(mine.tot)}</b></div>
+        <div class="receipt-line"><span>Total da conta</span><b class="money">${fmtC(c.total)}</b></div>
+        <div class="receipt-line"><span>Falta pagar</span><b class="money">${fmtC(c.falta)}</b></div>
+      </div>
+      ${loose ? `<p class="sh-note" style="--bg:#fff6e0;--tink:#8a5a00">${icon('alert')}<span>${loose} ${loose > 1 ? 'itens ficaram' : 'item ficou'} sem dono. Na mesa, toque em <b>É meu</b> ou <b>Dividir</b>.</span></p>` : ''}
+      ${conta.demo ? `<p class="sh-note">${icon('info')}<span>Protótipo: sem o servidor da IA, os preços são de exemplo.</span></p>` : ''}
+      <div class="res-actions"><button class="btn btn-primary" data-mz="close">Ver a mesa</button><button class="btn btn-ghost" data-mz="forgot">${icon('plus')}Esqueci de anotar algo</button></div>`;
+    requestAnimationFrame(() => $('shTitle').focus({ preventScroll: true }));
+  };
+
+  // fechar a conta
+  const mzOpenBill = () => {
+    const c = mzCalc(mz);
+    mzSheet(`<p class="sh-kicker">Fechar a conta</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Quanto cada um paga</h2>
+      <p class="sh-sub">Mesa ${mz.code} · ${mz.service ? mz.service + '% de serviço incluído' : 'sem taxa de serviço'}</p>
+      <div class="sh-box">${c.rows.map(r => `<div class="receipt-line"><span>${r.p.id === me ? 'Você' : esc(r.p.n)}${r.p.paid ? ' · pagou' : ''}</span><b class="money">${fmtC(r.tot)}</b></div>`).join('')}
+        ${c.looseTot ? `<div class="receipt-line"><span>Sem dono</span><b class="money">${fmtC(c.looseTot)}</b></div>` : ''}
+        <div class="receipt-line"><span>Total da conta</span><b class="money">${fmtC(c.total)}</b></div>
+        <div class="receipt-line"><span>Falta pagar</span><b class="big money">${fmtC(c.falta)}</b></div></div>
+      ${c.looseTot ? `<p class="sh-note" style="--bg:#fff6e0;--tink:#8a5a00">${icon('alert')}<span>Ainda tem item sem dono. Resolva antes de fechar ou ele fica fora da divisão.</span></p>` : ''}
+      <p class="sh-note">${icon('receipt')}<span>Depois de pagar, peça o cupom fiscal e escaneie: cada um ganha cashback sobre o que pagou.</span></p>
+      <div class="res-actions"><button class="btn btn-primary" data-mz="closeBill">Fechar a conta para todos</button><button class="btn btn-ghost" data-mz="close">Voltar</button></div>`);
+  };
+
+  document.addEventListener('click', e => {
+    const s = e.target.closest('[data-mzs]');
+    if (s) { $('mzItemName').value = s.dataset.mzs; $('mzItemName').focus(); return; }
+    const b = e.target.closest('[data-mz]'); if (!b || b.disabled) return;
+    const a = b.dataset.mz, id = b.dataset.id;
+    if (a === 'mic') mzMic();
+    else if (a === 'photo') mzOpenPhoto();
+    else if (a === 'new') mzCreate();
+    else if (a === 'share') mzOpenShare();
+    else if (a === 'send') mzSend();
+    else if (a === 'copy') mzCopy(mzLink(mz.code));
+    else if (a === 'bill') mzOpenBill();
+    else if (a === 'close') closeSheet();
+    else if (a === 'serv') mzSave(m => { m.service = +b.dataset.v; });
+    else if (a === 'del') { const it = mz.items.find(i => i.id === id); mzSave(m => { m.items = m.items.filter(i => i.id !== id); if (m.conta) m.conta.linhas.forEach(l => { l.items = l.items.filter(x => x !== id); }); }); if (it) toast(it.d + ' removido'); }
+    else if (a === 'claim') mzSave(m => { const l = m.conta.linhas.find(x => x.id === id); if (l) l.dono = me; });
+    else if (a === 'all') mzSave(m => { const l = m.conta.linhas.find(x => x.id === id); if (l) l.dono = 'todos'; });
+    else if (a === 'unclaim') mzSave(m => { const l = m.conta.linhas.find(x => x.id === id); if (l) l.dono = null; });
+    else if (a === 'also') {
+      // esqueceu de anotar: entra na linha da pré-conta junto com quem já tinha pedido (a linha passa a ser dividida)
+      let desc = '';
+      mzSave(m => {
+        const l = m.conta && m.conta.linhas.find(x => x.id === id); if (!l) return;
+        desc = mzCap(l.desc.toLowerCase());
+        const it = { id: mzId(), d: desc, by: me, at: Date.now() };
+        m.items.push(it); l.items.push(it.id); mzFlash.add(it.id);
+      });
+      if (desc) toast(`${desc} adicionado para você. O valor foi dividido.`);
+    }
+    else if (a === 'forgot') { closeSheet(); setTimeout(() => { const el = $('mzLines'); if (el) el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }); }, 320); }
+    else if (a === 'paid') { mzSave(m => { const p = m.people.find(x => x.id === me); if (p) p.paid = !p.paid; }); toast(mzPerson(me).paid ? 'Marcado como pago.' : 'Desfeito.'); }
+    else if (a === 'closeBill') { closeSheet(); mzSave(m => { m.closed = true; }); toast('Conta fechada. Cada um já vê a sua parte.'); }
+    else if (a === 'leave') { MZ_SES.set(null); mz = null; me = null; renderMesa(); toast('Você saiu da mesa. Dá para voltar pelo link.'); }
+  });
+  document.addEventListener('change', e => {
+    if (e.target.classList.contains('mz-file')) { const f = e.target.files && e.target.files[0]; e.target.value = ''; mzPhoto(f); }
+  });
+  document.addEventListener('input', e => {
+    if (e.target.id === 'mzCode') e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  });
+  document.addEventListener('submit', e => {
+    const id = e.target.id;
+    if (!['mzCodeForm', 'mzJoinForm', 'mzItemForm'].includes(id)) return;
+    e.preventDefault();
+    if (id === 'mzItemForm') mzAddItem();
+    if (id === 'mzCodeForm') {
+      const code = $('mzCode').value;
+      if (code.length !== 6) { toast('O código da mesa tem 6 letras e números.'); $('mzCode').focus(); return; }
+      mzOpenJoin(code);
+    }
+    if (id === 'mzJoinForm') {
+      const n = $('mzMyName').value.trim().replace(/\s+/g, ' ');
+      if (n.length < 2) { $('mzJoinErr').textContent = 'Digite seu nome para a mesa saber quem é você.'; $('mzMyName').focus(); return; }
+      mzJoin(n);
+    }
+  });
+
+  // tempo real: outra aba/pessoa mexeu na mesa
+  addEventListener('storage', e => {
+    if (!mz || e.key !== MZ_DB.key(mz.code) || !e.newValue) return;
+    const old = mz, m = safe(() => JSON.parse(e.newValue)); if (!m) return;
+    mz = m;
+    const had = new Set(old.items.map(i => i.id)), was = new Set(old.people.map(p => p.id));
+    const added = m.items.filter(i => !had.has(i.id) && i.by !== me), joined = m.people.filter(p => !was.has(p.id));
+    const newPaid = m.people.filter(p => p.paid && p.id !== me && !(old.people.find(x => x.id === p.id) || {}).paid);
+    added.forEach(i => mzFlash.add(i.id));
+    if (m.closed && !old.closed) toast('A conta foi fechada. Veja a sua parte.');
+    else if (m.conta && (!old.conta || m.conta.at !== old.conta.at)) { const c = mzCalc(m), mine = c.rows.find(r => r.p.id === me); toast(`${mzName(m.conta.by)} leu a pré-conta. Você consumiu ${fmtC(mine ? mine.tot : 0)}`); }
+    else if (joined.length) toast(joinNames(joined.map(p => p.n.split(' ')[0])) + (joined.length > 1 ? ' entraram' : ' entrou') + ' na mesa');
+    else if (added.length) toast(`${mzName(added[0].by)} pediu ${added[0].d}`);
+    else if (newPaid.length) toast(`${mzName(newPaid[0].id)} marcou que já pagou`);
+    else if (m.service !== old.service) toast(`Taxa de serviço mudou para ${m.service ? m.service + '%' : 'sem taxa'}`);
+    if (!m.people.some(p => p.id === me)) { MZ_SES.set(null); mz = null; me = null; }
+    renderMesa();
+  });
+
+  const mzBoot = () => {
+    const inv = (new URLSearchParams(location.search).get('mesa') || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
+    const s = MZ_SES.get(!inv);   // abrindo um convite numa aba nova, não herda a mesa de outra aba
+    if (s) {
+      const m = MZ_DB.get(s.code);
+      // mesas do formato antigo (com valor digitado) não valem mais
+      if (m && m.people.some(p => p.id === s.me) && !m.items.some(i => typeof i.v === 'number')) { mz = m; me = s.me; }
+    }
+    renderMesa();
+    if (inv) { history.replaceState(null, '', location.pathname + '#mesa'); route(); mzOpenJoin(inv); }
+  };
+
+  // ---------- navegação entre telas ----------
+  const VIEWS = ['inicio', 'escanear', 'carteira', 'mesa', 'missoes', 'perfil'];
+  let first = true;
+  const route = () => {
+    const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'inicio';
+    document.querySelectorAll('.view').forEach(s => s.classList.toggle('on', s.id === 'v-' + v));
+    document.querySelectorAll('[data-nav]').forEach(a => { if (a.dataset.nav === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    document.body.dataset.view = v;
+    const title = $('v-' + v).dataset.title;
+    $('viewTitle').textContent = title;
+    document.title = title + ' — Muito Mais';
+    if (v === 'inicio') countUp();
+    if (v !== 'escanear') { resetScan(); closeSheet(); }
+    if (!first) window.scrollTo(0, 0);
+    first = false;
+  };
+  addEventListener('hashchange', route);
+  route();
+  mzBoot();
+})();
+</script>
+<!-- DEMONSTRAÇÃO: trocar de conta (admin, caixa, garçom, cliente). Remover em produção. -->
+<script src="assets/demo-switch.js"></script>
+</body>
+</html>
