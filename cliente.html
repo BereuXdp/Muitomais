@@ -417,6 +417,98 @@
   .toast-x.on { transform: translate(-50%, 0); opacity: 1; }
   .toast-x i { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--green-300); color: var(--forest-950); flex: none; }
 
+  /* --- Mesa: dividir a conta --- */
+  .mz, .mz-start { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+  .mz-col { display: grid; gap: 20px; min-width: 0; }
+  .mz-kick { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--green-300); }
+  .mz-hero h2 { margin-top: 8px; max-width: 20ch; font-size: clamp(24px, 3vw, 32px); line-height: 1.12; font-weight: 800; letter-spacing: -0.04em; }
+  .mz-hero .mz-txt { margin-top: 10px; max-width: 44ch; font-size: 15px; line-height: 1.5; color: rgba(255,255,255,.75); }
+  .mz-code { color: #fff; letter-spacing: .1em; }
+  .mz-live { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; flex: none; border-radius: var(--radius-pill); background: rgba(71,211,152,.16); color: var(--green-300); font-size: 12px; font-weight: 700; }
+  .mz-live i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: mz-pulse 1.6s ease-in-out infinite; }
+  .mz-live.off { background: rgba(255,255,255,.12); color: #fff; }
+  .mz-live.off i { animation: none; }
+  @keyframes mz-pulse { 50% { opacity: .25; } }
+  .mz-lbl { margin-top: 16px; font-size: 14px; color: rgba(255,255,255,.7); }
+  .mz-items .act-body small { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mz-items .act-val b { color: var(--ink-deep); }
+  .mz-items .act-val small { display: block; font-size: 12px; color: var(--ink-3); }
+  .mz-items .sp-x { flex: none; margin-left: -6px; }
+  .mz-new { animation: mz-flash 1.8s ease both; border-radius: 14px; }
+  @keyframes mz-flash { from { background: var(--mint-150); box-shadow: 0 0 0 8px var(--mint-150); } }
+  .mz-seg { margin-top: 0; grid-template-columns: repeat(4, 1fr); }
+  .mz-seg button:disabled { opacity: .5; cursor: not-allowed; }
+  .mz-people { margin-top: 0; }
+  .mz-people li > b { white-space: nowrap; }
+  .mz-people em { margin-left: 6px; padding: 1px 6px; border-radius: 6px; border: 1px solid var(--line); background: #fff; font-style: normal; font-size: 11px; font-weight: 700; color: var(--ink-3); }
+  .mz-total { margin-top: 6px; padding: 0 4px; }
+  .mz-btns { display: grid; gap: 10px; }
+  .mz-btns .btn { width: 100%; height: 52px; }
+  .mz-in { width: 100%; height: 48px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line); background: #fff; font: inherit; font-size: 16px; font-weight: 600; color: var(--ink-deep); }
+  .mz-in:focus { outline: 0; border-color: var(--green-500); box-shadow: 0 0 0 4px rgba(15,163,110,.18); }
+  .mz-wait { margin-top: 6px; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; font-size: 15px; color: rgba(255,255,255,.75); }
+  .mz-wait b { font-size: 40px; font-weight: 800; letter-spacing: -0.04em; color: #fff; line-height: 1.05; }
+  .mz-wait span { flex-basis: 100%; font-size: 13.5px; color: rgba(255,255,255,.6); }
+  .mz-quick { margin-top: 18px; display: flex; gap: 10px; }
+  .mz-quick .mz-money { flex: 1; min-width: 0; height: 54px; border: 0; }
+  .mz-quick .mz-money .ic { color: var(--sage); }
+  .mz-quick .mz-money input { font-size: 17px; font-weight: 600; }
+  .mz-quick .mz-money input::placeholder { font-weight: 500; color: var(--sage); }
+  .mz-sug { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .mz-sug button { height: 32px; padding: 0 12px; border-radius: 16px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.08); font: inherit; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.85); cursor: pointer; }
+  .mz-sug button:hover { background: rgba(255,255,255,.16); color: #fff; }
+  .mz-cam { position: relative; overflow: hidden; cursor: pointer; }
+  .mz-cam input { position: absolute; inset: 0; opacity: 0; cursor: pointer; font-size: 0; }
+  .mz-cam:focus-within { outline: 2px solid var(--green-300); outline-offset: 2px; }
+  .mz-src { text-transform: uppercase; font-size: 11.5px; letter-spacing: .02em; }
+  .pill.mz-miss { background: #fdecec; color: #a52a2a; }
+  .mz-lines .act { gap: 12px; flex-wrap: wrap; }
+  .mz-lines { scroll-margin-top: 90px; }
+  .mz-forgot { display: flex; gap: 10px; margin: -4px 0 8px; padding: 12px 14px; border-radius: 14px; background: var(--mint-50); border: 1px solid var(--mint-150); font-size: 13.5px; line-height: 1.45; color: var(--ink-2); }
+  .mz-forgot .ic { width: 18px; height: 18px; flex: none; color: var(--green-500); margin-top: 1px; }
+  .mz-forgot b { color: var(--ink-deep); }
+  .mz-also .ic { width: 16px; height: 16px; }
+  .mz-q { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex: none; background: var(--canvas); border: 1px solid var(--line); font-size: 13px; font-weight: 800; color: var(--ink-2); }
+  .mz-loose .mz-q { background: #fff6e0; border-color: #f6e3b8; color: #8a5a00; }
+  .mz-loose .act-body small { color: #8a5a00; font-weight: 600; }
+  .mz-claim { display: flex; gap: 6px; flex-basis: 100%; padding-left: 52px; }
+  .mz-claim .btn { height: 38px; padding: 0 14px; font-size: 13.5px; }
+  .mz-paid { height: 20px; margin-left: 6px; padding: 0 8px; font-size: 10.5px; vertical-align: 2px; }
+  .mz-sum { margin-top: 14px; }
+  .mz-shot { position: relative; margin-top: 18px; height: 300px; border-radius: 18px; overflow: hidden; background: #0b1512; }
+  .mz-shot img { width: 100%; height: 100%; object-fit: contain; opacity: .85; }
+  .mz-scan { position: absolute; left: 0; right: 0; height: 3px; background: var(--green-300); box-shadow: 0 0 18px 4px rgba(71,211,152,.6); animation: scanline 1.6s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) { .mz-scan { animation: none; top: 50%; } }
+  .mz-quick .btn { height: 54px; flex: none; }
+  .mz-mic { position: relative; width: 54px; height: 54px; flex: none; display: grid; place-items: center; border-radius: 16px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.08); color: #fff; cursor: pointer; transition: background-color .2s ease, border-color .2s ease; }
+  .mz-mic:hover { background: rgba(255,255,255,.16); }
+  .mz-mic .ic { width: 22px; height: 22px; }
+  .mz-mic[aria-pressed="true"] { background: #dc4b4b; border-color: #dc4b4b; }
+  .mz-mic[aria-pressed="true"]::after { content: ""; position: absolute; inset: -4px; border-radius: 20px; border: 2px solid #ff8a8a; animation: mz-ring 1.2s ease-out infinite; }
+  @keyframes mz-ring { from { opacity: .9; transform: scale(.94); } to { opacity: 0; transform: scale(1.2); } }
+  @media (prefers-reduced-motion: reduce) { .mz-mic[aria-pressed="true"]::after { animation: none; opacity: .6; } }
+  .mz-mic-hint { margin-top: 8px; font-size: 13.5px; color: #ffd77a; font-weight: 600; }
+  .mz-mic-hint:empty { display: none; }
+  /* campo + microfone em cima, botão de adicionar embaixo ocupando a largura toda */
+  .mz-quick { flex-wrap: wrap; }
+  .mz-quick .btn[type="submit"] { flex-basis: 100%; height: 50px; }
+  @media (max-width: 640px) {
+    .mz .bal-actions .mz-cam { flex-basis: 100%; }
+  }
+  .mz-items .sp-av { width: 40px; height: 40px; }
+  .mz-items .act-val .pill { margin-top: 0; }
+  .mz-money { display: flex; align-items: center; gap: 6px; height: 48px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line); background: #fff; }
+  .mz-money:focus-within { border-color: var(--green-500); box-shadow: 0 0 0 4px rgba(15,163,110,.18); }
+  .mz-money i { font-style: normal; font-weight: 600; color: var(--ink-3); }
+  .mz-money input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; font: inherit; font-size: 18px; font-weight: 700; color: var(--ink-deep); }
+  .mz-stack { display: flex; margin-top: 16px; }
+  .mz-stack .sp-av { box-shadow: 0 0 0 3px #fff; }
+  .mz-stack .sp-av + .sp-av { margin-left: -8px; }
+  .mz-home .w-actions { margin-top: 0; }
+  .mz-home .w-actions .act-ic { color: var(--forest-800); }
+  .mz-home p b.money { display: inline; }
+  @media (max-width: 960px) { .mz, .mz-start { grid-template-columns: 1fr; } }
+
   /* ================= Responsivo ================= */
   @media (max-width: 960px) {
     .app { grid-template-columns: 1fr; }
@@ -510,6 +602,12 @@
   <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c2 .7 3.2 2.5 3.6 5.2"/></symbol>
   <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
   <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3M21 14v.01M14 21h3M21 17v4h-1"/></symbol>
+  <symbol id="i-mesa" viewBox="0 0 24 24"><path d="M7 3v18M4 3v5a3 3 0 0 0 6 0V3M18 21V3c-2.2 0-4 2.5-4 7v3h4"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></symbol>
   <symbol id="i-star"viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/></symbol>
 </svg>
 
@@ -524,6 +622,7 @@
       <a href="#inicio" data-nav="inicio"><svg class="ic"><use href="#i-home"/></svg>Início</a>
       <a href="#escanear" data-nav="escanear" class="scan-link"><svg class="ic"><use href="#i-scan"/></svg>Escanear cupom</a>
       <a href="#carteira" data-nav="carteira"><svg class="ic"><use href="#i-wallet"/></svg>Carteira</a>
+      <a href="#mesa" data-nav="mesa"><svg class="ic"><use href="#i-mesa"/></svg>Mesa</a>
       <a href="#missoes" data-nav="missoes"><svg class="ic"><use href="#i-target"/></svg>Missões</a>
       <a href="#perfil" data-nav="perfil"><svg class="ic"><use href="#i-user"/></svg>Perfil</a>
     </nav>
@@ -575,6 +674,8 @@
                 <a class="btn btn-glass" href="#carteira"><svg class="ic"><use href="#i-wallet"/></svg>Ver carteira</a>
               </div>
             </div>
+
+            <div class="mz-home" id="mzHome"></div>
 
             <div class="card">
               <div class="card-head"><h2>Atividade recente</h2><a class="more" href="#carteira">Ver tudo <svg class="ic" style="width:16px;height:16px"><use href="#i-chev"/></svg></a></div>
@@ -666,6 +767,11 @@
           <button class="chip-f" data-f="dividido" aria-pressed="false">Divididos</button>
         </div>
         <div class="card" style="margin-top:12px"><div id="statement"></div></div>
+      </section>
+
+      <!-- ========== MESA (dividir a conta) ========== -->
+      <section class="view" id="v-mesa" data-title="Mesa">
+        <div id="mzRoot"></div>
       </section>
 
       <!-- ========== MISSÕES ========== -->
@@ -1195,8 +1301,585 @@
     else if (e.target.closest('[data-use-new]')) showUseQr();
   });
 
+  // ---------- mesa: dividir a conta em tempo real ----------
+  // 1) cada pessoa entra pelo link/QR e diz o que pediu (só o nome);
+  // 2) alguém tira foto da pré-conta e a IA lê os itens, coloca o valor no pedido de cada um,
+  //    e mostra o total da conta e quanto ainda falta pagar.
+  // PROTÓTIPO: a mesa fica no localStorage e sincroniza entre abas do mesmo navegador (evento "storage").
+  // TODO(API): trocar MZ_DB por um backend em tempo real (WebSocket, Supabase Realtime, Firebase…) para sincronizar entre celulares.
+  const MZ_API = 'api/analisar-pre-conta';   // função de servidor que chama a IA (ver api/analisar-pre-conta.js)
+  const MZ_SERV = [0, 10, 12, 15];
+  const MZ_COLORS = ['#2f7fd8', '#c2410c', '#9333ea', '#0c6b4a', '#b91c1c', '#1e3a5f', '#a16207', '#7c4a2d'];
+  const MZ_ME_NAME = 'Marina Souza';   // TODO: vir da conta logada
+  const MZ_SUG = ['Chopp', 'Refrigerante', 'Água', 'Suco', 'Porção de fritas', 'Pizza', 'Sobremesa'];
+  const safe = f => { try { return f(); } catch (e) { return null; } };
+  const MZ_DB = {
+    key: c => 'mm-mesa:' + c,
+    get: c => safe(() => JSON.parse(localStorage.getItem('mm-mesa:' + c))),
+    put: m => safe(() => localStorage.setItem('mm-mesa:' + m.code, JSON.stringify(m)))
+  };
+  // quem você é nesta aba (sessionStorage deixa testar duas pessoas em duas abas)
+  const MZ_SES = {
+    get: last => safe(() => JSON.parse(sessionStorage.getItem('mm-mesa') || (last ? localStorage.getItem('mm-mesa-ultima') : null))),
+    set: s => {
+      const v = s ? JSON.stringify(s) : null;
+      safe(() => v ? sessionStorage.setItem('mm-mesa', v) : sessionStorage.removeItem('mm-mesa'));
+      safe(() => v ? localStorage.setItem('mm-mesa-ultima', v) : localStorage.removeItem('mm-mesa-ultima'));
+    }
+  };
+  let mz = null, me = null, mzPending = null;
+  const mzFlash = new Set();
+  const mzId = () => Math.random().toString(36).slice(2, 9);
+  const mzNewCode = () => Array.from({ length: 6 }, () => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random() * 32)]).join('');
+  const mzLink = code => { const u = new URL(location.href); u.search = '?mesa=' + code; u.hash = 'mesa'; return u.href; };
+  const mzPerson = (id, m = mz) => m.people.find(p => p.id === id);
+  const mzName = (id, m = mz) => id === me ? 'Você' : ((mzPerson(id, m) || { n: 'Alguém' }).n.split(' ')[0]);
+  const mzAv = p => avatar({ n: p.n, c: p.c });
+  const joinNames = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' e ' + a[a.length - 1];
+  const mzNorm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+  const mzCap = s => s ? s[0].toUpperCase() + s.slice(1) : s;
+
+  // contas: cada linha da pré-conta é dividida entre os pedidos ligados a ela (2 pessoas pediram a mesma pizza = metade cada).
+  // linha sem pedido ligado fica "sem dono" até alguém dizer que é dela ou dividir com todos.
+  const mzCalc = m => {
+    const per = {}, itemVal = {}; m.people.forEach(p => { per[p.id] = 0; });
+    let loose = 0;
+    const share = (tot, ids, add) => { const each = Math.floor(tot / ids.length); let extra = tot - each * ids.length; ids.forEach(id => add(id, each + (extra-- > 0 ? 1 : 0))); };
+    (m.conta ? m.conta.linhas : []).forEach(l => {
+      const its = l.items.map(id => m.items.find(i => i.id === id)).filter(i => i && i.by in per);
+      if (its.length) share(l.v, its.map(i => i.id), (id, v) => { itemVal[id] = (itemVal[id] || 0) + v; const it = its.find(i => i.id === id); per[it.by] += v; });
+      else if (l.dono === 'todos') share(l.v, m.people.map(p => p.id), (id, v) => { per[id] += v; });
+      else if (l.dono && l.dono in per) per[l.dono] += l.v;
+      else loose += l.v;
+    });
+    const serv = v => Math.round(v * m.service / 100);
+    const rows = m.people.map(p => ({ p, sub: per[p.id], serv: serv(per[p.id]), tot: per[p.id] + serv(per[p.id]) }));
+    const looseTot = loose + serv(loose);
+    const total = rows.reduce((a, r) => a + r.tot, 0) + looseTot;
+    const paid = rows.filter(r => r.p.paid).reduce((a, r) => a + r.tot, 0);
+    return { rows, itemVal, loose, looseTot, total, paid, falta: Math.max(0, total - paid) };
+  };
+  // grava sempre em cima da versão mais nova (outra pessoa pode ter mexido)
+  const mzSave = fn => { const m = MZ_DB.get(mz.code) || mz; fn(m); m.at = Date.now(); MZ_DB.put(m); mz = m; renderMesa(); };
+
+  const renderMesa = () => {
+    const root = $('mzRoot'), home = $('mzHome');
+    if (!mz) {
+      home.innerHTML = `<div class="w-actions"><span class="act-ic">${icon('mesa')}</span>
+        <p><b>Na mesa com mais gente?</b> Cada um diz o que pediu, a IA lê a pré-conta e mostra quanto cada um paga.</p>
+        <button class="btn btn-primary" data-mz="new">${icon('plus')}Abrir mesa</button></div>`;
+      root.innerHTML = `<div class="mz-start">
+        <div class="balance mz-hero">
+          <p class="mz-kick">Dividir a conta</p>
+          <h2>Cada um diz o que pediu. A IA faz a conta.</h2>
+          <p class="mz-txt">Chame quem está com você pelo link ou QR Code. No fim, tire uma foto da pré-conta: a IA coloca o valor de cada pedido e mostra quanto falta pagar.</p>
+          <div class="bal-actions"><button class="btn btn-lime" data-mz="new">${icon('plus')}Abrir uma mesa</button></div>
+        </div>
+        <div class="scan-side">
+          <div class="card">
+            <div class="card-head"><h2>Recebeu um código?</h2></div>
+            <form class="code-row" id="mzCodeForm"><label class="input">${icon('hash')}<input id="mzCode" maxlength="6" autocomplete="off" autocapitalize="characters" placeholder="Código da mesa" aria-label="Código da mesa"></label><button class="btn btn-outline" type="submit">Entrar</button></form>
+            <p class="muted" style="font-size:13.5px;margin-top:10px">Ou leia com a câmera o QR Code que alguém da mesa mostrar.</p>
+          </div>
+          <div class="card">
+            <div class="card-head"><h2>Como funciona</h2></div>
+            <ol class="steps">
+              <li><span><b>Abra a mesa</b> e chame a galera pelo <b>link ou QR Code</b>.</span></li>
+              <li><span>Cada um escreve <b>o que pediu</b>. Só o nome, sem valor.</span></li>
+              <li><span>Peça a pré-conta e <b>tire uma foto</b>. A IA lê os itens e os preços.</span></li>
+              <li><span>Cada um vê <b>quanto consumiu</b>, o total da conta e <b>quanto falta pagar</b>.</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>`;
+      return;
+    }
+    const c = mzCalc(mz), mine = c.rows.find(r => r.p.id === me) || { sub: 0, serv: 0, tot: 0 }, myP = mzPerson(me) || {};
+    const closed = mz.closed, pct = mz.service, n = mz.people.length, conta = mz.conta;
+    const typing = $('mzItemName'), keep = typing ? typing.value : '', hadFocus = typing && document.activeElement === typing;
+    home.innerHTML = `<div class="w-actions"><span class="act-ic">${icon('mesa')}</span>
+      <p><b>${closed ? 'Conta fechada' : 'Mesa aberta'} · ${mz.code}</b><br>${conta ? `Sua parte: <b class="money">${fmtC(mine.tot)}</b>` : 'Aguardando a pré-conta'} · ${n} ${n > 1 ? 'pessoas' : 'pessoa'}</p>
+      <a class="btn btn-primary" href="#mesa">Ver mesa</a></div>`;
+    const hora = t => t ? new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '';
+    const items = mz.items.slice().reverse();
+    const lineOf = id => conta && conta.linhas.find(l => l.items.includes(id));
+    root.innerHTML = `<div class="mz">
+      <div class="mz-col">
+        <div class="balance">
+          <div class="bal-top"><span>Mesa <b class="mz-code">${mz.code}</b> · ${n} ${n > 1 ? 'pessoas' : 'pessoa'}</span>${closed ? '<span class="mz-live off"><i></i>Conta fechada</span>' : '<span class="mz-live"><i></i>Ao vivo</span>'}</div>
+          ${conta ? `<p class="mz-lbl">Você consumiu${pct ? ` (com ${pct}% de serviço)` : ''}</p>
+            <div class="bal-val money"><small>R$</small>${(mine.tot / 100).toFixed(2).replace('.', ',')}</div>
+            <div class="bal-sub">
+              <div><small>Total da conta</small><b class="money">${fmtC(c.total)}</b></div>
+              <div class="${c.falta ? 'wait' : ''}"><small>Falta pagar</small><b class="money">${fmtC(c.falta)}</b></div>
+            </div>`
+          : `<p class="mz-lbl">Seus pedidos</p>
+            <div class="mz-wait"><b>${mz.items.filter(i => i.by === me).length}</b> ${mz.items.filter(i => i.by === me).length === 1 ? 'item' : 'itens'}<span>Os valores aparecem quando alguém tirar a foto da pré-conta.</span></div>`}
+          ${closed ? '' : `<form class="mz-quick" id="mzItemForm" novalidate>
+            <label class="mz-money">${icon('receipt')}<input id="mzItemName" maxlength="40" autocomplete="off" placeholder="O que você pediu?" aria-label="O que você pediu"></label>
+            <button class="mz-mic" type="button" data-mz="mic" aria-pressed="false" aria-label="Falar o pedido">${icon('mic')}</button>
+            <button class="btn btn-lime" type="submit">${icon('plus')}Adicionar pedido</button>
+          </form>
+          <p class="mz-mic-hint" id="mzMicHint" aria-live="polite"></p>
+          <div class="mz-sug" aria-label="Sugestões">${MZ_SUG.map(s => `<button type="button" data-mzs="${s}">${s}</button>`).join('')}</div>`}
+          <div class="bal-actions">${closed
+            ? `<a class="btn btn-lime" href="#escanear">${icon('scan')}Escanear cupom</a>`
+            : `<button class="btn btn-glass mz-cam" data-mz="photo">${icon('scan')}${conta ? 'Nova foto da pré-conta' : 'Foto da pré-conta'}</button>
+               <button class="btn btn-glass" data-mz="share">${icon('qr')}Convidar</button>`}</div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Pedidos da mesa</h2><span class="muted" style="font-size:14px">${mz.items.length} ${mz.items.length === 1 ? 'pedido' : 'pedidos'}</span></div>
+          ${items.length ? `<ul class="act-list mz-items">${items.map(it => {
+            const who = mzPerson(it.by) || { n: '?', c: '#4b5563' }, v = c.itemVal[it.id], l = lineOf(it.id);
+            const shared = l && l.items.length > l.q;   // mais pedidos que unidades = dividiram
+            return `<li class="act${mzFlash.has(it.id) ? ' mz-new' : ''}">
+              ${mzAv(who)}
+              <div class="act-body"><b>${esc(it.d)}</b><small>${esc(mzName(it.by))} · ${hora(it.at)}${shared ? ` · dividido em ${l.items.length}` : ''}${l ? ` · <span class="mz-src">${esc(l.desc)}</span>` : ''}</small></div>
+              <div class="act-val">${v !== undefined ? `<b class="money">${fmtC(v)}</b>` : conta ? '<span class="pill mz-miss">Não achado</span>' : '<span class="pill wait">Sem valor</span>'}</div>
+              ${it.by === me && !closed ? `<button class="sp-x" data-mz="del" data-id="${it.id}" aria-label="Remover ${esc(it.d)}">${icon('x')}</button>` : ''}
+            </li>`;
+          }).join('')}</ul>` : '<p class="empty">Ninguém disse o que pediu ainda.</p>'}
+          ${conta && mz.items.some(it => c.itemVal[it.id] === undefined) ? `<p class="use-limit">${icon('info')}<span><b>Não achado</b>: a IA não encontrou esse pedido na pré-conta. Confira o nome ou veja os itens sem dono abaixo.</span></p>` : ''}
+        </div>
+        ${conta ? `<div class="card">
+          <div class="card-head"><h2>Pré-conta lida pela IA</h2><span class="muted" style="font-size:13px">${hora(conta.at)}${conta.demo ? ' · demonstração' : ''}</span></div>
+          ${closed ? '' : `<p class="mz-forgot">${icon('info')}<span><b>Esqueceu de anotar algo?</b> Toque em <b>É meu</b> no item sem dono, ou em <b>Eu também</b> se dividiu com alguém.</span></p>`}
+          <ul class="act-list mz-lines" id="mzLines">${conta.linhas.map(l => {
+            const owners = l.items.map(id => (mz.items.find(i => i.id === id) || {}).by).filter(Boolean);
+            const who = owners.length ? joinNames([...new Set(owners)].map(id => mzName(id))) : l.dono === 'todos' ? 'Dividido com todos' : l.dono ? mzName(l.dono) : '';
+            const mineL = l.dono === me || owners.includes(me);
+            return `<li class="act${who ? '' : ' mz-loose'}">
+              <span class="mz-q">${l.q}×</span>
+              <div class="act-body"><b>${esc(l.desc)}</b><small>${who ? esc(who) : 'Sem dono'}</small></div>
+              <div class="act-val"><b class="money">${fmtC(l.v)}</b></div>
+              ${closed ? '' : !who ? `<div class="mz-claim"><button class="btn btn-outline" data-mz="claim" data-id="${l.id}">É meu</button><button class="btn btn-ghost" data-mz="all" data-id="${l.id}">Dividir</button></div>`
+                : l.dono ? `<button class="sp-x" data-mz="unclaim" data-id="${l.id}" aria-label="Desfazer">${icon('x')}</button>`
+                : !mineL ? `<div class="mz-claim"><button class="btn btn-ghost mz-also" data-mz="also" data-id="${l.id}">${icon('plus')}Eu também</button></div>` : ''}
+            </li>`;
+          }).join('')}</ul>
+          <div class="receipt-line mz-total"><span>Total na pré-conta</span><b class="money">${fmtC(conta.total)}</b></div>
+          ${Math.abs(conta.total - c.total) > 2 ? `<p class="use-limit">${icon('info')}<span>A soma da mesa (${fmtC(c.total)}) está diferente da pré-conta. Confira a taxa de serviço e os itens sem dono.</span></p>` : ''}
+        </div>` : ''}
+      </div>
+      <div class="mz-col">
+        <div class="card">
+          <div class="card-head"><h2>Taxa de serviço</h2></div>
+          <div class="sp-seg mz-seg" role="group" aria-label="Taxa de serviço">${MZ_SERV.map(v => `<button data-mz="serv" data-v="${v}" aria-pressed="${v === pct}"${closed ? ' disabled' : ''}>${v ? v + '%' : 'Sem'}</button>`).join('')}</div>
+          <p class="use-limit">${icon('info')}<span>Vale para a mesa toda. ${pct ? `Cada um paga ${pct}% sobre o que consumiu.` : 'Ninguém paga taxa de serviço.'}</span></p>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Quem está na mesa</h2>${closed ? '' : `<button class="more" data-mz="share" style="border:0;background:none">${icon('plus', 'width:16px;height:16px')}Convidar</button>`}</div>
+          <ul class="sp-split mz-people">${c.rows.map(r => {
+            const cnt = mz.items.filter(i => i.by === r.p.id).length;
+            return `<li class="${r.p.id === me ? 'you' : ''}">${mzAv(r.p)}
+            <div><b>${r.p.id === me ? 'Você' : esc(r.p.n)}${r.p.paid ? '<span class="pill ok mz-paid">Pagou</span>' : ''}</b><small class="money">${conta ? (r.sub ? fmtC(r.sub) + (pct ? ' + ' + fmtC(r.serv) + ' de serviço' : '') : 'Nada na pré-conta') : cnt ? cnt + (cnt > 1 ? ' pedidos' : ' pedido') : 'Ainda não pediu nada'}</small></div>
+            ${conta ? `<b class="money">${fmtC(r.tot)}</b>` : ''}</li>`;
+          }).join('')}</ul>
+          ${conta ? `<div class="sh-box mz-sum">
+            <div class="receipt-line"><span>Total da conta</span><b class="money">${fmtC(c.total)}</b></div>
+            ${c.looseTot ? `<div class="receipt-line"><span>Sem dono</span><b class="money">${fmtC(c.looseTot)}</b></div>` : ''}
+            <div class="receipt-line"><span>Já pago</span><b class="money">${fmtC(c.paid)}</b></div>
+            <div class="receipt-line"><span>Falta pagar</span><b class="big money">${fmtC(c.falta)}</b></div></div>` : ''}
+        </div>
+        <div class="mz-btns">${closed
+          ? `<button class="btn btn-primary" data-mz="new">${icon('plus')}Abrir nova mesa</button><button class="btn btn-ghost" data-mz="leave">Sair da mesa</button>`
+          : `${conta ? `<button class="btn ${myP.paid ? 'btn-ghost' : 'btn-primary'}" data-mz="paid"${mine.tot || myP.paid ? '' : ' disabled'}>${icon('check')}${myP.paid ? 'Desfazer: ainda não paguei' : 'Já paguei minha parte'}</button>` : ''}
+             <button class="btn ${conta ? 'btn-outline' : 'btn-primary'}" data-mz="bill"${conta ? '' : ' disabled'}>${icon('receipt')}Fechar a conta</button>
+             <button class="btn btn-ghost" data-mz="leave">Sair da mesa</button>`}</div>
+      </div>
+    </div>`;
+    if (mzFlash.size) setTimeout(() => mzFlash.clear(), 1800);
+    if (keep && $('mzItemName')) $('mzItemName').value = keep;
+    if (hadFocus && $('mzItemName')) $('mzItemName').focus({ preventScroll: true });
+    if (mzRec) mzMicUi(true);   // a mesa atualizou enquanto a pessoa falava
+  };
+
+  const mzSheet = (html, focus) => {
+    if (sheet.hidden) lastFocus = document.activeElement;
+    clearInterval(useTimer);
+    $('sheetBox').className = 'sheet t-ok';
+    $('shBody').innerHTML = html;
+    $('sheetBox').scrollTop = 0;
+    showSheet();
+    requestAnimationFrame(() => ($(focus) || $('shTitle')).focus({ preventScroll: true }));
+  };
+  const goMesa = () => { if (location.hash !== '#mesa') { history.pushState(null, '', '#mesa'); route(); } };
+
+  // abrir mesa: já abre e mostra o convite
+  const mzCreate = () => {
+    const id = mzId();
+    mz = { code: mzNewCode(), service: 10, closed: false, at: Date.now(), people: [{ id, n: MZ_ME_NAME, c: '#065f46' }], items: [], conta: null };
+    me = id;
+    MZ_DB.put(mz); MZ_SES.set({ code: mz.code, me });
+    goMesa(); renderMesa();
+    mzOpenShare();
+  };
+
+  // convidar: link ou QR Code
+  const mzOpenShare = () => {
+    const link = mzLink(mz.code);
+    mzSheet(`<p class="sh-kicker">Convidar para a mesa</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Chame a galera</h2>
+      <p class="sh-sub">Quem ler o QR Code ou abrir o link entra direto na mesa.</p>
+      <div class="use-qr">${qrSvg(link) || '<p class="muted" style="text-align:center;font-size:14px">Não foi possível desenhar o QR. Use o código abaixo.</p>'}</div>
+      <p class="use-code" aria-label="Código da mesa">${mz.code}</p>
+      <div class="res-actions"><button class="btn btn-primary" data-mz="send">${icon('share')}Enviar link</button><button class="btn btn-ghost" data-mz="copy">${icon('copy')}Copiar link</button></div>`);
+  };
+  const mzCopy = text => {
+    const fallback = () => { const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); const ok = safe(() => document.execCommand('copy')); t.remove(); return ok; };
+    const done = ok => toast(ok ? 'Link copiado. Cole no grupo da mesa.' : 'Não deu para copiar. Código da mesa: ' + mz.code);
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(() => done(true), () => done(fallback()));
+    else done(fallback());
+  };
+  const mzSend = () => {
+    const url = mzLink(mz.code);
+    const text = `Entra na nossa mesa no Muito Mais para dividir a conta. Código: ${mz.code}`;
+    if (navigator.share) navigator.share({ title: 'Mesa no Muito Mais', text, url }).catch(() => {});
+    else window.open('https://wa.me/?text=' + encodeURIComponent(text + '\n' + url), '_blank', 'noopener');
+  };
+
+  // entrar numa mesa (link, QR ou código)
+  const mzDemo = code => {   // demonstração: código que não existe neste navegador vira uma mesa de exemplo
+    const a = mzId(), b = mzId(), t = Date.now();
+    const it = (by, d, ago) => ({ id: mzId(), d, by, at: t - ago * 60000 });
+    return { code, service: 10, closed: false, at: t, demo: true, conta: null,
+      people: [{ id: a, n: 'Lucas Lima', c: MZ_COLORS[0] }, { id: b, n: 'Ana Paula', c: MZ_COLORS[1] }],
+      items: [it(a, 'Pizza margherita', 40), it(b, 'Pizza margherita', 40), it(a, 'Chopp', 35), it(b, 'Suco de laranja', 34), it(a, 'Chopp', 12)] };
+  };
+  const mzOpenJoin = code => {
+    if (mz && mz.code === code) { goMesa(); toast('Você já está nesta mesa.'); return; }
+    let m = MZ_DB.get(code);
+    if (!m) { m = mzDemo(code); MZ_DB.put(m); }
+    if (m.closed) { toast('Essa mesa já fechou a conta.'); return; }
+    mzPending = code;
+    mzSheet(`<p class="sh-kicker">Convite para mesa</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Entrar na mesa</h2>
+      <p class="sh-sub">Mesa ${m.code} · ${esc(joinNames(m.people.map(p => p.n.split(' ')[0])))} ${m.people.length > 1 ? 'estão' : 'está'} lá.</p>
+      <div class="mz-stack">${m.people.map(mzAv).join('')}</div>
+      <form id="mzJoinForm" novalidate>
+        <label class="field-use"><span>Seu nome na mesa</span><input class="mz-in" id="mzMyName" maxlength="24" autocomplete="given-name" placeholder="Como a galera vai te ver"></label>
+        <p class="sp-err" id="mzJoinErr" aria-live="polite"></p>
+        <div class="res-actions"><button class="btn btn-primary" type="submit">Entrar na mesa</button><button class="btn btn-ghost" type="button" data-mz="close">Agora não</button></div>
+      </form>`, 'mzMyName');
+  };
+  const mzJoin = name => {
+    const m = MZ_DB.get(mzPending); if (!m) return;
+    const id = mzId();
+    m.people.push({ id, n: name, c: MZ_COLORS[m.people.length % MZ_COLORS.length] }); m.at = Date.now();
+    MZ_DB.put(m);
+    mz = m; me = id; MZ_SES.set({ code: m.code, me });
+    closeSheet(); goMesa(); renderMesa();
+    toast('Você entrou na mesa. Escreva o que pedir.');
+    setTimeout(() => $('mzItemName') && $('mzItemName').focus({ preventScroll: true }), 350);
+  };
+
+  // dizer o que pediu: só o nome
+  const mzAddItem = () => {
+    const inp = $('mzItemName'), d = mzCap(inp.value.trim().replace(/\s+/g, ' '));
+    if (d.length < 2) { toast('Escreva o que você pediu.'); inp.focus(); return; }
+    const it = { id: mzId(), d, by: me, at: Date.now() };
+    mzFlash.add(it.id);
+    inp.value = '';
+    // se já existe pré-conta lida, tenta achar o item novo nela
+    mzSave(m => { m.items.push(it); if (m.conta) mzMatch(m.conta.linhas, [it], true); });
+    toast(`${d} adicionado aos seus pedidos`);
+    $('mzItemName').focus({ preventScroll: true });
+  };
+
+  // ---------- falar o pedido (voz) ----------
+  // Usa o reconhecimento de voz do navegador (Chrome, Edge, Safari). "dois chopps e uma porção de fritas" vira 3 pedidos.
+  const MZ_SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const MZ_NUM = { um: 1, uma: 1, dois: 2, duas: 2, tres: 3, quatro: 4, cinco: 5, seis: 6, sete: 7, oito: 8, nove: 9, dez: 10 };
+  let mzRec = null;
+  const mzParseSpeech = text => mzNorm(text) === '' ? [] : text.toLowerCase().replace(/[.!?;]/g, ',')
+    .split(/,|\s+e\s+|\s+mais\s+|\s+tamb[eé]m\s+/)
+    .map(s => s.trim().replace(/^(e|eu|a gente|n[oó]s)\s+/, '').replace(/^(pedi|pedimos|quero|queria|vou querer|anota|anotar|coloca|me v[eê]|traz|foi)\s+/, '').replace(/^(o|a|os|as)\s+/, ''))
+    .filter(Boolean)
+    .flatMap(s => {
+      const m = s.match(/^(\d+|um|uma|dois|duas|tr[eê]s|quatro|cinco|seis|sete|oito|nove|dez)\s+(.+)$/);
+      let q = 1, name = s;
+      if (m) { q = /^\d+$/.test(m[1]) ? +m[1] : MZ_NUM[mzNorm(m[1])] || 1; name = m[2]; }
+      name = name.replace(/^(de|do|da)\s+/, '').trim();
+      if (q > 1) name = name.replace(/^(\S{3,}?)(s)(\s|$)/, (all, w, s, sp) => /ss$/.test(w + s) ? all : w + sp);   // "chopps" -> "chopp"
+      return name.length < 2 ? [] : Array(Math.min(q, 10)).fill(mzCap(name.slice(0, 40)));
+    });
+  const mzMicUi = on => {
+    const b = document.querySelector('[data-mz="mic"]'), h = $('mzMicHint'), inp = $('mzItemName');
+    if (b) { b.setAttribute('aria-pressed', on); b.setAttribute('aria-label', on ? 'Parar de ouvir' : 'Falar o pedido'); }
+    if (h) h.textContent = on ? 'Ouvindo… Diga, por exemplo: "dois chopps e uma porção de fritas"' : '';
+    if (inp) inp.placeholder = on ? 'Fale o que você pediu' : 'O que você pediu?';
+  };
+  const mzAddSpoken = text => {
+    const names = mzParseSpeech(text);
+    if (!names.length) { toast('Não entendi o pedido. Tente de novo.'); return; }
+    const t = Date.now(), its = names.map((d, i) => ({ id: mzId(), d, by: me, at: t + i }));
+    its.forEach(it => mzFlash.add(it.id));
+    if ($('mzItemName')) $('mzItemName').value = '';
+    mzSave(m => { m.items.push(...its); if (m.conta) mzMatch(m.conta.linhas, its, true); });
+    const count = {}; names.forEach(n => { count[n] = (count[n] || 0) + 1; });
+    toast('Anotado: ' + joinNames(Object.entries(count).map(([n, q]) => (q > 1 ? q + ' ' : '') + n)));
+  };
+  const mzMic = () => {
+    if (mzRec) { mzRec.stop(); return; }
+    if (!MZ_SR) { toast('Este navegador não aceita voz. Use o Chrome ou o Safari, ou escreva o pedido.'); return; }
+    const rec = new MZ_SR();
+    rec.lang = 'pt-BR'; rec.interimResults = true; rec.continuous = false; rec.maxAlternatives = 1;
+    let heard = '', failed = false;
+    rec.onresult = e => {
+      let interim = '';
+      for (let i = e.resultIndex; i < e.results.length; i++) { if (e.results[i].isFinal) heard += e.results[i][0].transcript + ' '; else interim += e.results[i][0].transcript; }
+      if ($('mzItemName')) $('mzItemName').value = (heard + interim).trim();
+    };
+    rec.onerror = e => {
+      failed = true;
+      toast(e.error === 'not-allowed' || e.error === 'service-not-allowed' ? 'Libere o microfone para o site nas configurações do navegador.'
+        : e.error === 'no-speech' ? 'Não ouvi nada. Toque no microfone e fale de novo.'
+        : e.error === 'network' ? 'Sem internet para reconhecer a voz. Escreva o pedido.' : 'Não deu para ouvir. Tente de novo.');
+    };
+    rec.onend = () => {
+      mzRec = null; mzMicUi(false);
+      const t = heard.trim();
+      if (t) mzAddSpoken(t); else if (!failed && $('mzItemName')) $('mzItemName').value = '';
+    };
+    try { rec.start(); } catch (e) { toast('Não deu para ligar o microfone.'); return; }
+    mzRec = rec; mzMicUi(true);
+  };
+
+  // ---------- foto da pré-conta + IA ----------
+  // reduz a foto antes de enviar (celular tira fotos de 4-12 MB)
+  const mzShrink = file => new Promise((ok, fail) => {
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => {
+      const k = Math.min(1, 1600 / Math.max(img.width, img.height)), cv = document.createElement('canvas');
+      cv.width = Math.round(img.width * k); cv.height = Math.round(img.height * k);
+      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      URL.revokeObjectURL(url); ok(cv.toDataURL('image/jpeg', 0.82));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); fail(new Error('imagem')); };
+    img.src = url;
+  });
+  // liga cada pedido a uma linha da pré-conta pelo nome (usado na demonstração e quando alguém pede depois da foto)
+  const mzScore = (a, b) => {
+    const A = mzNorm(a).split(' ').filter(w => w.length > 2), B = mzNorm(b).split(' ').filter(w => w.length > 2);
+    let s = 0;
+    A.forEach(x => { if (B.some(y => y === x || (x.length >= 4 && y.startsWith(x.slice(0, 4))) || (y.length >= 4 && x.startsWith(y.slice(0, 4))))) s++; });
+    return s;
+  };
+  const mzMatch = (linhas, items, onlyNew) => {
+    items.forEach(it => {
+      if (onlyNew && linhas.some(l => l.items.includes(it.id))) return;
+      let best = null, bs = 0;
+      linhas.forEach(l => {
+        if (l.dono) return;
+        const sc = mzScore(it.d, l.desc) * 10 + (l.items.length < l.q ? 5 : 0);   // prefere linha que ainda tem unidade sobrando
+        if (mzScore(it.d, l.desc) && sc > bs) { bs = sc; best = l; }
+      });
+      if (best) best.items.push(it.id);
+    });
+  };
+  // DEMONSTRAÇÃO: sem servidor, inventa uma pré-conta com os pedidos da mesa + itens que ninguém disse
+  const MZ_PRICES = [['chopp', 1490], ['cerveja', 1290], ['refri', 790], ['coca', 790], ['guarana', 790], ['agua', 550], ['suco', 990], ['caipirinha', 2490], ['drink', 2990], ['vinho', 3900],
+    ['pizza', 8990], ['porcao', 4990], ['fritas', 3490], ['batata', 3490], ['sobremesa', 2290], ['pudim', 1890], ['petit', 2690], ['prato', 5490], ['file', 6990], ['hamburguer', 3990], ['burger', 3990], ['salada', 3290], ['cafe', 690]];
+  const mzDemoConta = m => {
+    const groups = {};
+    m.items.forEach(it => { const k = mzNorm(it.d); (groups[k] = groups[k] || []).push(it); });
+    const linhas = Object.values(groups).map(g => {
+      const k = mzNorm(g[0].d), price = (MZ_PRICES.find(([w]) => k.includes(w)) || [0, 2990])[1];
+      const shared = /pizza|porcao|fritas|batata/.test(k);   // comida de dividir: 1 unidade para quem pediu junto
+      const q = shared ? 1 : g.length;
+      return { id: mzId(), desc: g[0].d.toUpperCase().slice(0, 28), q, v: price * q, items: [], dono: null };
+    });
+    linhas.push({ id: mzId(), desc: 'COUVERT ARTISTICO', q: m.people.length, v: 1200 * m.people.length, items: [], dono: null });
+    linhas.push({ id: mzId(), desc: 'AGUA S/ GAS 500ML', q: 1, v: 550, items: [], dono: null });
+    const sub = linhas.reduce((a, l) => a + l.v, 0), serv = Math.round(sub * 0.1);
+    return { linhas, sub, serv, total: sub + serv, demo: true };
+  };
+  // chama o servidor (IA). Se não houver servidor (site estático / protótipo), cai na demonstração.
+  const mzAnalyze = async dataUrl => {
+    const m = MZ_DB.get(mz.code) || mz;
+    const itens = m.items.map(i => ({ id: i.id, nome: i.d, pessoa: (mzPerson(i.by, m) || {}).n || '' }));
+    // demonstração só quando não existe servidor da IA (arquivo local ou rota inexistente).
+    // Com servidor no ar, erro vira mensagem: nunca mostrar preço inventado para cliente de verdade.
+    const local = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+    const NO_SERVER = 'sem servidor';
+    try {
+      if (location.protocol === 'file:') throw new Error(NO_SERVER);
+      const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 90000);
+      let r;
+      try {
+        r = await fetch(MZ_API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl.signal,
+          body: JSON.stringify({ imagem: dataUrl.split(',')[1], media_type: 'image/jpeg', itens }) });
+      } catch (e) {
+        if (local) throw new Error(NO_SERVER);
+        return { erro: e.name === 'AbortError' ? 'A leitura demorou demais. Tente de novo.' : 'Sem conexão. Confira a internet e tente de novo.' };
+      } finally { clearTimeout(to); }
+      if (r.status === 404 && local) throw new Error(NO_SERVER);
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) return { erro: j.erro || 'A leitura da pré-conta falhou. Tente de novo.' };
+      if (j.erro) return { erro: j.erro };
+      const ids = new Set(itens.map(i => i.id));
+      const linhas = (j.linhas || []).map(l => ({ id: mzId(), desc: String(l.descricao || 'Item').slice(0, 40), q: Math.max(1, l.quantidade | 0), v: cents(+l.valor_total || 0), items: (l.item_ids || []).filter(id => ids.has(id)), dono: null })).filter(l => l.v > 0);
+      if (!linhas.length) return { erro: 'Não encontramos itens nessa foto. Tente de novo, com a pré-conta inteira e sem reflexo.' };
+      const sub = linhas.reduce((a, l) => a + l.v, 0);
+      return { linhas, sub, serv: cents(+j.taxa_servico || 0), total: cents(+j.total || 0) || sub + cents(+j.taxa_servico || 0), demo: false };
+    } catch (e) {
+      if (e.message !== NO_SERVER) return { erro: 'A leitura da pré-conta falhou. Tente de novo.' };
+      await new Promise(ok => setTimeout(ok, 1800));
+      const conta = mzDemoConta(m); mzMatch(conta.linhas, m.items);
+      return conta;
+    }
+  };
+  // duas formas de mandar a pré-conta: câmera (capture) ou foto já salva na galeria
+  const mzPhotoBtns = (camLabel = 'Tirar foto') => `<label class="btn btn-primary mz-cam">${icon('scan')}${camLabel}<input type="file" class="mz-file" accept="image/*" capture="environment"></label>
+    <label class="btn btn-outline mz-cam">${icon('image')}Escolher da galeria<input type="file" class="mz-file" accept="image/*"></label>`;
+  const mzOpenPhoto = () => mzSheet(`<p class="sh-kicker">Pré-conta</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Mande a foto da pré-conta</h2>
+      <p class="sh-sub">A IA lê os itens e coloca o valor no pedido de cada um.</p>
+      <ul class="sh-tips">
+        <li><span>1</span><p>Pegue a pré-conta <b>inteira</b>, do primeiro item até o total.</p></li>
+        <li><span>2</span><p>Evite <b>reflexo</b> e sombra no papel.</p></li>
+      </ul>
+      <div class="res-actions">${mzPhotoBtns()}</div>`);
+  const mzPhoto = async file => {
+    if (!file) return;
+    let dataUrl;
+    try { dataUrl = await mzShrink(file); } catch (e) { toast('Não deu para abrir essa foto. Tente outra.'); return; }
+    mzSheet(`<p class="sh-kicker">Pré-conta</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Lendo a pré-conta…</h2>
+      <p class="sh-sub">A IA está lendo os itens e ligando cada um ao pedido de quem está na mesa.</p>
+      <div class="mz-shot"><img src="${dataUrl}" alt="Foto da pré-conta"><span class="mz-scan"></span></div>`);
+    const conta = await mzAnalyze(dataUrl);
+    if (!mz) return;
+    if (conta.erro) {
+      $('shBody').innerHTML = `<span class="sh-ic" style="--bg:#fdecec;--c:#dc4b4b">${icon('x')}</span><p class="sh-kicker" style="color:#a52a2a">Não deu certo</p>
+        <h2 class="sh-title" id="shTitle" tabindex="-1">Não conseguimos ler</h2><p class="sh-sub">${esc(conta.erro)}</p>
+        <div class="res-actions">${mzPhotoBtns('Tirar outra foto')}<button class="btn btn-ghost" data-mz="close">Fechar</button></div>`;
+      return;
+    }
+    conta.at = Date.now(); conta.by = me;
+    const pct = conta.sub ? Math.round(conta.serv / conta.sub * 100) : null;
+    mzSave(m => { m.conta = conta; if (MZ_SERV.includes(pct)) m.service = pct; m.people.forEach(p => { p.paid = false; }); });
+    const c = mzCalc(mz), mine = c.rows.find(r => r.p.id === me) || { tot: 0 }, loose = conta.linhas.filter(l => !l.items.length).length;
+    $('shBody').innerHTML = `<span class="sh-ic">${icon('check')}</span>
+      <p class="sh-kicker">Pré-conta lida${conta.demo ? ' · demonstração' : ''}</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Pronto, a conta está feita</h2>
+      <p class="sh-sub">${conta.linhas.length} itens encontrados na pré-conta.</p>
+      <div class="sh-box">
+        <div class="receipt-line"><span>Você consumiu</span><b class="big money">${fmtC(mine.tot)}</b></div>
+        <div class="receipt-line"><span>Total da conta</span><b class="money">${fmtC(c.total)}</b></div>
+        <div class="receipt-line"><span>Falta pagar</span><b class="money">${fmtC(c.falta)}</b></div>
+      </div>
+      ${loose ? `<p class="sh-note" style="--bg:#fff6e0;--tink:#8a5a00">${icon('alert')}<span>${loose} ${loose > 1 ? 'itens ficaram' : 'item ficou'} sem dono. Na mesa, toque em <b>É meu</b> ou <b>Dividir</b>.</span></p>` : ''}
+      ${conta.demo ? `<p class="sh-note">${icon('info')}<span>Protótipo: sem o servidor da IA, os preços são de exemplo.</span></p>` : ''}
+      <div class="res-actions"><button class="btn btn-primary" data-mz="close">Ver a mesa</button><button class="btn btn-ghost" data-mz="forgot">${icon('plus')}Esqueci de anotar algo</button></div>`;
+    requestAnimationFrame(() => $('shTitle').focus({ preventScroll: true }));
+  };
+
+  // fechar a conta
+  const mzOpenBill = () => {
+    const c = mzCalc(mz);
+    mzSheet(`<p class="sh-kicker">Fechar a conta</p>
+      <h2 class="sh-title" id="shTitle" tabindex="-1">Quanto cada um paga</h2>
+      <p class="sh-sub">Mesa ${mz.code} · ${mz.service ? mz.service + '% de serviço incluído' : 'sem taxa de serviço'}</p>
+      <div class="sh-box">${c.rows.map(r => `<div class="receipt-line"><span>${r.p.id === me ? 'Você' : esc(r.p.n)}${r.p.paid ? ' · pagou' : ''}</span><b class="money">${fmtC(r.tot)}</b></div>`).join('')}
+        ${c.looseTot ? `<div class="receipt-line"><span>Sem dono</span><b class="money">${fmtC(c.looseTot)}</b></div>` : ''}
+        <div class="receipt-line"><span>Total da conta</span><b class="money">${fmtC(c.total)}</b></div>
+        <div class="receipt-line"><span>Falta pagar</span><b class="big money">${fmtC(c.falta)}</b></div></div>
+      ${c.looseTot ? `<p class="sh-note" style="--bg:#fff6e0;--tink:#8a5a00">${icon('alert')}<span>Ainda tem item sem dono. Resolva antes de fechar ou ele fica fora da divisão.</span></p>` : ''}
+      <p class="sh-note">${icon('receipt')}<span>Depois de pagar, peça o cupom fiscal e escaneie: cada um ganha cashback sobre o que pagou.</span></p>
+      <div class="res-actions"><button class="btn btn-primary" data-mz="closeBill">Fechar a conta para todos</button><button class="btn btn-ghost" data-mz="close">Voltar</button></div>`);
+  };
+
+  document.addEventListener('click', e => {
+    const s = e.target.closest('[data-mzs]');
+    if (s) { $('mzItemName').value = s.dataset.mzs; $('mzItemName').focus(); return; }
+    const b = e.target.closest('[data-mz]'); if (!b || b.disabled) return;
+    const a = b.dataset.mz, id = b.dataset.id;
+    if (a === 'mic') mzMic();
+    else if (a === 'photo') mzOpenPhoto();
+    else if (a === 'new') mzCreate();
+    else if (a === 'share') mzOpenShare();
+    else if (a === 'send') mzSend();
+    else if (a === 'copy') mzCopy(mzLink(mz.code));
+    else if (a === 'bill') mzOpenBill();
+    else if (a === 'close') closeSheet();
+    else if (a === 'serv') mzSave(m => { m.service = +b.dataset.v; });
+    else if (a === 'del') { const it = mz.items.find(i => i.id === id); mzSave(m => { m.items = m.items.filter(i => i.id !== id); if (m.conta) m.conta.linhas.forEach(l => { l.items = l.items.filter(x => x !== id); }); }); if (it) toast(it.d + ' removido'); }
+    else if (a === 'claim') mzSave(m => { const l = m.conta.linhas.find(x => x.id === id); if (l) l.dono = me; });
+    else if (a === 'all') mzSave(m => { const l = m.conta.linhas.find(x => x.id === id); if (l) l.dono = 'todos'; });
+    else if (a === 'unclaim') mzSave(m => { const l = m.conta.linhas.find(x => x.id === id); if (l) l.dono = null; });
+    else if (a === 'also') {
+      // esqueceu de anotar: entra na linha da pré-conta junto com quem já tinha pedido (a linha passa a ser dividida)
+      let desc = '';
+      mzSave(m => {
+        const l = m.conta && m.conta.linhas.find(x => x.id === id); if (!l) return;
+        desc = mzCap(l.desc.toLowerCase());
+        const it = { id: mzId(), d: desc, by: me, at: Date.now() };
+        m.items.push(it); l.items.push(it.id); mzFlash.add(it.id);
+      });
+      if (desc) toast(`${desc} adicionado para você. O valor foi dividido.`);
+    }
+    else if (a === 'forgot') { closeSheet(); setTimeout(() => { const el = $('mzLines'); if (el) el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }); }, 320); }
+    else if (a === 'paid') { mzSave(m => { const p = m.people.find(x => x.id === me); if (p) p.paid = !p.paid; }); toast(mzPerson(me).paid ? 'Marcado como pago.' : 'Desfeito.'); }
+    else if (a === 'closeBill') { closeSheet(); mzSave(m => { m.closed = true; }); toast('Conta fechada. Cada um já vê a sua parte.'); }
+    else if (a === 'leave') { MZ_SES.set(null); mz = null; me = null; renderMesa(); toast('Você saiu da mesa. Dá para voltar pelo link.'); }
+  });
+  document.addEventListener('change', e => {
+    if (e.target.classList.contains('mz-file')) { const f = e.target.files && e.target.files[0]; e.target.value = ''; mzPhoto(f); }
+  });
+  document.addEventListener('input', e => {
+    if (e.target.id === 'mzCode') e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  });
+  document.addEventListener('submit', e => {
+    const id = e.target.id;
+    if (!['mzCodeForm', 'mzJoinForm', 'mzItemForm'].includes(id)) return;
+    e.preventDefault();
+    if (id === 'mzItemForm') mzAddItem();
+    if (id === 'mzCodeForm') {
+      const code = $('mzCode').value;
+      if (code.length !== 6) { toast('O código da mesa tem 6 letras e números.'); $('mzCode').focus(); return; }
+      mzOpenJoin(code);
+    }
+    if (id === 'mzJoinForm') {
+      const n = $('mzMyName').value.trim().replace(/\s+/g, ' ');
+      if (n.length < 2) { $('mzJoinErr').textContent = 'Digite seu nome para a mesa saber quem é você.'; $('mzMyName').focus(); return; }
+      mzJoin(n);
+    }
+  });
+
+  // tempo real: outra aba/pessoa mexeu na mesa
+  addEventListener('storage', e => {
+    if (!mz || e.key !== MZ_DB.key(mz.code) || !e.newValue) return;
+    const old = mz, m = safe(() => JSON.parse(e.newValue)); if (!m) return;
+    mz = m;
+    const had = new Set(old.items.map(i => i.id)), was = new Set(old.people.map(p => p.id));
+    const added = m.items.filter(i => !had.has(i.id) && i.by !== me), joined = m.people.filter(p => !was.has(p.id));
+    const newPaid = m.people.filter(p => p.paid && p.id !== me && !(old.people.find(x => x.id === p.id) || {}).paid);
+    added.forEach(i => mzFlash.add(i.id));
+    if (m.closed && !old.closed) toast('A conta foi fechada. Veja a sua parte.');
+    else if (m.conta && (!old.conta || m.conta.at !== old.conta.at)) { const c = mzCalc(m), mine = c.rows.find(r => r.p.id === me); toast(`${mzName(m.conta.by)} leu a pré-conta. Você consumiu ${fmtC(mine ? mine.tot : 0)}`); }
+    else if (joined.length) toast(joinNames(joined.map(p => p.n.split(' ')[0])) + (joined.length > 1 ? ' entraram' : ' entrou') + ' na mesa');
+    else if (added.length) toast(`${mzName(added[0].by)} pediu ${added[0].d}`);
+    else if (newPaid.length) toast(`${mzName(newPaid[0].id)} marcou que já pagou`);
+    else if (m.service !== old.service) toast(`Taxa de serviço mudou para ${m.service ? m.service + '%' : 'sem taxa'}`);
+    if (!m.people.some(p => p.id === me)) { MZ_SES.set(null); mz = null; me = null; }
+    renderMesa();
+  });
+
+  const mzBoot = () => {
+    const inv = (new URLSearchParams(location.search).get('mesa') || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
+    const s = MZ_SES.get(!inv);   // abrindo um convite numa aba nova, não herda a mesa de outra aba
+    if (s) {
+      const m = MZ_DB.get(s.code);
+      // mesas do formato antigo (com valor digitado) não valem mais
+      if (m && m.people.some(p => p.id === s.me) && !m.items.some(i => typeof i.v === 'number')) { mz = m; me = s.me; }
+    }
+    renderMesa();
+    if (inv) { history.replaceState(null, '', location.pathname + '#mesa'); route(); mzOpenJoin(inv); }
+  };
+
   // ---------- navegação entre telas ----------
-  const VIEWS = ['inicio', 'escanear', 'carteira', 'missoes', 'perfil'];
+  const VIEWS = ['inicio', 'escanear', 'carteira', 'mesa', 'missoes', 'perfil'];
   let first = true;
   const route = () => {
     const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'inicio';
@@ -1213,6 +1896,7 @@
   };
   addEventListener('hashchange', route);
   route();
+  mzBoot();
 })();
 </script>
 </body>
