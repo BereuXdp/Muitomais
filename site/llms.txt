@@ -39,6 +39,7 @@ Geppos Italiano, Cabaña del Primo, Jardins Open Mall e Geppos Praia já usam o 
 ## Páginas
 
 - [Página inicial](https://muitomais.app/): o que é o Muito Mais, como funciona, para quem é, planos e dúvidas frequentes.
+- [Para clientes](https://muitomais.app/para-clientes.html): como o cliente do restaurante ganha e usa cashback, com as telas reais do app passo a passo e dúvidas frequentes.
 - [Planos](https://muitomais.app/planos.html): comparação completa dos planos Essencial, Profissional e Redes.
 - [Cadastro](https://muitomais.app/assinar.html): cadastro do restaurante e escolha do plano.
 - [Entrar](https://muitomais.app/entrar.html): acesso do cliente (carteira de cashback) e da loja (painel).

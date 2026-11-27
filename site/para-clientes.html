@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muito Mais para clientes — cashback nos restaurantes que você ama</title>
+<meta name="description" content="Você já paga a conta. Agora ela te devolve: escaneie o QR Code do cupom fiscal e receba cashback para usar na próxima visita. Sem cartão de fidelidade.">
+<link rel="icon" type="image/svg+xml" href="brand/icon.svg">
+<link rel="alternate icon" type="image/png" href="brand/logo-icone.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/pages.css">
+<style>
+  .ic { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- Topo ---------- */
+  .c-hero { position: relative; padding: clamp(48px, 7vw, 96px) 0 0; overflow-x: clip; }
+  .c-hero::before {
+    content: ""; position: absolute; inset: -160px 0 auto; height: 760px; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(620px 360px at 12% 8%, rgba(201,246,226,.95), transparent 70%),
+      radial-gradient(560px 360px at 88% 4%, rgba(215,238,228,.9), transparent 70%);
+  }
+  .c-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(32px, 5vw, 80px); align-items: center; }
+  .c-hero .chip { display: inline-flex; align-items: center; gap: 10px; height: 40px; padding: 0 16px 0 6px; border-radius: 99px; background: #fff; border: 1px solid var(--line); font-size: 14px; color: var(--ink-2); }
+  .c-hero .chip b { display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 99px; background: var(--mint-150); color: var(--forest-800); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+  .c-hero .display { margin-top: 22px; font-size: clamp(40px, 5.6vw, 74px); max-width: 13ch; }
+  .c-hero .display .accent { color: var(--green-500); }
+  .c-hero .lead { margin-top: 22px; max-width: 520px; }
+  .c-hero .hero-actions { margin-top: 32px; justify-content: flex-start; }
+  .c-checks { list-style: none; margin: 28px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 22px; }
+  .c-checks li { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; color: var(--ink); }
+  .c-checks li i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--forest-800); color: #fff; flex: none; }
+
+  /* celular de demonstração */
+  .c-stage { position: relative; display: grid; place-items: center; min-height: 600px; }
+  .c-stage::before { content: ""; position: absolute; width: 440px; height: 440px; border-radius: 50%; background: radial-gradient(circle, rgba(71,211,152,.35), transparent 68%); filter: blur(10px); }
+  .c-phone { position: relative; width: 318px; padding: 12px; border-radius: 52px; background: #0b1311; box-shadow: 0 50px 90px -30px rgba(6,37,29,.6), 0 0 0 2px #25302c inset; animation: c-float 6s ease-in-out infinite; }
+  .c-screen { border-radius: 42px; overflow: hidden; background: var(--canvas); padding: 20px 16px 18px; }
+  .c-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .c-bar .g { font-size: 12px; color: var(--ink-3); line-height: 1.2; }
+  .c-bar .g b { display: block; font-size: 17px; color: var(--ink-deep); letter-spacing: -.02em; }
+  .c-bar .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--mint-150); color: var(--forest-800); font-weight: 800; font-size: 13px; }
+  .c-bal { padding: 16px 16px 14px; border-radius: 24px; color: #fff; background: radial-gradient(120% 80% at 100% 0%, rgba(71,211,152,.3), transparent 60%), linear-gradient(160deg, #0a3328, #06251d); }
+  .c-bal small { font-size: 11.5px; color: rgba(255,255,255,.7); }
+  .c-bal .v { margin: 4px 0 12px; font-size: 38px; font-weight: 800; letter-spacing: -.045em; line-height: 1; }
+  .c-bal .v span { font-size: 17px; font-weight: 700; margin-right: 4px; opacity: .75; }
+  .c-bal .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .c-bal .two div { padding: 9px 10px; border-radius: 14px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); }
+  .c-bal .two small { display: block; font-size: 10.5px; }
+  .c-bal .two b { font-size: 14px; }
+  .c-bal .two .w { color: #ffd166; }
+  .c-act { margin-top: 14px; font-size: 12px; font-weight: 700; color: var(--ink-deep); }
+  .c-row { display: flex; align-items: center; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; }
+  .c-row:last-child { border-bottom: 0; }
+  .c-row .i { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: var(--mint-50); color: var(--forest-800); flex: none; }
+  .c-row .i .ic { width: 16px; height: 16px; }
+  .c-row div { flex: 1; min-width: 0; line-height: 1.3; color: var(--ink-3); }
+  .c-row div b { display: block; color: var(--ink-deep); font-size: 13px; }
+  .c-row em { font-style: normal; font-weight: 700; color: var(--green-500); font-size: 13px; }
+  .c-toast { position: absolute; z-index: 3; display: flex; align-items: center; gap: 10px; padding: 10px 14px 10px 10px; border-radius: 18px; background: #fff; border: 1px solid var(--line); box-shadow: 0 18px 40px -18px rgba(6,37,29,.45); font-size: 13px; line-height: 1.25; }
+  .c-toast .t { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; background: var(--forest-800); color: #fff; flex: none; }
+  .c-toast .t .ic { width: 17px; height: 17px; }
+  .c-toast b { display: block; color: var(--ink-deep); }
+  .c-toast span { color: var(--ink-3); font-size: 12px; }
+  .c-toast.a { left: -12%; top: 7%; animation: c-float 5s ease-in-out -1s infinite; }
+  .c-toast.b { right: -8%; bottom: 6%; animation: c-float 5.5s ease-in-out -3s infinite; }
+  @keyframes c-float { 50% { transform: translateY(-10px); } }
+
+  /* ---------- Como funciona ---------- */
+  .c-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; counter-reset: s; }
+  .c-step { position: relative; padding: 30px 28px 32px; border-radius: 28px; background: var(--paper); border: 1px solid var(--line); counter-increment: s; overflow: hidden; }
+  .c-step::after { content: counter(s); position: absolute; right: 22px; top: 6px; font-size: 110px; font-weight: 800; letter-spacing: -.06em; color: var(--mint-50); line-height: 1; pointer-events: none; }
+  .c-step .ico { position: relative; z-index: 1; width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center; background: var(--forest-800); color: #fff; }
+  .c-step .ico .ic { width: 26px; height: 26px; }
+  .c-step h3 { position: relative; z-index: 1; margin-top: 26px; font-size: 22px; font-weight: 800; letter-spacing: -.03em; color: var(--ink-deep); }
+  .c-step p { position: relative; z-index: 1; margin-top: 10px; font-size: 16px; color: var(--ink-2); }
+  .c-step.dark { background: linear-gradient(160deg, #0a3328, #06251d); border-color: transparent; }
+  .c-step.dark::after { color: rgba(255,255,255,.06); }
+  .c-step.dark .ico { background: var(--green-300); color: var(--forest-950); }
+  .c-step.dark h3 { color: #fff; } .c-step.dark p { color: rgba(255,255,255,.75); }
+
+  /* ---------- Vantagens ---------- */
+  .c-perks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .c-perk { padding: 28px; border-radius: 28px; background: var(--paper); border: 1px solid var(--line); transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .35s ease; }
+  .c-perk:hover { transform: translateY(-5px); border-color: var(--mint-200); box-shadow: 0 26px 50px -30px rgba(6,37,29,.4); }
+  .c-perk .ico { width: 50px; height: 50px; border-radius: 16px; display: grid; place-items: center; background: var(--mint-50); color: var(--forest-800); border: 1px solid var(--mint-150); }
+  .c-perk h3 { margin-top: 22px; font-size: 20px; font-weight: 800; letter-spacing: -.03em; color: var(--ink-deep); }
+  .c-perk p { margin-top: 8px; font-size: 15.5px; color: var(--ink-2); }
+  .c-perk.hl { background: linear-gradient(160deg, #0a3328, #06251d); border-color: transparent; }
+  .c-perk.hl .ico { background: var(--green-300); color: var(--forest-950); border-color: transparent; }
+  .c-perk.hl h3 { color: #fff; } .c-perk.hl p { color: rgba(255,255,255,.75); }
+  .c-perk .tag { display: inline-flex; margin-top: 16px; height: 26px; align-items: center; padding: 0 12px; border-radius: 99px; background: rgba(71,211,152,.18); color: var(--green-300); font-size: 12px; font-weight: 700; }
+
+  /* ---------- Na prática (telas reais do app) ---------- */
+  .c-demo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); gap: clamp(28px, 5vw, 72px); align-items: center; max-width: 1040px; margin: 0 auto; }
+  .c-dsteps { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .c-dsteps button { position: relative; overflow: hidden; width: 100%; display: flex; align-items: flex-start; gap: 16px; text-align: left; padding: 18px 20px; border-radius: 22px; border: 1px solid transparent; background: transparent; font: inherit; color: var(--ink-2); cursor: pointer; transition: background-color .3s ease, border-color .3s ease, box-shadow .3s ease; }
+  .c-dsteps button:hover { background: rgba(255,255,255,.7); }
+  .c-dsteps .n { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; flex: none; font-size: 14px; font-weight: 800; background: var(--mint-150); color: var(--forest-800); transition: background-color .3s ease, color .3s ease; }
+  .c-dsteps .tx b { display: block; font-size: 18px; font-weight: 800; letter-spacing: -.02em; color: var(--ink-deep); }
+  .c-dsteps .tx small { display: block; max-height: 0; opacity: 0; overflow: hidden; margin-top: 0; font-size: 15px; line-height: 1.5; color: var(--ink-2); transition: max-height .4s ease, opacity .3s ease, margin-top .3s ease; }
+  .c-dsteps button[aria-current="true"] { background: var(--paper); border-color: var(--mint-150); box-shadow: 0 22px 44px -30px rgba(6,37,29,.4); }
+  .c-dsteps button[aria-current="true"] .n { background: var(--forest-800); color: #fff; }
+  .c-dsteps button[aria-current="true"] .tx small { max-height: 90px; opacity: 1; margin-top: 6px; }
+  .c-dsteps .bar { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: linear-gradient(90deg, var(--green-500), var(--green-300)); transform: scaleX(0); transform-origin: left; }
+  .c-dsteps button[aria-current="true"] .bar { animation: c-bar var(--dur, 6s) linear forwards; }
+  .c-demo.paused .c-dsteps button[aria-current="true"] .bar { animation: none; transform: scaleX(1); opacity: .35; }
+  @keyframes c-bar { to { transform: scaleX(1); } }
+  .c-dphone { display: grid; place-items: center; }
+  .c-dshell { position: relative; width: min(100%, 300px); aspect-ratio: 390 / 844; padding: 0; border-radius: 46px; background: #0b1311; border: 10px solid #0b1311; box-shadow: 0 50px 90px -34px rgba(6,37,29,.6), 0 0 0 2px #25302c inset; overflow: hidden; }
+  .c-dshell img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 36px; opacity: 0; transform: scale(1.03); transition: opacity .5s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+  .c-dshell img.on { opacity: 1; transform: none; }
+
+  @media (max-width: 960px) {
+    .c-grid { grid-template-columns: minmax(0, 1fr); }
+    .c-stage { min-height: 560px; order: 2; }
+    .c-steps, .c-perks { grid-template-columns: minmax(0, 1fr); }
+    .c-demo { grid-template-columns: minmax(0, 1fr); }
+    .c-dphone { order: -1; }
+  }
+  @media (max-width: 760px) {
+    .c-toast.a { left: 0; } .c-toast.b { right: 0; }
+  }
+  @media (max-width: 560px) { .c-hero .hero-actions .btn { width: 100%; justify-content: space-between; } .c-hero .chip .ct { display: none; } .c-hero .chip { padding: 0 6px; } }
+  @media (prefers-reduced-motion: reduce) { .c-phone, .c-toast { animation: none; } .c-dshell img, .c-dsteps button { transition: none; } .c-dsteps .bar { display: none; } .c-perk:hover { transform: none; } }
+
+  /* logo: cubo + nome em duas linhas */
+  .brand .mm-logo { display: block; width: auto; height: 36px; flex: none; }
+  .brand .wm { display: flex; flex-direction: column; line-height: .9; font-size: .8em; font-weight: 800; letter-spacing: .02em; text-transform: uppercase; }
+  .brand .wm .muito { color: #2db160; }
+  .brand .wm .mais { color: #0c9444; }
+  footer .brand .wm .muito, .side .brand .wm .muito { color: #fff; }
+  footer .brand .wm .mais, .side .brand .wm .mais { color: var(--green-300); }
+
+  /* troca entre as duas páginas: restaurantes / clientes */
+  .nav-left { display: flex; align-items: center; gap: 18px; min-width: 0; }
+  .aud { display: inline-flex; padding: 3px; border-radius: 99px; background: var(--mint-50); border: 1px solid var(--mint-150); }
+  .aud a { display: inline-flex; align-items: center; height: 32px; padding: 0 14px; border-radius: 99px; font-size: 13.5px; font-weight: 600; color: var(--ink-2); white-space: nowrap; transition: background-color .25s ease, color .25s ease; }
+  .aud a:hover { color: var(--ink-deep); background: rgba(255,255,255,.7); }
+  .aud a[aria-current="page"] { background: var(--forest-800); color: #fff; }
+  .m-aud { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .m-aud a { text-align: center; background: var(--mint-50); border: 1px solid var(--mint-150); font-weight: 600; }
+  .m-aud a[aria-current="page"] { background: var(--forest-800); border-color: var(--forest-800); color: #fff; }
+  @media (max-width: 1180px) { .nav-cta .login { display: none; } }
+  @media (max-width: 960px) { .aud { display: none; } }
+</style>
+<style>.devmais-credit{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px 12px;font-size:12.5px;line-height:1;color:rgba(255,255,255,.55);margin:0}.devmais-credit .dm-logo{display:inline-flex;padding:4px;margin:-4px;border-radius:8px;transition:opacity .2s ease,transform .2s ease}.devmais-credit .dm-logo:hover{opacity:.85;transform:translateY(-1px)}.devmais-credit img{height:24px;width:auto;display:block}.devmais-credit .dm-mail{color:rgba(255,255,255,.75);text-decoration:underline;text-underline-offset:3px}.devmais-credit .dm-mail:hover{color:#fff}</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h13v4M3 7v10a2 2 0 0 0 2 2h14a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H5a2 2 0 0 1-2-2zM16 14h.01"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c2 .7 3.2 2.5 3.6 5.2"/></symbol>
+  <symbol id="i-table" viewBox="0 0 24 24"><path d="M7 3v8a2 2 0 0 0 2 2v8M7 3v6M11 3v6M17 21V3c-2 1-3.5 4-3.5 8 0 1.5.8 2 2 2h1.5"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-percent" viewBox="0 0 24 24"><path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.4"/><circle cx="17" cy="17" r="2.4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="5" rx="1.5"/><path d="M5 13v7h14v-7M12 8v12M12 8c-1.5-3-5-3.5-5-1.2C7 8 9 8 12 8zm0 0c1.5-3 5-3.5 5-1.2C17 8 15 8 12 8z"/></symbol>
+</svg>
+<div class="edge-blur" aria-hidden="true"></div>
+
+<!-- Nav -->
+<div class="wrap nav-shell">
+  <nav class="nav" id="nav" aria-label="Principal">
+    <div class="nav-left">
+      <a href="index.html" class="brand" aria-label="Muito Mais — início">
+      <img class="mm-logo" src="brand/icon.svg" width="36" height="30" alt="">
+      <span class="wm"><span class="muito">Muito</span><span class="mais">Mais</span></span>
+    </a>
+      <div class="aud" role="group" aria-label="Escolha para quem é">
+        <a href="index.html">Restaurantes</a>
+        <a href="para-clientes.html" aria-current="page">Clientes</a>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#como-funciona">Como funciona</a></li>
+      <li><a href="#vantagens">Vantagens</a></li>
+      <li><a href="#na-pratica">Na prática</a></li>
+      <li><a href="#faq">Dúvidas</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a class="login" href="entrar.html?tipo=loja">Sou da loja</a>
+      <a class="btn btn-primary" href="entrar.html">Entrar <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="m-aud">
+      <a href="index.html">Para restaurantes</a>
+      <a href="para-clientes.html" aria-current="page">Para clientes</a>
+    </div>
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#vantagens">Vantagens</a>
+    <a href="#na-pratica">Na prática</a>
+    <a href="#faq">Dúvidas</a>
+  
+    <a href="entrar.html?tipo=loja">Sou da loja</a>
+  </div>
+</div>
+
+<main>
+  <!-- Topo -->
+  <header class="c-hero">
+    <div class="wrap c-grid">
+      <div>
+        <span class="chip" data-aos="up"><b>Para quem come fora</b><span class="ct">Cashback sem cartão de fidelidade</span></span>
+        <h1 class="display" data-aos="words" style="--aos-delay: 0.08s">Você já paga a conta. <span class="accent">Agora ela te devolve.</span></h1>
+        <p class="lead" data-aos="up" style="--aos-delay: 0.2s">Escaneie o QR Code do cupom fiscal e receba cashback em cada refeição, para usar na próxima visita. É dinheiro que hoje fica na mesa.</p>
+        <div class="hero-actions" data-aos="up" style="--aos-delay: 0.28s">
+          <a class="btn btn-primary" href="entrar.html">Quero meu cashback <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn btn-ghost" href="#como-funciona"><span class="play"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span> Ver como funciona</a>
+        </div>
+        <ul class="c-checks" data-aos="up" style="--aos-delay: 0.36s">
+          <li><i><svg class="ic" style="width:12px;height:12px;stroke-width:3"><use href="#i-check"/></svg></i>Usa o cupom que você já recebe</li>
+          <li><i><svg class="ic" style="width:12px;height:12px;stroke-width:3"><use href="#i-check"/></svg></i>Sem cartão</li>
+          <li><i><svg class="ic" style="width:12px;height:12px;stroke-width:3"><use href="#i-check"/></svg></i>Sem cadastro longo</li>
+        </ul>
+      </div>
+
+      <div class="c-stage" aria-label="Exemplo do aplicativo mostrando o saldo de cashback" data-aos="zoom">
+        <div class="c-toast a"><span class="t"><svg class="ic"><use href="#i-scan"/></svg></span><div><b>Cupom escaneado</b><span>Agora mesmo</span></div></div>
+        <div class="c-phone" aria-hidden="true">
+          <div class="c-screen">
+            <div class="c-bar"><div class="g">Boa tarde,<b>Marina</b></div><span class="av">M</span></div>
+            <div class="c-bal">
+              <small>Seu cashback disponível</small>
+              <div class="v"><span>R$</span><b id="cbVal" data-to="48.30">48,30</b></div>
+              <div class="two"><div><small>A liberar</small><b class="w">R$ 12,40</b></div><div><small>Ganho no mês</small><b>R$ 21,20</b></div></div>
+            </div>
+            <p class="c-act">Atividade recente</p>
+            <div class="c-row"><span class="i"><svg class="ic"><use href="#i-receipt"/></svg></span><div><b>Cantina Bella</b>Cupom escaneado</div><em>+ R$ 12,40</em></div>
+            <div class="c-row"><span class="i"><svg class="ic"><use href="#i-gift"/></svg></span><div><b>Missão: Volte 3× no mês</b>Café Central</div><em>+ R$ 5,00</em></div>
+            <div class="c-row"><span class="i"><svg class="ic"><use href="#i-receipt"/></svg></span><div><b>Café Central</b>Nota confirmada</div><em>+ R$ 3,80</em></div>
+          </div>
+        </div>
+        <div class="c-toast b"><span class="t"><svg class="ic"><use href="#i-check"/></svg></span><div><b>Crédito confirmado</b><span>+R$ 12,40 no seu saldo</span></div></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Como funciona -->
+  <section class="sec" id="como-funciona">
+    <div class="wrap">
+      <div class="sec-head center">
+        <span class="eyebrow" data-aos="up">Como funciona</span>
+        <h2 class="h2" data-aos="words">Três passos. Sem complicação.</h2>
+        <p class="lead" data-aos="up" style="--aos-delay: 0.2s">Do cupom do restaurante ao cashback na sua carteira.</p>
+      </div>
+      <ol class="c-steps">
+        <li class="c-step" data-aos="up"><span class="ico"><svg class="ic"><use href="#i-receipt"/></svg></span><h3>Peça o cupom fiscal</h3><p>Pague como sempre e peça a nota fiscal (NFC-e) do restaurante parceiro.</p></li>
+        <li class="c-step" data-aos="up" style="--aos-delay: 0.08s"><span class="ico"><svg class="ic"><use href="#i-scan"/></svg></span><h3>Escaneie o QR Code</h3><p>Abra o app, toque em escanear e aponte a câmera para o QR Code do cupom.</p></li>
+        <li class="c-step dark" data-aos="up" style="--aos-delay: 0.16s"><span class="ico"><svg class="ic"><use href="#i-wallet"/></svg></span><h3>Receba o cashback</h3><p>Quando a nota é confirmada, o valor cai na sua carteira. Na próxima visita, é só usar.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Na prática -->
+  <section class="sec" id="na-pratica">
+    <div class="wrap">
+      <div class="sec-head center">
+        <span class="eyebrow" data-aos="up">Na prática</span>
+        <h2 class="h2" data-aos="words">Veja o app em ação</h2>
+        <p class="lead" data-aos="up" style="--aos-delay: 0.2s">Estas são as telas reais do app. Toque em cada passo para ver como usar.</p>
+      </div>
+      <div class="c-demo" id="demo" data-aos="up">
+        <ol class="c-dsteps">
+          <li><button type="button" data-i="0" aria-current="true"><span class="n">1</span><span class="tx"><b>Escaneie o cupom</b><small>Abra o app, toque em escanear e aponte a câmera para o QR Code do cupom fiscal.</small></span><i class="bar" aria-hidden="true"></i></button></li>
+          <li><button type="button" data-i="1" aria-current="false"><span class="n">2</span><span class="tx"><b>Veja o cashback chegar</b><small>O app mostra o valor da compra e o cashback. Ele é liberado quando a nota é confirmada.</small></span><i class="bar" aria-hidden="true"></i></button></li>
+          <li><button type="button" data-i="2" aria-current="false"><span class="n">3</span><span class="tx"><b>Escolha quanto gastar</b><small>Na próxima visita, diga quanto do saldo quer usar. Cada restaurante tem um limite por compra.</small></span><i class="bar" aria-hidden="true"></i></button></li>
+          <li><button type="button" data-i="3" aria-current="false"><span class="n">4</span><span class="tx"><b>Mostre o QR ao garçom</b><small>O QR vale por 10 minutos. O restaurante lê o código e o desconto entra na conta.</small></span><i class="bar" aria-hidden="true"></i></button></li>
+          <li><button type="button" data-i="4" aria-current="false"><span class="n">5</span><span class="tx"><b>Divida a conta na mesa</b><small>Cada um diz o que pediu, a IA lê a pré-conta e mostra quanto cada pessoa paga.</small></span><i class="bar" aria-hidden="true"></i></button></li>
+        </ol>
+        <div class="c-dphone">
+          <div class="c-dshell">
+            <img src="assets/app/01-escanear.webp" width="620" height="1342" alt="Tela de escanear cupom do app, com a moldura para o QR Code" class="on">
+            <img src="assets/app/02-registrada.webp" width="620" height="1342" alt="Tela Compra registrada, com o valor da compra e o cashback de R$ 12,40" loading="lazy" class="">
+            <img src="assets/app/03-usar-valor.webp" width="620" height="1342" alt="Tela Quanto você quer gastar, com o valor de R$ 10,00 escolhido" loading="lazy" class="">
+            <img src="assets/app/04-usar-qr.webp" width="620" height="1342" alt="Tela com o QR Code para mostrar ao garçom e o valor a gastar" loading="lazy" class="">
+            <img src="assets/app/05-mesa.webp" width="620" height="1342" alt="Tela Mesa, com os pedidos e o total da conta" loading="lazy" class="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vantagens -->
+  <section class="sec" id="vantagens">
+    <div class="wrap">
+      <div class="sec-head center">
+        <span class="eyebrow" data-aos="up">Vantagens</span>
+        <h2 class="h2" data-aos="words">Cada refeição rende mais</h2>
+        <p class="lead" data-aos="up" style="--aos-delay: 0.2s">Ganhe, gaste, divida e complete missões: tudo no mesmo app.</p>
+      </div>
+      <div class="c-perks">
+        <article class="c-perk hl" data-aos="up"><span class="ico"><svg class="ic"><use href="#i-percent"/></svg></span><h3>Dinheiro de volta em cada cupom</h3><p>Todo cupom registrado devolve parte do valor. Cada restaurante define o percentual.</p></article>
+        <article class="c-perk" data-aos="up" style="--aos-delay: 0.06s"><span class="ico"><svg class="ic"><use href="#i-qr"/></svg></span><h3>Use em segundos</h3><p>Escolha quanto quer gastar, gere o QR e mostre ao garçom. O desconto entra na conta na hora.</p></article>
+        <article class="c-perk" data-aos="up" style="--aos-delay: 0.12s"><span class="ico"><svg class="ic"><use href="#i-users"/></svg></span><h3>Divida com quem estava com você</h3><p>Estava em grupo? Envie parte do seu cashback para quem estava na mesa e retribua o convite.</p></article>
+        <article class="c-perk" data-aos="up"><span class="ico"><svg class="ic"><use href="#i-table"/></svg></span><h3>Chega de calculadora na mesa</h3><p>Cada um diz o que pediu, a IA lê a pré-conta e mostra quanto cada pessoa paga.</p></article>
+        <article class="c-perk" data-aos="up" style="--aos-delay: 0.06s"><span class="ico"><svg class="ic"><use href="#i-target"/></svg></span><h3>Ganhe a mais por voltar</h3><p>As missões dão cashback extra: volte no mês, experimente o menu novo ou vá no almoço e acompanhe o seu progresso.</p></article>
+        <article class="c-perk" data-aos="up" style="--aos-delay: 0.12s"><span class="ico"><svg class="ic"><use href="#i-eye"/></svg></span><h3>Seus dados protegidos</h3><p>O restaurante não vê o seu CPF. E você pode esconder o saldo da tela com um toque.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec" id="faq">
+    <div class="wrap faq-grid">
+      <div>
+        <span class="eyebrow" data-aos="up">Dúvidas</span>
+        <h2 class="h2" data-aos="words">Perguntas frequentes</h2>
+        <p class="lead" data-aos="up" style="--aos-delay: 0.2s">Tudo o que você precisa saber para começar a ganhar cashback.</p>
+        <div class="faq-help" data-aos="up" style="--aos-delay: 0.3s">
+          <b>Tem um restaurante?</b>
+          <p>Veja como oferecer cashback para os seus clientes, sem instalar nada no caixa.</p>
+          <a href="index.html">Conhecer o Muito Mais →</a>
+        </div>
+      </div>
+      <div class="faq-list" data-aos="right" style="--aos-delay: 0.1s">
+        <details open>
+          <summary>Quanto custa para usar?<span class="pm" aria-hidden="true"></span></summary>
+          <p>Nada. Quem contrata o Muito Mais é o restaurante. Para você, ganhar e usar cashback é grátis.</p>
+        </details>
+        <details>
+          <summary>Quando o cashback cai na minha carteira?<span class="pm" aria-hidden="true"></span></summary>
+          <p>Assim que a nota fiscal é confirmada na Sefaz. Até lá, o valor aparece como “a liberar”.</p>
+        </details>
+        <details>
+          <summary>Posso usar o cashback em qualquer restaurante?<span class="pm" aria-hidden="true"></span></summary>
+          <p>Você usa nos restaurantes parceiros. Cada um define o percentual, o valor mínimo da compra e quanto você pode gastar por vez.</p>
+        </details>
+        <details>
+          <summary>O cashback tem validade?<span class="pm" aria-hidden="true"></span></summary>
+          <p>Cada restaurante define a validade do saldo. Fique de olho na carteira e use antes do prazo para não perder o que já é seu.</p>
+        </details>
+        <details>
+          <summary>Posso registrar o mesmo cupom duas vezes?<span class="pm" aria-hidden="true"></span></summary>
+          <p>Não. Cada cupom gera cashback uma única vez. Se você tentar de novo, o app avisa que ele já foi registrado.</p>
+        </details>
+        <details>
+          <summary>O QR Code não lê. E agora?<span class="pm" aria-hidden="true"></span></summary>
+          <p>Use o QR Code do cupom fiscal, não o do cardápio ou da mesa, e deixe o papel reto e iluminado. Se ainda não ler, digite a chave de acesso de 44 números impressa no cupom.</p>
+        </details>
+        <details>
+          <summary>Meus dados ficam seguros?<span class="pm" aria-hidden="true"></span></summary>
+          <p>O restaurante não vê o seu CPF. Você ainda pode esconder o saldo na tela do app com um toque.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="final">
+    <div class="wrap">
+      <div class="final-card" data-aos="zoom">
+        <h2 class="display" data-aos="words" style="--aos-delay: 0.2s">Seu próximo cupom <span class="hl">já vale cashback.</span></h2>
+        <p class="lead">Entre no app, escaneie na próxima refeição e veja o saldo crescer. Cada refeição sem escanear é cashback que fica para trás.</p>
+        <div class="hero-actions">
+          <a class="btn btn-lime" href="entrar.html">Quero meu cashback <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn btn-ghost" href="index.html"><span class="play"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span> Tenho um restaurante</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <a href="index.html" class="brand" aria-label="Muito Mais — início">
+          <img class="mm-logo" src="brand/icon.svg" width="36" height="30" alt="">
+          <span class="wm"><span class="muito">Muito</span><span class="mais">Mais</span></span>
+        </a>
+        <p class="foot-tagline">Pessoas. Conexões. <span>Benefícios.</span></p>
+      </div>
+      <div>
+        <h4>Acessos</h4>
+        <ul>
+          <li><a href="entrar.html">Entrar no app</a></li>
+          <li><a href="entrar.html?tipo=loja">Sou da loja</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Saiba mais</h4>
+        <ul>
+          <li><a href="#como-funciona">Como funciona</a></li>
+          <li><a href="index.html">Para restaurantes</a></li>
+          <li><a href="planos.html">Planos</a></li>
+          <li><a href="#faq">Dúvidas</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> Muito Mais</span>
+      <span>Seu cliente volta. A gente ajuda nisso.</span>
+      <div class="devmais-credit"><span>Desenvolvido por</span><a href="https://devmais.com" target="_blank" rel="noopener" aria-label="Dev+ — abrir o site da Dev+" class="dm-logo"><img src="assets/devmais-logo.svg" alt="Dev+" width="94" height="24"></a><a href="mailto:atendimento@devmais.com" class="dm-mail">atendimento@devmais.com</a></div>
+    </div>
+    <div class="wordmark" aria-hidden="true">MuitoMais</div>
+  </div>
+</footer>
+
+<a href="#" class="to-top" id="toTop" aria-label="Voltar ao topo">
+  <svg class="ring" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24"/></svg>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+</a>
+
+<script src="assets/pages.js"></script>
+<script>
+  (() => {
+    const $ = id => document.getElementById(id);
+    const brl = v => 'R$ ' + Math.round(v).toLocaleString('pt-BR');
+
+    // saldo do celular: conta de zero até o valor quando aparece
+    const cb = $('cbVal');
+    if (cb && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const end = +cb.dataset.to, t0 = performance.now() + 500;
+      const step = t => {
+        const k = Math.max(0, Math.min(1, (t - t0) / 1100)), e = 1 - Math.pow(1 - k, 3);
+        cb.textContent = (end * e).toFixed(2).replace('.', ',');
+        if (k < 1) requestAnimationFrame(step);
+      };
+      cb.textContent = '0,00'; requestAnimationFrame(step);
+    }
+
+    // demonstração passo a passo: troca sozinha, e o clique escolhe o passo
+    const demo = $('demo');
+    if (demo) {
+      const btns = [...demo.querySelectorAll('.c-dsteps button')], imgs = [...demo.querySelectorAll('.c-dshell img')];
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let cur = 0, timer = null, visible = false, hover = false, stopped = reduce;
+      const DUR = 6000;
+      demo.style.setProperty('--dur', DUR + 'ms');
+      const show = i => {
+        cur = (i + btns.length) % btns.length;
+        btns.forEach((b, k) => b.setAttribute('aria-current', k === cur));
+        imgs.forEach((im, k) => im.classList.toggle('on', k === cur));
+      };
+      const arm = () => {
+        clearTimeout(timer);
+        const run = visible && !hover && !stopped;
+        demo.classList.toggle('paused', !run);
+        if (run) timer = setTimeout(() => { show(cur + 1); arm(); }, DUR);
+      };
+      btns.forEach((b, i) => b.addEventListener('click', () => {
+        stopped = false; show(i);
+        // reinicia a barra de progresso do passo escolhido
+        b.setAttribute('aria-current', 'false'); void b.offsetWidth; b.setAttribute('aria-current', 'true');
+        arm();
+      }));
+      demo.addEventListener('mouseenter', () => { hover = true; arm(); });
+      demo.addEventListener('mouseleave', () => { hover = false; arm(); });
+      if ('IntersectionObserver' in window) new IntersectionObserver(es => { visible = es[0].isIntersecting; arm(); }, { threshold: 0.35 }).observe(demo);
+      else { visible = true; arm(); }
+    }
+  })();
+</script>
+</body>
+</html>
